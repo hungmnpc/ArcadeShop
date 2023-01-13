@@ -2,16 +2,20 @@ package com.monopoco.arcade.util;
 
 import com.monopoco.arcade.entity.Product;
 import com.monopoco.arcade.modal.ProductDTO;
+import com.monopoco.arcade.service.imageservice.ImageStorageService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
+@Component
 public class MapperUtil {
 
-    public static ProductDTO productMapper(Product product, ModelMapper modelMapper) {
+
+
+    public static ProductDTO productMapper(Product product, ModelMapper modelMapper, ImageStorageService imageStorageService) {
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
         productDTO.setDiscountModeName(product.getDiscountMode().getDiscountMode());
         productDTO.setInventoryStatus(product.getInventory().getType());
@@ -20,9 +24,10 @@ public class MapperUtil {
         additionalInfo.put(product.getAdditionalInfoTitle2().getTitle(), product.getAdditionalInfoDescription2());
         additionalInfo.put(product.getAdditionalInfoTitle3().getTitle(), product.getAdditionalInfoDescription3());
         productDTO.setAdditionalInfo(additionalInfo);
-        Set<byte[]> images = new HashSet<>();
+        Set<String> images = new HashSet<>();
         product.getImages().forEach(image -> {
-            images.add(image.getImageData());
+            byte[] imageData = imageStorageService.downloadImage(image.getId());
+            images.add(Base64.getEncoder().encodeToString(imageData));
         });
         productDTO.setImageSet(images);
         Set<String> categories = new HashSet<>();

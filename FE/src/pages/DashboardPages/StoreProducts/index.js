@@ -10,6 +10,7 @@ import Tippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
 import { faClone } from '@fortawesome/free-regular-svg-icons';
 import {images} from "../../../assets/images"
+import { get } from '../../../utils/request';
 const cx = classNames.bind(style);
 const columns = [
     {
@@ -18,8 +19,7 @@ const columns = [
         key: 'image',
         width: 100,
         render: (_, record) => {
-            console.log(record);
-            return (<img className={cx('image')} src={record.image} alt='logo' />)
+            return (<img className={cx('image')} src={ `data:image/png;base64, ${record.image}`} alt='logo' />)
         },
     },
     {
@@ -75,13 +75,27 @@ for (let i = 0; i < 46; i++) {
 
 function StoreProducts() {
     const searchRef = useRef();
-
     const [focused, setFocused] = useState(false);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const onSelectChange = (newSelectedRowKeys) => {
         console.log('selectedRowKeys changed: ', newSelectedRowKeys);
         setSelectedRowKeys(newSelectedRowKeys);
     };
+
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        get("/api/v1/admin/products")
+        .then((response) => {
+            console.log(response)
+            setProducts(response.products)
+        })
+        .catch(error =>  {
+            console.log(error)
+        })
+    }, [])
+
+
     const rowSelection = {
         selectedRowKeys,
         onChange: onSelectChange,
@@ -167,7 +181,18 @@ function StoreProducts() {
                         </div>
                     </div>
                 </div>
-                <Table rowSelection={rowSelection} sticky={true} columns={columns} dataSource={data} />
+                <Table rowSelection={rowSelection} sticky={true} columns={columns} dataSource={products.map((product, index) => {
+                    return {
+                        key: product.id,
+                        name: product.name,
+                        image: product.imageSet[0],
+                        type: 'Physical',
+                        sku: product.sku,
+                        price: product.price,
+                        inventory: product.inventoryStatus
+                        
+                    }
+                })} />
             </div>
         </div>
     );

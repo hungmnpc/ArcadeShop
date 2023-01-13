@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AdditionalInfoTitleRepository extends JpaRepository<AdditionalInfoTitle, String> {
+
+    public AdditionalInfoTitle findAdditionalInfoTitleByTitle(String title);
 }

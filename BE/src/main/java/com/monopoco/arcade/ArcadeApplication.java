@@ -65,6 +65,7 @@ public class ArcadeApplication {
 			productService.saveCategory("Controllers");
 			productService.saveCategory("Games");
 			productService.saveCategory("On Sale");
+			productService.saveCategory("All");
 
 			productService.saveDiscountMode("PERCENT");
 			productService.saveDiscountMode("AMOUNT");

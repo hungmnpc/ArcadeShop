@@ -1,4 +1,4 @@
-package com.monopoco.arcade.requestbody;
+package com.monopoco.arcade.request;
 
 import lombok.*;
 
@@ -31,7 +31,7 @@ public class ProductRequest {
 
     private String discountMode;
 
-    private String discountValue;
+    private Double discountValue;
 
     private String SKU;
     private String inventoryStatus;

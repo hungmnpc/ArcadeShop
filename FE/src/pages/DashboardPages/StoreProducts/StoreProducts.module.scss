@@ -155,7 +155,7 @@
                 top: 50%;
                 transform: translate(-100%,-50%);
                 display: none;
-                box-shadow: var(--wsr-shadow30, 0 6px 6px 0 rgba(22, 45, 61, 0.06), 0 0 18px 0 rgba(22, 45, 61, 0.12));
+                box-shadow: 0 0 11px 0 rgb(0 0 0 / 21%);
                 border-radius: 10px;
                 
 
@@ -164,7 +164,7 @@
                     width: 8px;
                     height: 8px;
                     background-color: var(--white);
-                    box-shadow: var( 0 6px 6px 0 rgba(22, 45, 61, 0.06), 0 0 18px 0 rgba(22, 45, 61, 0.12));
+                    box-shadow: 0 0 11px 0 rgb(0 0 0 / 21%);
                     top: 50%;
                     right: 4px;
                     transform: translate(100%, -50%) rotate(45deg);

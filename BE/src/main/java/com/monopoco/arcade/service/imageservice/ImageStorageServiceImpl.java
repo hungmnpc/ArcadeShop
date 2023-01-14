@@ -26,6 +26,8 @@ public class ImageStorageServiceImpl implements  ImageStorageService{
                 .type(file.getContentType())
                 .imageData(ImageUtils.compressImage(file.getBytes())).build());
 
+
+
         return imageData.getId();
 
     }

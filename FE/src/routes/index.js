@@ -16,6 +16,7 @@ import { Fragment } from 'react';
 import DashboardLayout from '../components/layouts/DashboardLayout';
 import StoreProducts from '../pages/DashboardPages/StoreProducts';
 import Orders from '../pages/DashboardPages/Orders';
+import NewProduct from '../pages/DashboardPages/NewProduct';
 
 const collectionPages = [
     {
@@ -138,6 +139,11 @@ const dashboardRoutes = [
     {
         path:  routes.dashboardStoreProducts.products,
         component: StoreProducts
+    },
+    {
+        path: routes.dashboardStoreProducts.newProduct,
+        component: NewProduct
+        
     }
 ]
 

@@ -1,0 +1,252 @@
+.wrapper {
+    position: relative;
+    z-index: 10;
+
+    --content-width: 1200px;
+    padding: 0 4.8rem;
+
+    .header-color {
+        width: 100%;
+        height: 170px;
+        background-image: linear-gradient(257deg, #ebdce1, #aae0eb 71%, #ece1d8);
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: 0;
+
+        &::after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: linear-gradient(180deg, rgba(0, 0, 0, .7), transparent);
+            content: "";
+            opacity: .35;
+        }
+    }
+
+    .content {
+        color: white;
+        z-index: 2;
+        // background-color: red;
+        position: relative;
+        margin: 0 auto;
+
+        .header {
+
+            padding: 32px calc((100% - var(--content-width)) / 2);
+            width: 100%;
+
+            .breadcrumbs {
+                display: flex;
+                font-size: 1.3rem;
+
+                margin-bottom: 10px;
+
+
+                .breadcrumb-item {
+
+                    color: #dfe5eb;
+
+                    &:last-child {
+                        color: white;
+                    }
+
+                    position: relative;
+
+                    &+.breadcrumb-item {
+                        margin-left: 35px;
+
+                        &::before {
+                            content: "\276D";
+                            display: inline-block;
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            color: #f0f4f7;
+                            padding-right: 10px;
+                            transform: translateX(-100%);
+                        }
+                    }
+
+                    a {
+                        color: inherit;
+                    }
+                }
+            }
+
+            .header-row {
+
+                display: flex;
+
+                .header-action {
+                    margin-left: auto;
+
+                    display: flex;
+                    align-items: flex-end;
+
+                    .actions-dropdown {
+                        position: relative;
+
+                        .btn-drop {
+                            height: 3.5rem;
+                            width: 3.5rem;
+                            border: 1px solid var(--white);
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            border-radius: 999px;
+                            cursor: pointer;
+                            transition: all .15s ease-out;
+                            &:hover {
+                                background-color: var(--white);
+
+                                color: #3899ec;
+                            }
+
+                        }
+
+                        &.isShow {
+                            .drop-content {
+                                display: flex;
+                                flex-direction: column;
+                                width: max-content;
+                                position: absolute;
+                                background-color: var(--white);
+                                bottom: -10px;
+                                left: 50%;
+                                transform: translate(-50%, 100%);
+                                color: var(--black);
+                                z-index: 10;
+                                padding: 18px;
+                                border-radius: 18px;
+                                box-shadow: 0 0 11px 0 rgb(0 0 0 / 21%);
+                                .dropdown-item {
+                                    display: flex;
+                                    align-items: center;
+                                    transition: color .15s ease-out;
+                                    font-size: 1.5rem;
+                                    letter-spacing: .1px;
+                                    cursor: pointer;
+
+                                    &[data-type="normal"] {
+                                        &:hover {
+                                            color: #3899ec;
+                                        }
+                                    }
+                                    &[data-type="danger"] {
+                                        &:hover {
+                                            color: #ee5951;
+                                        }
+                                    }
+
+                                    & + .dropdown-item {
+                                        margin-top: 12px;
+                                    }
+                                    .dropdown-item-icon {
+                                        min-width: 30px;
+                                    }
+                                }
+
+                                &::after {
+                                    content: "";
+                                    position: absolute;
+                                    width: 10px;
+                                    height: 10px;
+                                    top: 0;
+                                    left: 50%;
+                                    background-color: var(--white);
+                                    transform: translate(-50%, -40%) rotate(-45deg);
+
+                                    box-shadow: 0 0 11px 0 rgb(0 0 0 / 21%);
+                                    z-index: 1;
+                                    clip-path: polygon(100% 0, 0 0, 100% 100%);
+                                }
+                            }
+                        }
+
+                        .drop-content {
+                            display: none;
+                            
+                        }
+
+                    }
+
+                    .btn {
+                        line-height: 3.5rem;
+                        padding: 0 2.4rem;
+                        border: 1px solid white;
+                        border-radius: 999px;
+                        margin-left: 1.5rem;
+                        cursor: pointer;
+
+                        transition: all .15s ease-out;
+                        &.btn-cancel {
+                            color: var(--white);
+                            background-color: transparent;
+                            
+
+                            &:hover {
+                                background-color: var(--white);
+
+                                color: #3899ec;
+                            }
+                        }
+
+                        &.btn-save {
+                            background-color: var(--white);
+                            color: #3899ec;
+                        }
+                    }
+                }
+
+
+                .header-title {
+
+                    font-size: 3.3rem;
+                    font-weight: 600;
+                    min-width: 60%;
+
+                    .label-title {
+                        display: inline-block;
+                        border-bottom: 1px dashed transparent;
+                        cursor: text;
+                        line-height: 4rem;
+                        transition: border-color .15s ease-out;
+                        padding-bottom: 10px;
+
+                        &:hover {
+                            border-color: var(--white);
+                        }
+
+                    }
+
+                    .input-title {
+                        display: none;
+                        font-size: inherit;
+                        background-color: transparent;
+                        border-width: 0px;
+                        outline: none;
+                        font-weight: 500;
+                        color: inherit;
+                        font-family: inherit;
+                    }
+
+                    &.is-focus {
+
+                        .label-title {
+                            display: none;
+                        }
+
+                        .input-title {
+                            display: inline-block;
+                        }
+                    }
+                }
+            }
+
+        }
+
+    }
+}

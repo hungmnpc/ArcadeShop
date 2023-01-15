@@ -88,6 +88,8 @@ function Header() {
             }
         };
         window.addEventListener('scroll', handleOver);
+
+        return () => window.removeEventListener('scroll', handleOver)
     }, []);
 
     return (

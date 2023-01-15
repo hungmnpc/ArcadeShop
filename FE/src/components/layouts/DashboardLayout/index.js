@@ -1,5 +1,6 @@
 import classNames from 'classnames/bind';
-import { Route, Routes } from 'react-router-dom';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Orders from '../../../pages/DashboardPages/Orders';
 import StoreProducts from '../../../pages/DashboardPages/StoreProducts';
 import { dashboardRoutes } from '../../../routes';
@@ -11,6 +12,35 @@ import Sidebar from './Sidebar';
 const cx = classNames.bind(style);
 
 function DashboardLayout() {
+
+
+    const contentRef = useRef(null);
+
+    const [contentOver, setContentOver] = useState(false);
+
+
+    useLayoutEffect(() => {
+
+        
+        const handleOver = () => {
+
+            if (contentRef.current.scrollTop >= 20) {
+                setContentOver(true)
+            } else {
+                setContentOver(false)
+            }
+        };
+        contentRef.current.addEventListener('scroll', handleOver);
+
+        return () => contentRef.current.removeEventListener('scroll', handleOver)
+    }, [contentRef]);
+
+    const location = useLocation();
+    useEffect(() => {
+        contentRef.current.scrollTo(0, 0);
+    }, [location]);
+
+
     return (
         <div className={cx('wrapper')}>
             {/* <Header /> */}
@@ -20,13 +50,13 @@ function DashboardLayout() {
                 <div className={cx('sidebar')}>
                     <Sidebar />
                 </div>
-                <div className={cx('content')}>
+                <div ref={contentRef} className={cx('content')}>
                     <Routes>
                         {
                             dashboardRoutes.map((route, index) => {
                                 const Component = route.component;
                                 return (
-                                    <Route path={route.path} element={<Component />} key={index} />
+                                    <Route path={route.path} element={<Component isScrollOver={contentOver} />} key={index} />
                                 )
                             }
                             )

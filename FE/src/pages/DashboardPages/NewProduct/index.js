@@ -4,8 +4,9 @@ import style from "./NewProduct.module.scss";
 
 const cx = classNames.bind(style);
 
-function NewProduct() {
-    return ( <ProductDetailAdmin /> );
+function NewProduct({isScrollOver, ...prop}) {
+    
+    return ( <ProductDetailAdmin isScrollOver={isScrollOver} /> );
 }
 
 export default NewProduct;

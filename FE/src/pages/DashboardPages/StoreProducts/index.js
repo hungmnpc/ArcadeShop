@@ -11,6 +11,9 @@ import 'tippy.js/dist/tippy.css';
 import { faClone } from '@fortawesome/free-regular-svg-icons';
 import {images} from "../../../assets/images"
 import { get } from '../../../utils/request';
+import { Link } from 'react-router-dom';
+import routes from "../../../configs/routes";
+
 const cx = classNames.bind(style);
 const columns = [
     {
@@ -144,9 +147,12 @@ function StoreProducts() {
                 </div>
                 <div className={cx('option')}>
                     <div className={cx('btn-add')}>
-                        <Button type="primary" shape="round" icon={<PlusOutlined />} size='large'>
-                            New Product
-                        </Button>
+                        <Link to={'/dashboard' + routes.dashboardStoreProducts.newProduct}>
+                            <Button type="primary" shape="round" icon={<PlusOutlined />} size='large'>
+                                New Product
+                            </Button>
+
+                        </Link>
                     </div>
                 </div>
             </div>

@@ -3,14 +3,16 @@ import { faCopy, faEllipsis, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "antd";
 import classNames from "classnames/bind";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { images } from "../../assets/images";
 import routes from "../../configs/routes";
+import ImageField from "./ImageField";
 import style from "./ProductDetailAdmin.module.scss";
 
 const cx = classNames.bind(style);
 
-function ProductDetailAdmin({ ...prop }) {
+function ProductDetailAdmin({isScrollOver, ...prop }) {
 
 
     const UNTITLED_PRODUCT = "Untitled Product";
@@ -23,10 +25,14 @@ function ProductDetailAdmin({ ...prop }) {
 
 
 
+
+
+
+
     return (<div className={cx('wrapper')}>
         <div className={cx('header-color')} />
-        <div className={cx('content')}>
-            <div className={cx('header')}>
+        <div  className={cx('content')}>
+            <div className={cx('header', [isScrollOver ? 'minimize' : ''])}>
                 <div className={cx("breadcrumbs")}>
                     <span className={cx('breadcrumb-item')}>
                         <Link to={`/dashboard${routes.dashboardStoreProducts.products}`}>Products</Link>
@@ -55,6 +61,18 @@ function ProductDetailAdmin({ ...prop }) {
 
                 </div>
             </div>
+            <div className={cx('main-content')}>
+                <div className={cx('main-content-column')}>
+                    <div className={cx('image-field')}>
+                        <ImageField images={[images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse]}/>
+                    </div>
+                    
+                </div>
+                <div className={cx('main-content-column')}>
+                    
+                </div>
+            </div>
+            
         </div>
     </div>);
 }
@@ -85,7 +103,6 @@ function ActionsDropdown() {
             type: 'danger',
         }
     ]
-    console.log(show)
 
     useEffect(() => {
         const handleClickOutside = (event) => {

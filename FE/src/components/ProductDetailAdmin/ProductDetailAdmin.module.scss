@@ -350,10 +350,12 @@
                 flex-direction: column;
                 gap: 30px;
                 &:first-child {
-                    flex: 2;
+                    flex-basis: 66.66666%  !important;
+                    max-width: calc(66.66666% - 30px);
                 }
                 &:last-child{
-                    flex: 1;
+                    flex-basis: 33.33333% !important;
+                    max-width: calc(33.33333% - 30px);
                 }
             }
         }

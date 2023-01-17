@@ -9,6 +9,7 @@ import { images } from "../../assets/images";
 import routes from "../../configs/routes";
 import ImageField from "./ImageField";
 import style from "./ProductDetailAdmin.module.scss";
+import ProductInfo from "./ProductInfo";
 
 const cx = classNames.bind(style);
 
@@ -66,10 +67,13 @@ function ProductDetailAdmin({isScrollOver, ...prop }) {
                     <div className={cx('image-field')}>
                         <ImageField images={[images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse]}/>
                     </div>
+                    <div className={cx('product-info')}>
+                        <ProductInfo />
+                    </div>
                     
                 </div>
                 <div className={cx('main-content-column')}>
-                    
+                    hello
                 </div>
             </div>
             

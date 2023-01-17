@@ -25,7 +25,9 @@ function ImageField({images}) {
                     {
                         images.slice(1).map((image, index) => {
                             return (
-                                <div className={cx('child-image')} key={index}>
+                                <div onMouseDownCapture={(event) => {
+                                    console.log(event)
+                                }} className={cx('child-image')} key={index}>
                                     <img src={image} alt='child' />
                                 </div>
                             )

@@ -1,5 +1,5 @@
-import { faClone, faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import { faCopy, faEllipsis, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faClone, faSquare, faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import { faCopy, faEllipsis, faSquareCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "antd";
 import classNames from "classnames/bind";
@@ -7,13 +7,18 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { images } from "../../assets/images";
 import routes from "../../configs/routes";
+import Checkbox from "../Checkbox";
 import ImageField from "./ImageField";
+import ProductCategories from "./ProductCategories";
 import style from "./ProductDetailAdmin.module.scss";
 import ProductInfo from "./ProductInfo";
+import ProductPrice from "./ProductPrice";
 
 const cx = classNames.bind(style);
 
-function ProductDetailAdmin({isScrollOver, ...prop }) {
+
+
+function ProductDetailAdmin({ isScrollOver, ...prop }) {
 
 
     const UNTITLED_PRODUCT = "Untitled Product";
@@ -22,6 +27,62 @@ function ProductDetailAdmin({isScrollOver, ...prop }) {
     const [title, setTitle] = useState("")
 
     const [isFocus, setIsFocus] = useState(false);
+
+    const [isVisiable, setIsVisiable] = useState(true);
+
+    const [productInfo, setProductInfo] = useState(
+        {
+            name: "",
+            ribbon: "",
+            description: "",
+            categories: [
+            ],
+            visible: true,
+            imagesId: [
+              
+            ],
+            additionalInfo: {
+            },
+            price: null,
+            discountMod: "PERCENR",
+            discountValue: 0,
+            inventoryStatus: "In stock",
+            sku: ""
+          }
+    )
+
+    const handleOnChaneCategories = (value) => {
+
+        if (productInfo.categories.includes(value)) {
+            setProductInfo({
+                ...productInfo,
+                categories: productInfo.categories.filter((category) => category !== value)
+            })
+        } else {
+            
+            setProductInfo({
+                ...productInfo,
+                categories: [
+                    ...productInfo.categories,
+                    value,
+                ]
+            })
+        }
+
+
+    }
+
+
+
+
+
+    const handleVisiable = () => {
+        setIsVisiable(true);
+    }
+
+    const handleUnVisiable = () => {
+        setIsVisiable(false);
+    }
 
 
 
@@ -32,7 +93,7 @@ function ProductDetailAdmin({isScrollOver, ...prop }) {
 
     return (<div className={cx('wrapper')}>
         <div className={cx('header-color')} />
-        <div  className={cx('content')}>
+        <div className={cx('content')}>
             <div className={cx('header', [isScrollOver ? 'minimize' : ''])}>
                 <div className={cx("breadcrumbs")}>
                     <span className={cx('breadcrumb-item')}>
@@ -65,18 +126,29 @@ function ProductDetailAdmin({isScrollOver, ...prop }) {
             <div className={cx('main-content')}>
                 <div className={cx('main-content-column')}>
                     <div className={cx('image-field')}>
-                        <ImageField images={[images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse]}/>
+                        <ImageField images={[images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse]} />
                     </div>
                     <div className={cx('product-info')}>
-                        <ProductInfo />
+                        <ProductInfo value={productInfo} setValue={setProductInfo}/>
                     </div>
-                    
+                    <div className={cx('price')}>
+                        <ProductPrice />
+                    </div>
+
                 </div>
                 <div className={cx('main-content-column')}>
-                    hello
+                    <div className={cx('visiable-section')}>
+                        <label htmlFor="visiable" className={cx('visiable')}>
+                            <Checkbox  checked={isVisiable} handelChecked={handleVisiable} handelUnChecked={handleUnVisiable} value='visiable' name='visiable' id='visiable' />
+                            <span>Show in online store</span>
+                        </label>
+                    </div>
+                    <div className={cx('categories-section')}>
+                        <ProductCategories isChecked={productInfo.categories} onChange={handleOnChaneCategories} />
+                    </div>
                 </div>
             </div>
-            
+
         </div>
     </div>);
 }
@@ -122,7 +194,7 @@ function ActionsDropdown() {
         }
     }, [ref])
 
-    return ( <div ref={ref} className={cx('actions-dropdown',[show ? 'isShow' : ''])}>
+    return (<div ref={ref} className={cx('actions-dropdown', [show ? 'isShow' : ''])}>
         <div onClick={() => {
             setShow(!show)
         }} className={cx('btn-drop')}>
@@ -138,8 +210,12 @@ function ActionsDropdown() {
                 ))
             }
         </div>
-    </div> ); 
+    </div>);
 }
+
+
+
+
 
 
 

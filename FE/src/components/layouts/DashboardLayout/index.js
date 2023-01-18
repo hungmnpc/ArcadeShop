@@ -21,18 +21,22 @@ function DashboardLayout() {
 
     useLayoutEffect(() => {
 
+        const element = contentRef.current;
         
         const handleOver = () => {
+            console.log(contentRef.current.scrollTop)
 
-            if (contentRef.current.scrollTop >= 20) {
+            
+
+            if (element.scrollTop >= 160) {
                 setContentOver(true)
-            } else {
+            } else if (element.scrollTop <= 100) {
                 setContentOver(false)
             }
         };
-        contentRef.current.addEventListener('scroll', handleOver);
+        element.addEventListener('scroll', handleOver);
 
-        return () => contentRef.current.removeEventListener('scroll', handleOver)
+        return () => element.removeEventListener('scroll', handleOver)
     }, [contentRef]);
 
     const location = useLocation();

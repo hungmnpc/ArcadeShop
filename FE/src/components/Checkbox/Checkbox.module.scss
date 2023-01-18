@@ -1,0 +1,22 @@
+.checkbox {
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    input {
+        width: 0;
+        height: 0;
+        opacity: 0;
+
+        &:disabled + .checkbox-icon {
+            color: rgba(77, 85, 92, 0.24);
+        }
+
+    }
+
+    .checkbox-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 1.7rem;
+        color: #3899ec;
+    }
+}

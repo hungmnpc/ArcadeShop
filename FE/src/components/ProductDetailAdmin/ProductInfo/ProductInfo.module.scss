@@ -35,42 +35,7 @@
             &+.info-row {
                 margin-top: 30px;
             }
-            .field-control {
-                display: flex;
-                flex-direction: column;
-                padding: 0 15px;
-                gap: 15px;
-                
-                .field-input {
-                    padding: 8px 10px;
-                    border-radius: 8px;
-                    outline: none;
-                    border: 1px solid #c1e4fe;
-                    line-height: 1.9rem;
-                    font-size: 1.6rem;
-                    font-family: inherit;
-                    transition: background-color .15s ease-out;
-                    &::placeholder {
-                        font-weight: 400;
-                        opacity: .5;
-                        color: rgba(68, 65, 65, 0.644);
-                    }
-
-                    &:hover {
-                        background-color: #eaf7ff;
-                    }
-                }
-                
-            }
-            .colspan1 {
-                flex: 1;
-            }
-            .colspan2 {
-                flex: 2;
-            }
-            .colspan3 {
-                width: 100%;
-            }
+            
         }
     }
 
@@ -78,6 +43,12 @@
         width: 100%;
         display: flex;
         flex-direction: column;
+
+        .explanation {
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
         .content {
             margin-bottom: 30px;
             .row-additional-info {

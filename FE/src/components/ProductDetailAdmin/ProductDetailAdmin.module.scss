@@ -41,12 +41,15 @@
             transition: padding .25s ease-in-out;
             background-color: transparent;
             transition: background-color .25s ease-in-out;
+            z-index: 99997;
 
 
             &.minimize {
                 padding-top: 15px;
                 padding-bottom: 15px;
                 background-color: rgba(240, 244, 247, 0.842);
+                z-index: 99999;
+
                 .breadcrumbs {
                     .breadcrumb-item {
 
@@ -65,32 +68,38 @@
                         }
                     }
                 }
+
                 .header-row {
                     margin-top: -50px;
+
                     .header-title {
                         opacity: 0;
                         pointer-events: none;
 
                     }
+
                     .header-action {
                         .actions-dropdown {
-                            .btn-drop 
-                            {
+                            .btn-drop {
                                 background-color: var(--white);
                                 color: #3899ec;
                                 height: 3.1rem;
                                 width: 3.1rem;
+
                                 &:hover {
                                     background-color: #3899ec;
                                     color: var(--white);
                                 }
                             }
                         }
+
                         .btn {
                             line-height: 3.1rem;
+
                             &.btn-cancel {
                                 background-color: var(--white);
                                 color: #3899ec;
+
                                 &:hover {
                                     background-color: #3899ec;
                                     color: var(--white);
@@ -101,6 +110,7 @@
                                 background-color: #3899ec;
                                 color: var(--white);
                                 transition: opacity .15s ease-out;
+
                                 &:hover {
                                     opacity: .8;
                                 }
@@ -122,7 +132,7 @@
 
                 .breadcrumb-item {
 
-                    
+
                     padding: 1px 7px;
                     transition: all .15s ease-in-out .1s;
 
@@ -130,6 +140,7 @@
                         color: #dfe5eb;
                         border-radius: 99px;
                         background-color: transparent;
+
                         &:hover {
                             background-color: #ebdce134;
                         }
@@ -187,6 +198,7 @@
                             cursor: pointer;
                             transition: all .15s ease-out;
                             color: var(--white);
+
                             &:hover {
                                 background-color: var(--white);
 
@@ -210,6 +222,7 @@
                                 padding: 18px;
                                 border-radius: 18px;
                                 box-shadow: 0 0 11px 0 rgb(0 0 0 / 21%);
+
                                 .dropdown-item {
                                     display: flex;
                                     align-items: center;
@@ -223,15 +236,17 @@
                                             color: #3899ec;
                                         }
                                     }
+
                                     &[data-type="danger"] {
                                         &:hover {
                                             color: #ee5951;
                                         }
                                     }
 
-                                    & + .dropdown-item {
+                                    &+.dropdown-item {
                                         margin-top: 12px;
                                     }
+
                                     .dropdown-item-icon {
                                         min-width: 30px;
                                     }
@@ -256,7 +271,7 @@
 
                         .drop-content {
                             display: none;
-                            
+
                         }
 
                     }
@@ -270,10 +285,11 @@
                         cursor: pointer;
 
                         transition: all .15s ease-out;
+
                         &.btn-cancel {
                             color: var(--white);
                             background-color: transparent;
-                            
+
 
                             &:hover {
                                 background-color: var(--white);
@@ -304,7 +320,7 @@
                         line-height: 4rem;
                         transition: border-color .15s ease-out;
                         padding-bottom: 10px;
-                        
+
 
                         &:hover {
                             border-color: var(--white);
@@ -345,20 +361,41 @@
             margin: 0 auto;
             display: flex;
             gap: 30px;
+            position: relative;
+            z-index: 99998;
+
             .main-content-column {
                 display: flex;
                 flex-direction: column;
                 gap: 30px;
+
                 &:first-child {
-                    flex-basis: 66.66666%  !important;
+                    flex-basis: 66.66666% !important;
                     max-width: calc(66.66666% - 30px);
                 }
-                &:last-child{
+
+                &:last-child {
                     flex-basis: 33.33333% !important;
                     max-width: calc(33.33333% - 30px);
+                }
+
+                .visiable-section {
+                    padding: 24px 30px;
+                    background-color: var(--white);
+                    border-radius: 10px;
+
+                    .visiable {
+                        line-height: 42px;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        user-select: none;
+
+                    }
                 }
             }
         }
 
     }
 }
+

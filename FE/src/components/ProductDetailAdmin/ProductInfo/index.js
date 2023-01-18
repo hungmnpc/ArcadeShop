@@ -6,10 +6,24 @@ import 'react-quill/dist/quill.snow.css';
 import "./ReactQuillCustom.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Modal } from 'antd';
+import AdditionalInfoModal from "../../ModalAdditionalInfo";
+import FieldControl from "../../FieldControl";
 
 const cx = classNames.bind(style);
 
-function ProductInfo() {
+function ProductInfo({value, setValue}) {
+
+
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const [newAdditionInfo, setNewAdditionInfo] = useState({
+        title: "",
+        description: ""
+    })
+
+
+
     return (<div className={cx('wrapper')}>
         <div className={cx('title')}>
             <span>Product info</span>
@@ -20,12 +34,27 @@ function ProductInfo() {
             </span>
             <div className={cx('form-info')}>
                 <div className={cx('info-row')}>
-                    <FieldControl label="Name" type="text" colspan="2" required={true} name="name" placeholder="Add a product name" />
-                    <FieldControl label="Ribbon" type="text" colspan="1" required={true} name="ribbon" placeholder="e.g., New Arrival" />
+                    <FieldControl value={value.name} onChange={(data) => {
+                        setValue({
+                            ...value,
+                            name: data
+                        })
+                    }} label="Name" type="text" colspan="2" required={true} name="name" placeholder="Add a product name" />
+                    <FieldControl value={value.ribbon} onChange={(data) => {
+                        setValue({
+                            ...value,
+                            ribbon: data
+                        })
+                    }} label="Ribbon" type="text" colspan="1" required={true} name="ribbon" placeholder="e.g., New Arrival" />
 
                 </div>
                 <div className={cx('info-row')}>
-                    <FieldControl label="Description" colspan="3" type="editor" required={true} name="description" />
+                    <FieldControl value={value.description} onChange={(data) => {
+                        setValue({
+                            ...value,
+                            description: data
+                        })
+                    }} label="Description" colspan="3" type="editor" required={true} name="description" />
                 </div>
             </div>
         </div>
@@ -33,65 +62,26 @@ function ProductInfo() {
         <span className={cx('header')}>
                 Additional Info Sections
             </span>
+            {
+                true &&
+                <span className={cx('explanation')}>Share information like return policy or care instructions with your customers.</span>
+            }
             <div className={cx('content')}>
                 <RowAdditionalInfo />
                 <RowAdditionalInfo />
             </div>
             <div className={cx('add-additional-info')} >
-            <button >
+            <button onClick={() => setModalOpen(true)}>
                 <FontAwesomeIcon icon={faPlus} className={cx('icon')} />
                 <span>Add an Info Section</span>
             </button>
             </div>
         </div>
+
+        <AdditionalInfoModal value={newAdditionInfo} setValue={setNewAdditionInfo} open={modalOpen} onOk={() => setModalOpen(false)} onCancel={() => setModalOpen(false)} />
     </div>);
 }
 
-function FieldControl({ label, type = "text", required, name, placeholder, colspan }) {
-
-    const [focused, setFocused] = useState(false)
-
-    console.log(focused)
-
-    const module ={
-        toolbar: [
-            ['bold', 'italic', 'underline', 
-                {color: ["red", "blue"]},
-                'link',
-                { "list": "ordered"}, { "list": "bullet" }, { "indent": "-1"}, { "indent": "+1" }
-            ],
-            
-        ]
-    }
-
-
-    let Field;
-    switch (type) {
-        case "editor":
-            Field = "textarea"
-            break;
-        default:
-            Field = "input"
-    }
-
-    const [value, setValue] = useState("")
-
-    console.log(value)
-
-
-
-    return (<div className={cx('field-control', `colspan${colspan}`)}>
-        <label htmlFor={name}>{label}</label>
-        {
-            type === "editor" ? (
-                <ReactQuill theme="snow" value={value} onChange={setValue} className={cx('field-editor')} modules={module} />
-            ) : (<Field onFocus={() => {
-                setFocused(true)
-            }} name={name} id={name} placeholder={placeholder} className={cx('field-input')} />)
-        }
-
-    </div>);
-}
 
 function RowAdditionalInfo() {
     return ( <div className={cx('row-additional-info')}>

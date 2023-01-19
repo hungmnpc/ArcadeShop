@@ -54,21 +54,45 @@
                     }
                 }
 
+                &.danger {
+                    .input {
+                        input {
+                            border-color: red;
+                        }
+
+                        div:first-of-type {
+                            border-left-color: red;
+                        }
+                    }
+
+                    
+                }
+
                 .input {
 
                     display: flex;
                     height: 36px;
 
+                    --border-color: #c1e4fe;
+
+                    &:has(> input:focus) {
+                        --border-color: #4eb7f5;
+                    }
+
 
                     input {
                         padding: 8px 10px;
                         background-color: transparent;
-                        border: 1px solid #c1e4fe;
+                        border: 1px solid var(--border-color);
                         border-right-width: 0px;
                         font-size: 1.6rem;
                         border-radius: 8px 0 0 8px;
                         width: calc(100% - var(--postfix-width));
                         height: 36px;
+                        font-family: inherit;
+
+                        
+
                     }
 
                     .field-postfix {
@@ -77,9 +101,10 @@
                         align-items: center;
                         height: 36px;
                         width: 36px;
-                        border: 1px solid #c1e4fe;
+                        border: 1px solid var(--border-color);
                         font-size: 1.2rem;
                         font-weight: 600;
+                        font-family: inherit;
 
                         &:last-child {
                             border-radius: 0 8px 8px 0;
@@ -97,13 +122,15 @@
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        border: 1px solid #c1e4fe;
+                        border: 1px solid var(--border-color);
                         border-right-color: transparent;
+                        font-weight: 600;
+
 
 
                         &:last-child {
                             border-radius: 0 8px 8px 0;
-                            border-right-color: #c1e4fe !important;
+                            border-right-color: var(--border-color)!important;
                         }
 
 

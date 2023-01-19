@@ -1,10 +1,11 @@
 import { Modal } from "antd";
 import classNames from "classnames/bind";
 import FieldControl from "../FieldControl";
+import MyModal from "../MyModal";
 import style from "./ModalAdditionalInfo.scss";
 
 function AdditionalInfoModal({open, onOk, onCancel, value, setValue}) {
-    return ( <Modal
+    return ( <MyModal
         title="Add an info section"
         centered
         open={open}
@@ -30,7 +31,7 @@ function AdditionalInfoModal({open, onOk, onCancel, value, setValue}) {
                     }} label="Description" colspan="3" type="editor" required={true} name="description" />
             </div>
         </div>
-      </Modal>);
+      </MyModal>);
 }
 
 export default AdditionalInfoModal;

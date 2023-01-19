@@ -22,6 +22,31 @@ function ProductInfo({value, setValue}) {
         description: ""
     })
 
+    const closeModal = () => {
+        setNewAdditionInfo({
+            title: "",
+            description: ""
+        })
+        setModalOpen(false)
+    }
+
+    const handleAddAdditionalInfo = () => {
+        if (newAdditionInfo.title !== '' && newAdditionInfo.description !== '') {
+
+            const title = newAdditionInfo.title;
+            const description = newAdditionInfo.description;
+            setValue({
+                ...value,
+                additionalInfo: {
+                    ...value.additionalInfo,
+                    [title]: description
+                }
+            })
+        }
+
+        closeModal()
+    }
+
 
 
     return (<div className={cx('wrapper')}>
@@ -78,7 +103,7 @@ function ProductInfo({value, setValue}) {
             </div>
         </div>
 
-        <AdditionalInfoModal value={newAdditionInfo} setValue={setNewAdditionInfo} open={modalOpen} onOk={() => setModalOpen(false)} onCancel={() => setModalOpen(false)} />
+        <AdditionalInfoModal value={newAdditionInfo} setValue={setNewAdditionInfo} open={modalOpen} onOk={handleAddAdditionalInfo} onCancel={closeModal} />
     </div>);
 }
 

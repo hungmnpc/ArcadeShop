@@ -24,7 +24,6 @@ function DashboardLayout() {
         const element = contentRef.current;
         
         const handleOver = () => {
-            console.log(contentRef.current.scrollTop)
 
             
 

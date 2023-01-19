@@ -24,7 +24,6 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
     const UNTITLED_PRODUCT = "Untitled Product";
 
 
-    const [title, setTitle] = useState("")
 
     const [isFocus, setIsFocus] = useState(false);
 
@@ -44,7 +43,7 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
             additionalInfo: {
             },
             price: null,
-            discountMod: "PERCENR",
+            discountMode: "PERCENT",
             discountValue: 0,
             inventoryStatus: "In stock",
             sku: ""
@@ -69,8 +68,12 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
             })
         }
 
-
     }
+
+    
+
+    // handleAddAdditionalInfo({'new': 'hello'});
+    // console.log(productInfo)
 
 
 
@@ -85,8 +88,7 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
     }
 
 
-
-
+console.log(productInfo)
 
 
 
@@ -100,18 +102,21 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
                         <Link to={`/dashboard${routes.dashboardStoreProducts.products}`}>Products</Link>
                     </span>
                     <span className={cx('breadcrumb-item')}>
-                        {title !== "" ? title : UNTITLED_PRODUCT}
+                        {productInfo.name !== "" ? productInfo.name : UNTITLED_PRODUCT}
                     </span>
                 </div>
                 <div className={cx('header-row')}>
                     <div className={cx('header-title', [isFocus ? 'is-focus' : ''])}>
-                        <label onClick={() => setIsFocus(true)} htmlFor="title" className={cx('label-title')}>{title !== "" ? title : UNTITLED_PRODUCT}</label>
+                        <label onClick={() => setIsFocus(true)} htmlFor="title" className={cx('label-title')}>{productInfo.name !== "" ? productInfo.name : UNTITLED_PRODUCT}</label>
                         <input className={cx('input-title')} onFocus={() => {
                             setIsFocus(true)
                         }} onBlur={() => {
                             setIsFocus(false)
-                        }} name="title" id='title' value={title} placeholder={UNTITLED_PRODUCT} onChange={(event) => {
-                            setTitle(event.target.value)
+                        }} name="title" id='title' value={productInfo.name} placeholder={UNTITLED_PRODUCT} onChange={(event) => {
+                            setProductInfo({
+                                ...productInfo,
+                                name: event.target.value
+                            })
                         }} />
                     </div>
                     <div className={cx('header-action')}>
@@ -132,7 +137,7 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
                         <ProductInfo value={productInfo} setValue={setProductInfo}/>
                     </div>
                     <div className={cx('price')}>
-                        <ProductPrice />
+                        <ProductPrice value={productInfo} setValue={setProductInfo} />
                     </div>
 
                 </div>

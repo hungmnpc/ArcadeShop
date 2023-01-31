@@ -32,6 +32,35 @@
                 
             }
 
+            .image {
+                position: relative;
+                user-select: none;
+                .remove-image {
+                    position: absolute;
+                    top: 20px;
+                    right: 25px;
+                    color: white;
+                    opacity: 0;
+                    cursor: pointer;
+                    font-size: 1.9rem;
+                    transition: opacity .15s ease-out;
+
+                }
+
+                &:hover {
+                    img {
+                        opacity: .7;
+                    }
+                    .remove-image {
+                        opacity: 1;
+
+                        .icon-remove {
+                            
+                        }
+                    }
+                }
+            }
+
             .child-images {
                 width: calc(100% - 33.333333%);
                 display: grid;

@@ -9,6 +9,7 @@ import { images } from "../../assets/images";
 import routes from "../../configs/routes";
 import Checkbox from "../Checkbox";
 import ImageField from "./ImageField";
+import Inventory from "./Inventory";
 import ProductCategories from "./ProductCategories";
 import style from "./ProductDetailAdmin.module.scss";
 import ProductInfo from "./ProductInfo";
@@ -50,6 +51,10 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
           }
     )
 
+    const handleSave = () => {
+        console.log(productInfo)
+    }
+
     const handleOnChaneCategories = (value) => {
 
         if (productInfo.categories.includes(value)) {
@@ -88,8 +93,6 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
     }
 
 
-console.log(productInfo)
-
 
 
 
@@ -122,7 +125,7 @@ console.log(productInfo)
                     <div className={cx('header-action')}>
                         <ActionsDropdown />
                         <button className={cx('btn', 'btn-cancel')}>Cancel</button>
-                        <button className={cx('btn', 'btn-save')}>Save</button>
+                        <button onClick={handleSave} className={cx('btn', 'btn-save')}>Save</button>
 
                     </div>
 
@@ -131,13 +134,16 @@ console.log(productInfo)
             <div className={cx('main-content')}>
                 <div className={cx('main-content-column')}>
                     <div className={cx('image-field')}>
-                        <ImageField images={[images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse, images.accessories.blaze_wireless_mouse]} />
+                        <ImageField images={[images.accessories.blaze_wireless_mouse, images.accessories.co21_mechanical_keyboard, images.accessories.echo_headset]} />
                     </div>
                     <div className={cx('product-info')}>
                         <ProductInfo value={productInfo} setValue={setProductInfo}/>
                     </div>
                     <div className={cx('price')}>
                         <ProductPrice value={productInfo} setValue={setProductInfo} />
+                    </div>
+                    <div className={cx('inventory')}>
+                        <Inventory value={productInfo} setValue={setProductInfo} />
                     </div>
 
                 </div>

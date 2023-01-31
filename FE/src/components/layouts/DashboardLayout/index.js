@@ -27,7 +27,7 @@ function DashboardLayout() {
 
             
 
-            if (element.scrollTop >= 160) {
+            if (element.scrollTop >= 100) {
                 setContentOver(true)
             } else if (element.scrollTop <= 100) {
                 setContentOver(false)

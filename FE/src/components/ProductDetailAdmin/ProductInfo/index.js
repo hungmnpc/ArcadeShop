@@ -22,6 +22,7 @@ function ProductInfo({value, setValue}) {
         description: ""
     })
 
+
     const closeModal = () => {
         setNewAdditionInfo({
             title: "",
@@ -92,8 +93,11 @@ function ProductInfo({value, setValue}) {
                 <span className={cx('explanation')}>Share information like return policy or care instructions with your customers.</span>
             }
             <div className={cx('content')}>
-                <RowAdditionalInfo />
-                <RowAdditionalInfo />
+                {Object.entries(value.additionalInfo).map((info, index) => {
+                    return (
+                        <RowAdditionalInfo key={index} title={info[0]} descreption={info[1]} />
+                    )
+                })}
             </div>
             <div className={cx('add-additional-info')} >
             <button onClick={() => setModalOpen(true)}>
@@ -108,16 +112,15 @@ function ProductInfo({value, setValue}) {
 }
 
 
-function RowAdditionalInfo() {
+function RowAdditionalInfo({title='', descreption=''}) {
+
+
+
     return ( <div className={cx('row-additional-info')}>
         <div className={cx('additional-info-title')}>
-            Product Description
+            {title}
         </div>
-        <div className={cx('additional-info-description')}>
-            <p>
-        It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.
-
-            </p>
+        <div dangerouslySetInnerHTML={{__html: descreption}} className={cx('additional-info-description')}>
         </div>
     </div> );
 }

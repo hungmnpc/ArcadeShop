@@ -3,6 +3,10 @@
     flex-direction: column;
     padding: 0 15px;
     gap: 15px;
+
+    label {
+        font-size: 1.4rem;
+    }
     
     .field-input {
         padding: 8px 10px;
@@ -22,14 +26,18 @@
         &:hover {
             background-color: #eaf7ff;
         }
+
+        &:focus {
+            border-color: #4eb7f5;;
+        }
     }
     
 }
 .colspan1 {
-    flex: 1;
+    flex-basis: 33.3333%;
 }
 .colspan2 {
-    flex: 2;
+    flex-basis: 66.6666%;
 }
 .colspan3 {
     width: 100%;

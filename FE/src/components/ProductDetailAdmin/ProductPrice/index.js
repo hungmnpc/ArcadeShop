@@ -107,8 +107,6 @@ function ProductPrice({value, setValue}) {
 
 function FieldPrice({name, danger=false, label, type, postfixs, value, onChange, onChangePostfix }) {
 
-    console.log(danger)
-
     const [postfixValue, setPostfixValue] = useState(postfixs.find(postfix => postfix.defaultChosse))
 
 
@@ -123,7 +121,6 @@ function FieldPrice({name, danger=false, label, type, postfixs, value, onChange,
 
     const handleOnChange = (e) => {
         const regex = /^[0-9]*(\.[0-9]{0,2})?$/
-        console.log(regex.test(e.target.value))
 
         if (e.target.value !== '') {
             
@@ -131,13 +128,10 @@ function FieldPrice({name, danger=false, label, type, postfixs, value, onChange,
 
                 let inputValue = e.target.value;
                 if (e.target.value.split('').pop() === '.') {
-                    console.log('oke')
                     inputValue = e.target.value.slice(0, -1);
                 }
 
-                console.log(inputValue)
                 if (parseFloat(inputValue) <= postfixValue.maxValue) {
-                    console.log(parseFloat(e.target.value))
                     onChange((e.target.value))
                 }
 

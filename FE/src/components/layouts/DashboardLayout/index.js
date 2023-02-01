@@ -8,6 +8,7 @@ import Header from '../DefaultLayout/Header';
 import style from './DashboardLayout.module.scss';
 import HeaderDB from './HeaderDB';
 import Sidebar from './Sidebar';
+import {Toaster} from 'react-hot-toast'
 
 const cx = classNames.bind(style);
 
@@ -69,6 +70,9 @@ function DashboardLayout() {
                     </Routes>
                 </div>
             </div>
+{/* 
+            <Toaster /> */}
+            
         </div>
     );
 }

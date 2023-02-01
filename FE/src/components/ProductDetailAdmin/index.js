@@ -13,6 +13,7 @@ import Inventory from "./Inventory";
 import ProductCategories from "./ProductCategories";
 import style from "./ProductDetailAdmin.module.scss";
 import ProductInfo from "./ProductInfo";
+import toast, {Toaster} from 'react-hot-toast'
 import ProductPrice from "./ProductPrice";
 
 const cx = classNames.bind(style);
@@ -53,6 +54,8 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
 
     const handleSave = () => {
         console.log(productInfo)
+
+        toast('Test toast')
     }
 
     const handleOnChaneCategories = (value) => {
@@ -161,6 +164,7 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
             </div>
 
         </div>
+        <Toaster />
     </div>);
 }
 

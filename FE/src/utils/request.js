@@ -26,4 +26,15 @@ export const login = async (email, password) => {
 };
 
 
+export const addNewProduct = async(data) => {
+    const response = await request.post('/api/v1/admin/products', {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+        },
+        data: data
+    });
+
+    return response;
+}
+
 export default request;

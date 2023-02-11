@@ -36,3 +36,6 @@ export const rememberAccount = (account = { email: '', password: '' }) => ({
     type: actionTypes.REMEMBER_ACCOUNT,
     account: account,
 });
+
+
+// export const addNewProduct = ()

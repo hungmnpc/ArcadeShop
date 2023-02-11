@@ -3,6 +3,7 @@ import { faPlus, faPlusCircle, faXmark } from "@fortawesome/free-solid-svg-icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
 import { useEffect, useRef, useState } from "react";
+import ModalImage from "../../ModalImage";
 import style from "./ImageField.module.scss";
 
 const cx = classNames.bind(style);
@@ -22,6 +23,12 @@ function ImageField({ images }) {
     const dragEnter = (e, position) => {
         dragOverItem.current = position;
     };
+
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const closeModal = () => {
+        setModalOpen(false)
+    }
 
 
     const drop = (e) => {
@@ -66,7 +73,9 @@ function ImageField({ images }) {
                         }
                         {
                             list.slice(1).length < 8 &&
-                            <div className={cx('image-btn-small')}>
+                            <div onClick={() => {
+                                setModalOpen(true)
+                            }} className={cx('image-btn-small')}>
                                 <div>
                                     <span>
 
@@ -81,6 +90,7 @@ function ImageField({ images }) {
             }
 
         </div>
+        <ModalImage  open={modalOpen} onOk={closeModal} onCancel={closeModal} />
     </div>);
 }
 

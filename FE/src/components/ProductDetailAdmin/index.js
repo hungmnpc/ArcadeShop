@@ -53,7 +53,13 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
     )
 
     const handleSave = () => {
-        console.log(productInfo)
+        const data = {
+            ...productInfo,
+            discountValue: parseFloat(productInfo.discountValue),
+            price: parseFloat(productInfo.price)
+        }
+
+        console.log(data);
 
         toast('Test toast')
     }
@@ -88,11 +94,17 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
 
 
     const handleVisiable = () => {
-        setIsVisiable(true);
+        setProductInfo({
+            ...productInfo,
+            visible: true
+        })
     }
 
     const handleUnVisiable = () => {
-        setIsVisiable(false);
+        setProductInfo({
+            ...productInfo,
+            visible: false
+        })
     }
 
 
@@ -153,7 +165,7 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
                 <div className={cx('main-content-column')}>
                     <div className={cx('visiable-section')}>
                         <label htmlFor="visiable" className={cx('visiable')}>
-                            <Checkbox  checked={isVisiable} handelChecked={handleVisiable} handelUnChecked={handleUnVisiable} value='visiable' name='visiable' id='visiable' />
+                            <Checkbox  checked={productInfo.visible} handelChecked={handleVisiable} handelUnChecked={handleUnVisiable} value='visiable' name='visiable' id='visiable' />
                             <span>Show in online store</span>
                         </label>
                     </div>

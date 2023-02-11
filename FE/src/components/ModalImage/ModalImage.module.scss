@@ -1,0 +1,33 @@
+.wrapper {
+    display: flex;
+    height: 60vh;
+    margin: -30px -24px ;
+    margin-bottom: 0px;
+    gap: 10px;
+    .sidebar {
+        flex-basis: 20%;
+        .upload {
+            padding: 15px;
+            .btn-upload {
+                border: 1px solid red;
+                outline: none;
+                background-color: red;
+                padding: 10px;
+                border-radius: 15px;
+                line-height: 1.5rem;
+                font-size: 1.5rem;
+            }
+        }
+    }
+
+    .main-content {
+        flex-basis: 60%;
+
+    }
+
+    .choosed {
+        flex-basis: 20%;
+
+    }
+}
+

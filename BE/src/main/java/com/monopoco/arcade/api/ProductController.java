@@ -23,6 +23,12 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    /**
+     *
+     * @param productRequest
+     * @return
+     */
     @PostMapping("")
     public ResponseEntity<ProductDTO> addNewProduct(@RequestBody ProductRequest productRequest) {
         ProductDTO productDTO = productService.saveProduct(productRequest);

@@ -1,11 +1,9 @@
-package com.monopoco.arcade.util;
+package com.monopoco.arcade.utils;
 
 import com.monopoco.arcade.entity.Product;
 import com.monopoco.arcade.modal.ProductDTO;
 import com.monopoco.arcade.service.imageservice.ImageStorageService;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.*;

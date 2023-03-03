@@ -2,11 +2,10 @@ package com.monopoco.arcade.service.imageservice;
 
 import com.monopoco.arcade.entity.Image;
 import com.monopoco.arcade.repository.ImageStorageRepository;
-import com.monopoco.arcade.util.ImageUtils;
+import com.monopoco.arcade.utils.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Optional;
@@ -17,7 +16,6 @@ import java.util.Optional;
 public class ImageStorageServiceImpl implements  ImageStorageService{
     @Autowired
     private ImageStorageRepository repository;
-
 
     @Override
     public Long uploadImage(MultipartFile file) throws IOException {

@@ -13,6 +13,7 @@ import {images} from "../../../assets/images"
 import { get } from '../../../utils/request';
 import { Link } from 'react-router-dom';
 import routes from "../../../configs/routes";
+import { toast } from 'react-hot-toast';
 
 const cx = classNames.bind(style);
 const columns = [
@@ -88,6 +89,7 @@ function StoreProducts() {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
+        toast("Hello")
         get("/api/v1/admin/products")
         .then((response) => {
             console.log(response)
@@ -142,7 +144,7 @@ function StoreProducts() {
             <div className={cx('top')}>
                 <div className={cx('title')}>
                     <h2>
-                        Products <span className={cx('number')}>26</span>
+                        Products <span className={cx('number')}>{products.length}</span>
                     </h2>
                 </div>
                 <div className={cx('option')}>

@@ -1,4 +1,4 @@
-package com.monopoco.arcade.util;
+package com.monopoco.arcade.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.util.zip.DataFormatException;

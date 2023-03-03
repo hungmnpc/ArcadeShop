@@ -12,7 +12,7 @@ import FieldControl from "../../FieldControl";
 
 const cx = classNames.bind(style);
 
-function ProductInfo({value, setValue}) {
+function ProductInfo({ value, setValue }) {
 
 
     const [modalOpen, setModalOpen] = useState(false);
@@ -22,14 +22,18 @@ function ProductInfo({value, setValue}) {
         description: ""
     })
 
-
     const closeModal = () => {
-        setNewAdditionInfo({
-            title: "",
-            description: ""
-        })
         setModalOpen(false)
     }
+
+    useEffect(() => {
+        if (!modalOpen) {
+            setNewAdditionInfo({
+                title: "",
+                description: "",
+            })
+        }
+    }, [modalOpen])
 
     const handleAddAdditionalInfo = () => {
         if (newAdditionInfo.title !== '' && newAdditionInfo.description !== '') {
@@ -43,9 +47,22 @@ function ProductInfo({value, setValue}) {
                     [title]: description
                 }
             })
-        }
 
+        }
         closeModal()
+    }
+
+    const handleEditAdditionalInfo = (title, additionalInfo) => {
+
+        delete value.additionalInfo[title];
+
+        setValue({
+            ...value,
+            additionalInfo: {
+                ...value.additionalInfo,
+                [additionalInfo.title]: additionalInfo.description
+            }
+        })
     }
 
 
@@ -85,7 +102,7 @@ function ProductInfo({value, setValue}) {
             </div>
         </div>
         <div className={cx('additional-info', 'section')}>
-        <span className={cx('header')}>
+            <span className={cx('header')}>
                 Additional Info Sections
             </span>
             {
@@ -95,15 +112,15 @@ function ProductInfo({value, setValue}) {
             <div className={cx('content')}>
                 {Object.entries(value.additionalInfo).map((info, index) => {
                     return (
-                        <RowAdditionalInfo key={index} title={info[0]} descreption={info[1]} />
+                        <RowAdditionalInfo onEdit={handleEditAdditionalInfo} key={index} title={info[0]} description={info[1]} />
                     )
                 })}
             </div>
             <div className={cx('add-additional-info')} >
-            <button onClick={() => setModalOpen(true)}>
-                <FontAwesomeIcon icon={faPlus} className={cx('icon')} />
-                <span>Add an Info Section</span>
-            </button>
+                <button onClick={() => setModalOpen(true)}>
+                    <FontAwesomeIcon icon={faPlus} className={cx('icon')} />
+                    <span>Add an Info Section</span>
+                </button>
             </div>
         </div>
 
@@ -112,17 +129,32 @@ function ProductInfo({value, setValue}) {
 }
 
 
-function RowAdditionalInfo({title='', descreption=''}) {
+function RowAdditionalInfo({ title = '', description = '' , onEdit}) {
 
+    const [modalOpen, setModelOpen] = useState(false);
+    const [additionalInfo, setAdditionInfo] = useState({
+        title,
+        description
+    })
 
+    const closeModal = () => {
+        setModelOpen(false);
+    }
 
-    return ( <div className={cx('row-additional-info')}>
-        <div className={cx('additional-info-title')}>
+    const handleEditAdditionInfo = () => {
+        onEdit(title, additionalInfo);
+        closeModal()
+    }
+
+    return (<><div onClick={() => setModelOpen(true)} className={cx('row-additional-info')}>
+        <div title={title} className={cx('additional-info-title')}>
             {title}
         </div>
-        <div dangerouslySetInnerHTML={{__html: descreption}} className={cx('additional-info-description')}>
+        <div dangerouslySetInnerHTML={{ __html: description }} className={cx('additional-info-description')}>
         </div>
-    </div> );
+
+
+    </div><AdditionalInfoModal value={additionalInfo} setValue={setAdditionInfo} open={modalOpen} onOk={handleEditAdditionInfo} onCancel={closeModal} /></>);
 }
 
 

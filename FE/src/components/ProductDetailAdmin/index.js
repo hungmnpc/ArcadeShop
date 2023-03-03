@@ -15,6 +15,7 @@ import style from "./ProductDetailAdmin.module.scss";
 import ProductInfo from "./ProductInfo";
 import toast, {Toaster} from 'react-hot-toast'
 import ProductPrice from "./ProductPrice";
+import { addNewProduct } from "../../utils/request";
 
 const cx = classNames.bind(style);
 
@@ -24,13 +25,7 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
 
 
     const UNTITLED_PRODUCT = "Untitled Product";
-
-
-
     const [isFocus, setIsFocus] = useState(false);
-
-    const [isVisiable, setIsVisiable] = useState(true);
-
     const [productInfo, setProductInfo] = useState(
         {
             name: "",
@@ -60,8 +55,14 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
         }
 
         console.log(data);
-
-        toast('Test toast')
+        
+        
+        
+        toast.promise(addNewProduct(data), {
+            loading: 'Creating.....',
+            success: 'Successfull!',
+            error: "Error. Try again!"
+        }).catch(error => console.log(error))
     }
 
     const handleOnChaneCategories = (value) => {
@@ -149,7 +150,7 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
             <div className={cx('main-content')}>
                 <div className={cx('main-content-column')}>
                     <div className={cx('image-field')}>
-                        <ImageField images={[images.accessories.blaze_wireless_mouse, images.accessories.co21_mechanical_keyboard, images.accessories.echo_headset]} />
+                        <ImageField images={[images.accessories.blaze_wireless_mouse]} />
                     </div>
                     <div className={cx('product-info')}>
                         <ProductInfo value={productInfo} setValue={setProductInfo}/>

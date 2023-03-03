@@ -5,7 +5,9 @@ import com.monopoco.arcade.modal.ProductDTO;
 import com.monopoco.arcade.repository.*;
 import com.monopoco.arcade.request.ProductRequest;
 import com.monopoco.arcade.service.imageservice.ImageStorageService;
-import com.monopoco.arcade.util.MapperUtil;
+import com.monopoco.arcade.utils.MapperUtil;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,7 @@ import java.util.function.Function;
 
 @Service
 @Transactional
+@Slf4j
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
@@ -73,7 +76,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO saveProduct(ProductRequest productRequest) {
-        Product product = new Product(null, productRequest.getName(), productRequest.getDescription(), productRequest.getPrice(),
+        Product product = new Product(null, productRequest.getName(),
+                productRequest.getDescription(), productRequest.getPrice(),
                 productRequest.getRibbon(), productRequest.getSKU(), productRequest.isVisible(),
                 discountModeRepository.findByDiscountMode(productRequest.getDiscountMode()),
                 productRequest.getDiscountValue(),
@@ -86,31 +90,38 @@ public class ProductServiceImpl implements ProductService {
 
         List<String> titles = new ArrayList<>(productRequest.getAdditionalInfo().keySet());
 
-        for (int i = 0; i < titles.size(); i++) {
-            AdditionalInfoTitle additionalInfoTitle = additionalInfoTitleRepository.findAdditionalInfoTitleByTitle(titles.get(i));
-            if (additionalInfoTitle == null) {
-                String newAdditionalInfoTitle = saveAdditionalInfoTitle(titles.get(i));
-                additionalInfoTitle = additionalInfoTitleRepository.findAdditionalInfoTitleByTitle(newAdditionalInfoTitle);
+        for (int i = 0; i < 3; i++) {
+            AdditionalInfoTitle additionalInfoTitle;
+            String additionalInfoDescription = "";
+            try {
+                additionalInfoTitle = additionalInfoTitleRepository.findAdditionalInfoTitleByTitle(titles.get(i));
+                if (additionalInfoTitle == null) {
+                    String newAdditionalInfoTitle = saveAdditionalInfoTitle(titles.get(i));
+                    additionalInfoTitle = additionalInfoTitleRepository.findAdditionalInfoTitleByTitle(newAdditionalInfoTitle);
+                }
+                additionalInfoDescription = productRequest.getAdditionalInfo().get(additionalInfoTitle.getTitle());
+            } catch (Exception exception) {
+                additionalInfoTitle = additionalInfoTitleRepository.findAdditionalInfoTitleByTitle("Empty");
             }
+
+
+
             switch (i) {
                 case 0:
                 {
                     productSaved.setAdditionalInfoTitle1(additionalInfoTitle);
-                    productSaved.setAdditionalInfoDescription1(
-                            productRequest.getAdditionalInfo().get(additionalInfoTitle.getTitle()));
+                    productSaved.setAdditionalInfoDescription1(additionalInfoDescription);
                 }
                 break;
                 case 1:
                 {
                     productSaved.setAdditionalInfoTitle2(additionalInfoTitle);
-                    productSaved.setAdditionalInfoDescription2(
-                            productRequest.getAdditionalInfo().get(additionalInfoTitle.getTitle()));
+                    productSaved.setAdditionalInfoDescription2(additionalInfoDescription);
                 }
                 break;
                 case 2: {
                     productSaved.setAdditionalInfoTitle3(additionalInfoTitle);
-                    productSaved.setAdditionalInfoDescription3(
-                            productRequest.getAdditionalInfo().get(additionalInfoTitle.getTitle()));
+                    productSaved.setAdditionalInfoDescription3(additionalInfoDescription);
                 }
                 break;
                 default:
@@ -132,7 +143,7 @@ public class ProductServiceImpl implements ProductService {
         });
 
         productSaved.getCategories().add(categoryRepository.findByCategoryName("All"));
-
+//        log.info(productSaved.toString());
         return MapperUtil.productMapper(productSaved, modelMapper, imageStorageService);
     }
 

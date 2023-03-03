@@ -54,7 +54,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().configurationSource(request -> {
             var cors = new CorsConfiguration();
-            cors.setAllowedOrigins(List.of("http://localhost:3000","https://arcadezz.netlify.app", "https://www.youtube.com"));
+            cors.setAllowedOrigins(List.of("http://localhost:3000",
+                    "https://arcadezz.netlify.app",
+                    "https://www.youtube.com"));
 
             cors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
             cors.setAllowedHeaders(List.of("*"));
@@ -63,16 +65,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication Failed"));
         http.authorizeHttpRequests().antMatchers("/login/**").permitAll();
+        http.authorizeHttpRequests().antMatchers("/h2-console/**").permitAll();
         http.authorizeHttpRequests().antMatchers(GET, "/api/users/**").hasAnyAuthority("ROLE_USER" +
                 "");
 //        http.authorizeHttpRequests().antMatchers(GET, "/api/users/**").permitAll();
         http.authorizeHttpRequests().antMatchers(POST, "/api/products/**").permitAll();
         http.authorizeHttpRequests().antMatchers(GET, "/api/products/**").permitAll();
+        http.authorizeHttpRequests().antMatchers(POST, "/api/v1/admin/products/**").permitAll();
+
         http.authorizeHttpRequests().antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll();
-
-
-
-
         http.authorizeHttpRequests().anyRequest().authenticated();
 
         http.addFilter(new CustomerAuthenticationFilter(authenticationManagerBean()));

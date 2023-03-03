@@ -39,23 +39,25 @@ function ImageField({ images }) {
         dragItem.current = null;
         dragOverItem.current = null;
         setList(copyListItems);
-      };
+    };
     return (<div className={cx('wrapper')}>
         <div className={cx('title')}>
             <span>Images</span>
         </div>
         <div className={cx('contents')}>
             {
-                list.length === 0 ? (<div className={cx('image-btn')}>
+                list.length === 0 ? (<div onClick={() => {
+                    setModalOpen(true)
+                }} className={cx('image-btn')}>
                     <FontAwesomeIcon icon={faImages} className={cx('icon')} />
                     <span>Add Images</span>
                 </div>) : (<div className={cx('images')}>
                     <div className={cx('main-image', 'image')}>
                         <img draggable onDragStart={(e) => dragStart(e, 0)}
                             onDragEnter={(e) => dragEnter(e, 0)} onDragEnd={drop} src={list[0]} alt="main" />
-                            <div className={cx('remove-image')}>
-                                <FontAwesomeIcon icon={faXmark} className={cx('icon-remove')} />
-                            </div>
+                        <div className={cx('remove-image')}>
+                            <FontAwesomeIcon icon={faXmark} className={cx('icon-remove')} />
+                        </div>
                     </div>
                     <div className={cx('child-images')}>
                         {
@@ -63,10 +65,10 @@ function ImageField({ images }) {
                                 return (
                                     <div className={cx('child-image', 'image')} key={index}>
                                         <img onDragEnd={drop} onDragStart={(e) => dragStart(e, index + 1)}
-                            onDragEnter={(e) => dragEnter(e, index + 1)} src={image} alt='child' />
-                            <div className={cx('remove-image')}>
-                                <FontAwesomeIcon icon={faXmark} className={cx('icon-remove')} />
-                            </div>
+                                            onDragEnter={(e) => dragEnter(e, index + 1)} src={image} alt='child' />
+                                        <div className={cx('remove-image')}>
+                                            <FontAwesomeIcon icon={faXmark} className={cx('icon-remove')} />
+                                        </div>
                                     </div>
                                 )
                             })
@@ -90,7 +92,7 @@ function ImageField({ images }) {
             }
 
         </div>
-        <ModalImage  open={modalOpen} onOk={closeModal} onCancel={closeModal} />
+        <ModalImage open={modalOpen} onOk={closeModal} onCancel={closeModal} />
     </div>);
 }
 

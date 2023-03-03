@@ -5,6 +5,7 @@ import MyModal from "../MyModal";
 import style from "./ModalAdditionalInfo.scss";
 
 function AdditionalInfoModal({open, onOk, onCancel, value, setValue}) {
+
     return ( <MyModal
         title="Add an info section"
         centered

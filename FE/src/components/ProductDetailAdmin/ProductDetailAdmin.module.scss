@@ -318,8 +318,9 @@
                         border-bottom: 1px dashed transparent;
                         cursor: text;
                         line-height: 4rem;
-                        transition: border-color .15s ease-out;
+                        transition: all .15s ease-out;
                         padding-bottom: 10px;
+                        color: white;
 
 
                         &:hover {

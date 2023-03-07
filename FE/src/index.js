@@ -8,7 +8,7 @@ import 'aos/dist/aos.css';
 import AuthProvider from './context/userContext';
 import CartProvider from './context/CartContext';
 import AppProvider from './context/AppContext';
-import {Toaster} from "react-hot-toast"
+import { Toaster } from 'react-hot-toast';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -23,6 +23,7 @@ root.render(
                 </GlobalStyles>
             </CartProvider>
         </AuthProvider>
+        <Toaster />
     </React.StrictMode>,
 );
 

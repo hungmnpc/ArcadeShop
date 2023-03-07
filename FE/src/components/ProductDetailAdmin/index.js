@@ -177,7 +177,7 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
             </div>
 
         </div>
-        <Toaster />
+        
     </div>);
 }
 

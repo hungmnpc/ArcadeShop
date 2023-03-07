@@ -1,6 +1,7 @@
 package com.monopoco.arcade.api;
 
 import com.monopoco.arcade.entity.Image;
+import com.monopoco.arcade.modal.ImageDTO;
 import com.monopoco.arcade.request.ImageRequest;
 import com.monopoco.arcade.service.imageservice.ImageStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +31,17 @@ public class ImageController {
         }
     }
 
+    @GetMapping("")
+    public ResponseEntity<?> getImages() {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(imageStorageService.getAllImage());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getImage(@PathVariable Long id) {
-        byte[] imageData = imageStorageService.downloadImage(id);
-        String imageBase64 = Base64.getEncoder().encodeToString(imageData);
+        ImageDTO imageDTO = imageStorageService.downloadImage(id);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(imageBase64);
+                .body(imageDTO);
     }
 
 }

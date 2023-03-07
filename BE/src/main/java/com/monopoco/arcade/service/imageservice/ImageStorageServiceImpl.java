@@ -1,13 +1,18 @@
 package com.monopoco.arcade.service.imageservice;
 
 import com.monopoco.arcade.entity.Image;
+import com.monopoco.arcade.modal.ImageDTO;
 import com.monopoco.arcade.repository.ImageStorageRepository;
 import com.monopoco.arcade.utils.ImageUtils;
+import com.monopoco.arcade.utils.MapperUtil;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -16,6 +21,9 @@ import java.util.Optional;
 public class ImageStorageServiceImpl implements  ImageStorageService{
     @Autowired
     private ImageStorageRepository repository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public Long uploadImage(MultipartFile file) throws IOException {
@@ -31,12 +39,19 @@ public class ImageStorageServiceImpl implements  ImageStorageService{
     }
 
     @Override
-    public byte[] downloadImage(Long id) {
+    public ImageDTO downloadImage(Long id) {
         Optional<Image> dbImageData = repository.findById(id);
-        if(dbImageData.isPresent()) {
-            byte[] images = ImageUtils.decompressImage(dbImageData.get().getImageData());
-            return images;
-        }
-        return null;
+        return dbImageData.map(image -> MapperUtil.imageMapper(image, modelMapper)).orElse(null);
+    }
+
+    @Override
+    public List<ImageDTO> getAllImage() {
+        List<Image> images = repository.findAll();
+        List<ImageDTO> imageDTOS = new ArrayList<>();
+        images.forEach(image -> {
+            imageDTOS.add(MapperUtil.imageMapper(image, modelMapper));
+        });
+
+        return imageDTOS;
     }
 }

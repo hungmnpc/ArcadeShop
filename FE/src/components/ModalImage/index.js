@@ -2,21 +2,31 @@ import { faSquare, faSquareCheck } from "@fortawesome/free-regular-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { images } from "../../assets/images";
 import ModalUploadImage from "../ModalUploadImage";
 import MyModal from "../MyModal";
 import style from "./ModalImage.module.scss";
+import toast, { Toaster } from 'react-hot-toast'
+import { get, uploadImage } from "../../utils/request";
 
 const cx = classNames.bind(style);
 
 function ModalImage({ open, onOk, onCancel, value, setValue }) {
 
-  const imageStore = [images.accessories.blaze_wireless_mouse, images.bannerImage, images.consoles.gameflow,
-  images.consoles.playbox_xz, images.consoles.gameflow, images.couponImage1, images.accessories.mach_gaming_chair, images.controllers.raptor, images.consolesImage,
-images.consoles.veritas_vr_set, images.gameStack];
+  const [imageStore, setImageStore] = useState([]);
 
   const [choosed, setChoosed] = useState([]);
+
+
+  useEffect(() => {
+    if (open) {
+
+      get("/api/v1/images").then(response => {
+        setImageStore(response.data)
+      })
+    }
+  }, [open])
 
   const onChoosed = (image) => {
     if (choosed.includes(image)) {
@@ -26,10 +36,34 @@ images.consoles.veritas_vr_set, images.gameStack];
     }
   }
 
-  const [openModalUpload, setOpenModalUpload] = useState(false);  
+  const [openModalUpload, setOpenModalUpload] = useState(false);
 
   const onCloseModalUpload = () => {
     setOpenModalUpload(false);
+  }
+
+  const onOke = () => {
+    
+    const imageIds = choosed.map(image => image.id)
+    console.log(imageIds);
+    setChoosed([])
+    onCancel();
+  }
+
+
+
+  const onUploadImage = (image) => {
+    toast.promise(uploadImage(image), {
+      loading: "Uploading...",
+      success: 'Successfull!',
+      error: "Error. Try again!"
+    }).then(response => {
+      setOpenModalUpload(false);
+      get("/api/v1/images").then(response => {
+        setImageStore(response.data)
+      })
+
+    }).catch(error => console.log(error))
   }
 
 
@@ -37,7 +71,7 @@ images.consoles.veritas_vr_set, images.gameStack];
     title="Choose Images"
     centered
     open={open}
-    onOk={onOk}
+    onOk={onOke}
     onCancel={onCancel}
     width={1500}
   >
@@ -54,7 +88,6 @@ images.consoles.veritas_vr_set, images.gameStack];
         </div>
         {
           imageStore.map((image, index) => {
-
             const isChoose = choosed.includes(image);
 
             return (
@@ -62,14 +95,14 @@ images.consoles.veritas_vr_set, images.gameStack];
                 <span className={cx('choose-box')}>
                   <FontAwesomeIcon icon={isChoose ? faSquareCheck : faSquare} />
                 </span>
-                <img src={image} alt='child' />
+                <img src={`data:image/jpeg;base64,${image.imageBase64}`} alt='child' />
               </div>
             )
           })
         }
       </div>
     </div>
-    <ModalUploadImage open={openModalUpload} onOk={onCloseModalUpload} onCancel={onCloseModalUpload} />
+    <ModalUploadImage open={openModalUpload} onOk={onUploadImage} onCancel={onCloseModalUpload} />
   </MyModal>);
 }
 

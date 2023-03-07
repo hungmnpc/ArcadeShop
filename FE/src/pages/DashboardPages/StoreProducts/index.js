@@ -23,7 +23,8 @@ const columns = [
         key: 'image',
         width: 100,
         render: (_, record) => {
-            return (<img className={cx('image')} src={ `data:image/png;base64, ${record.image}`} alt='logo' />)
+            console.log(record.image);
+            return (<img className={cx('image')} src={ `data:image/png;base64, ${record.image.imageBase64}`} alt='logo' />)
         },
     },
     {
@@ -63,37 +64,22 @@ const columns = [
         ),
     },
 ];
-const data = [];
-for (let i = 0; i < 46; i++) {
-    data.push({
-        key: i,
-        name: `Edward King ${i}`,
-        image: images.gameImage1,
-        type: 'Physical',
-        sku: '0001',
-        price: 900 + i,
-        inventory: 'In Stock'
 
-    });
-}
 
 function StoreProducts() {
     const searchRef = useRef();
     const [focused, setFocused] = useState(false);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const onSelectChange = (newSelectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
         setSelectedRowKeys(newSelectedRowKeys);
     };
 
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        toast("Hello")
         get("/api/v1/admin/products")
         .then((response) => {
-            console.log(response)
-            setProducts(response.products)
+            setProducts(response.data.products)
         })
         .catch(error =>  {
             console.log(error)

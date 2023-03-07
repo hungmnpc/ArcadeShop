@@ -25,7 +25,7 @@ public class ProductDTO {
 
     private Map<String, String> additionalInfo;
 
-    private Set<String> imageSet;
+    private Set<ImageDTO> imageSet;
 
 
     private Set<String> categoriesName;

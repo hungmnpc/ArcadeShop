@@ -13,7 +13,7 @@ export const get = async (url) => {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         }
     });
-    return response.data;
+    return response;
 };
 
 export const login = async (email, password) => {
@@ -39,18 +39,24 @@ export const addNewProduct = async (data) => {
     
     const response = await request.post('/admin/products', JSON.stringify(data));
     return response;
+}
 
-//     var dataz = JSON.stringify(data);
+export const uploadImage = async (image) => {
 
-//     const response = await request.post("/api/v1/admin/products", {
-//         headers: {
-//             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-//         },
-//         data: dataz
-//     });
+    const data = new FormData();
 
-//     console.log(JSON.stringify(response.data));
-//     return response;
+    data.append("imageFile", image);
+    const request = axios.create({
+        baseURL: 'http://localhost:8080/api/v1',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    
+        },
+    });
+    
+    const response = await request.post('/images', data);
+    return response;
 }
 
 export default request;

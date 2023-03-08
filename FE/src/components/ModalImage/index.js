@@ -3,11 +3,10 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
-import { images } from "../../assets/images";
 import ModalUploadImage from "../ModalUploadImage";
 import MyModal from "../MyModal";
 import style from "./ModalImage.module.scss";
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { get, uploadImage } from "../../utils/request";
 
 const cx = classNames.bind(style);
@@ -47,6 +46,7 @@ function ModalImage({ open, onOk, onCancel, value, setValue }) {
     const imageIds = choosed.map(image => image.id)
     console.log(imageIds);
     setChoosed([])
+    onOk(imageIds);
     onCancel();
   }
 

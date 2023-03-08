@@ -1,11 +1,7 @@
 package com.monopoco.arcade.entity;
 
-
-import com.monopoco.arcade.converter.YearAttributeConverter;
 import lombok.*;
-
 import javax.persistence.*;
-import java.time.Year;
 import java.util.Set;
 
 @Entity

@@ -43,9 +43,7 @@ public class UserController {
     @GetMapping("/users/{id}")
     public ResponseEntity<UserDTO> getUser(@PathVariable(name = "id") Long id) {
         log.info("Getting user with id: {}", id);
-
         UserDTO userDTO = service.getUserById(id);
-
         if (userDTO == null) {
             log.info("Not found user with id {} in the database", id);
             return ResponseEntity.notFound().build();
@@ -54,7 +52,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/users/get-avatar")
+    @GetMapping("/users/avatar")
     public ResponseEntity<String> getAvatar(HttpServletRequest request) {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
         String token = authorizationHeader.substring("Bearer ".length());

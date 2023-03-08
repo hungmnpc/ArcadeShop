@@ -14,4 +14,6 @@ public interface ImageStorageService {
     public ImageDTO downloadImage(Long id);
 
     public List<ImageDTO> getAllImage();
+
+    public List<ImageDTO> getImageByIdList(List<Long> idList);
 }

@@ -1,6 +1,7 @@
 package com.monopoco.arcade.api;
 
 
+import com.monopoco.arcade.modal.ImageDTO;
 import com.monopoco.arcade.modal.ProductDTO;
 import com.monopoco.arcade.request.ProductRequest;
 import com.monopoco.arcade.service.productservice.ProductService;
@@ -12,10 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/admin/products")
@@ -55,5 +53,13 @@ public class ProductController {
         response.put("totalItems", productDTOPage.getTotalElements());
         response.put("totalPages", productDTOPage.getTotalPages());
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/images")
+    public ResponseEntity<Set<ImageDTO>> getImagesOfProduct(@PathVariable Long id) {
+        ProductDTO productDTO = productService.getProductById(id);
+        Set<ImageDTO> imageDTOList =  productDTO.getImageSet();
+        System.out.println(imageDTOList.size());
+        return ResponseEntity.ok(imageDTOList);
     }
 }

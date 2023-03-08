@@ -3,26 +3,34 @@ import { faPlus, faPlusCircle, faXmark } from "@fortawesome/free-solid-svg-icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
 import { useEffect, useRef, useState } from "react";
+import { get } from "../../../utils/request";
 import ModalImage from "../../ModalImage";
 import style from "./ImageField.module.scss";
 
 const cx = classNames.bind(style);
 
 
-function ImageField({ images }) {
-
-    const dragItem = useRef();
-    const dragOverItem = useRef();
-    const [list, setList] = useState(images)
-
+function ImageField({ value, setValue }) {
     const dragStart = (e, position) => {
         dragItem.current = position;
     };
 
 
+
+
+
     const dragEnter = (e, position) => {
         dragOverItem.current = position;
     };
+
+    const dragItem = useRef();
+    const dragOverItem = useRef();
+    const [list, setList] = useState(value.imagesId)
+
+    useEffect(() => {
+        setList(value.imagesId)
+    }, [value])
+
 
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -30,6 +38,17 @@ function ImageField({ images }) {
         setModalOpen(false)
     }
 
+    const onOk = (idlist) => {
+        setValue({
+            ...value,
+            imagesId: [
+                ...value.imagesId,
+                ...idlist
+            ]
+        })
+    }
+
+    console.log(list);
 
     const drop = (e) => {
         const copyListItems = [...list];
@@ -52,24 +71,12 @@ function ImageField({ images }) {
                     <FontAwesomeIcon icon={faImages} className={cx('icon')} />
                     <span>Add Images</span>
                 </div>) : (<div className={cx('images')}>
-                    <div className={cx('main-image', 'image')}>
-                        <img draggable onDragStart={(e) => dragStart(e, 0)}
-                            onDragEnter={(e) => dragEnter(e, 0)} onDragEnd={drop} src={list[0]} alt="main" />
-                        <div className={cx('remove-image')}>
-                            <FontAwesomeIcon icon={faXmark} className={cx('icon-remove')} />
-                        </div>
-                    </div>
+                    <ImageDisplay dragEnter={dragEnter} dragStart={dragStart} drop={drop} type='main' id={list[0]} />
                     <div className={cx('child-images')}>
                         {
-                            list.slice(1).map((image, index) => {
+                            list.slice(1).map((id, index) => {
                                 return (
-                                    <div className={cx('child-image', 'image')} key={index}>
-                                        <img onDragEnd={drop} onDragStart={(e) => dragStart(e, index + 1)}
-                                            onDragEnter={(e) => dragEnter(e, index + 1)} src={image} alt='child' />
-                                        <div className={cx('remove-image')}>
-                                            <FontAwesomeIcon icon={faXmark} className={cx('icon-remove')} />
-                                        </div>
-                                    </div>
+                                    <ImageDisplay index={index} dragEnter={dragEnter} dragStart={dragStart} drop={drop} key={index} type='child' id={id} />
                                 )
                             })
                         }
@@ -92,8 +99,43 @@ function ImageField({ images }) {
             }
 
         </div>
-        <ModalImage open={modalOpen} onOk={closeModal} onCancel={closeModal} />
+        <ModalImage open={modalOpen} onOk={onOk} onCancel={closeModal} />
     </div>);
+
+
 }
+function ImageDisplay({ type, id, dragStart, dragEnter, drop, index  }) {
+
+    const [image, setImage] = useState('');
+
+    useEffect(() => {
+        console.log(id);
+        if (id) {
+            get(`/api/v1/images/${id}`).
+                then(response => setImage(response.data))
+        }
+    }, [id])
+
+
+    return (
+        type === 'main' ? <div className={cx('main-image', 'image')}>
+            <img draggable onDragStart={(e) => dragStart(e, 0)}
+                            onDragEnter={(e) => dragEnter(e, 0)} onDragEnd={drop} src={`data:image/jpeg;base64,${image.imageBase64}`} alt="main" />
+            <div className={cx('remove-image')}>
+                <FontAwesomeIcon icon={faXmark} className={cx('icon-remove')} />
+            </div>
+        </div> : <div className={cx('child-image', 'image')}>
+            <img draggable onDragStart={(e) => dragStart(e, index + 1)}
+                            onDragEnter={(e) => dragEnter(e, index + 1)} onDragEnd={drop} src={`data:image/jpeg;base64,${image.imageBase64}`} alt='child' />
+            <div className={cx('remove-image')}>
+                <FontAwesomeIcon icon={faXmark} className={cx('icon-remove')} />
+            </div>
+        </div>
+
+    )
+}
+
+
+
 
 export default ImageField;

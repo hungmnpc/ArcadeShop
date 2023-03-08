@@ -54,4 +54,15 @@ public class ImageStorageServiceImpl implements  ImageStorageService{
 
         return imageDTOS;
     }
+
+    @Override
+    public List<ImageDTO> getImageByIdList(List<Long> idList) {
+        List<Image> imageList = repository.findImagesByIdIn(idList);
+        List<ImageDTO> imageDTOS = new ArrayList<>();
+        imageList.forEach(image -> {
+            imageDTOS.add(MapperUtil.imageMapper(image, modelMapper));
+        });
+
+        return imageDTOS;
+    }
 }

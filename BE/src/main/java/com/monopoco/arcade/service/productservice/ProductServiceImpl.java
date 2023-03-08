@@ -103,9 +103,6 @@ public class ProductServiceImpl implements ProductService {
             } catch (Exception exception) {
                 additionalInfoTitle = additionalInfoTitleRepository.findAdditionalInfoTitleByTitle("Empty");
             }
-
-
-
             switch (i) {
                 case 0:
                 {
@@ -143,7 +140,6 @@ public class ProductServiceImpl implements ProductService {
         });
 
         productSaved.getCategories().add(categoryRepository.findByCategoryName("All"));
-//        log.info(productSaved.toString());
         return MapperUtil.productMapper(productSaved, modelMapper, imageStorageService);
     }
 
@@ -165,5 +161,12 @@ public class ProductServiceImpl implements ProductService {
                 return MapperUtil.productMapper(product, modelMapper, imageStorageService);
             }
         });
+    }
+
+    @Override
+    public ProductDTO getProductById(Long id) {
+        Optional<Product> product = productRepository.findById(id);
+        return product.map(value -> MapperUtil.productMapper(value, modelMapper, imageStorageService)).orElse(null);
+
     }
 }

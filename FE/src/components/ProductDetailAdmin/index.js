@@ -85,14 +85,6 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
 
     }
 
-    
-
-    // handleAddAdditionalInfo({'new': 'hello'});
-    // console.log(productInfo)
-
-
-
-
 
     const handleVisiable = () => {
         setProductInfo({
@@ -150,7 +142,7 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
             <div className={cx('main-content')}>
                 <div className={cx('main-content-column')}>
                     <div className={cx('image-field')}>
-                        <ImageField images={[images.accessories.blaze_wireless_mouse]} />
+                        <ImageField value={productInfo} setValue={setProductInfo} images={[]} />
                     </div>
                     <div className={cx('product-info')}>
                         <ProductInfo value={productInfo} setValue={setProductInfo}/>

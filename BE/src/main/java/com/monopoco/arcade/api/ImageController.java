@@ -11,12 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Base64;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/images")
 public class ImageController {
+
 
     @Autowired
     private ImageStorageService imageStorageService;

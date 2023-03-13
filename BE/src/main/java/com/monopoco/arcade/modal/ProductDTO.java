@@ -15,6 +15,7 @@ public class ProductDTO {
     private String name;
     private Double price;
     private String ribbon;
+    private String description;
     private String SKU;
     private boolean visible;
     private String discountModeName;

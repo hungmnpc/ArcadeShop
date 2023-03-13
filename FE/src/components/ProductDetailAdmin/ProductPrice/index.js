@@ -1,6 +1,6 @@
 /* eslint-disable use-isnan */
 import classNames from "classnames/bind";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import ToggleSwith from "../../ToggleSwitch";
 import style from "./ProductPrice.module.scss";
 
@@ -33,22 +33,23 @@ function ProductPrice({value, setValue}) {
         }
 
     }, [value.price, value.discountValue])
-    useEffect(() => {
-        setValue({
-            ...value,
-            discountValue: 0
-        })
+    // useEffect(() => {
+    //     setValue({
+    //         ...value,
+    //         discountValue: value.dis
+    //     })
         
-    }, [value.discountMode])
+    // }, [value.discountMode])
 
-    useEffect(() => {
-        if (!isSale) {
-            setValue({
-                ...value,
-                discountValue: 0
-            })
-        }
-    }, [isSale])
+    // useEffect(() => {
+    //     if (!isSale) {
+    //         setValue({
+    //             ...value,
+    //             discountValue: 0
+    //         })
+    //     }
+    // }, [isSale])
+
 
 
     return ( <div className={cx('wrapper')}>
@@ -58,7 +59,7 @@ function ProductPrice({value, setValue}) {
         <div className={cx('content')}>
            <div className={cx('price-row')}>
                 <div className={cx('price', 'colspan-1')}>
-                    <FieldPrice numberOnly value={value.price} onChange={(data) => {
+                    <FieldPrice productInfo={value}  numberOnly value={value.price} onChange={(data) => {
                         setValue({
                             ...value,
                             price: data
@@ -77,7 +78,7 @@ function ProductPrice({value, setValue}) {
             <div className={cx('price-row')}>
                 
                 <div className={cx('discount', 'colspan-1')}>
-                    <FieldPrice value={value.discountValue} danger={salePrice < 0} onChange={(data) => {
+                    <FieldPrice productInfo={value} value={value.discountValue} danger={salePrice < 0} onChange={(data) => {
                         setValue({
                             ...value,
                             discountValue: data
@@ -90,7 +91,7 @@ function ProductPrice({value, setValue}) {
                     }} name='discount-mode' type="radio" postfixs={[{value: 'percent', text: "%", maxValue: 100, defaultChosse: value.discountMode === 'PERCENT'}, {value: 'amount', text: "₫", maxValue: 999999999 ,defaultChosse: value.discountMode === 'AMOUNT'}]}  />
                 </div>
                 <div className={cx('sale-price', 'colspan-1')}>
-                    <FieldPrice value={salePrice} onChange={(data) => {
+                    <FieldPrice productInfo={value}  value={salePrice} onChange={(data) => {
                         setSalePrice(data)
                     } } label="Sale price" name='sale-price' type="normal" postfixs={[{value: 'amount', text: "₫", maxValue: 999999999, defaultChosse: true}]}/>
                 </div>
@@ -105,17 +106,20 @@ function ProductPrice({value, setValue}) {
 
 
 
-function FieldPrice({name, danger=false, label, type, postfixs, value, onChange, onChangePostfix }) {
+function FieldPrice({name, danger=false, label, type, postfixs, value, onChange, onChangePostfix, productInfo }) {
 
     const [postfixValue, setPostfixValue] = useState(postfixs.find(postfix => postfix.defaultChosse))
 
 
-
+    useEffect(() => {
+        setPostfixValue(postfixs.find(postfix => postfix.defaultChosse))
+    }, [productInfo.discountMode])
 
     const handleOnChangePostfix = (e) => {
         onChangePostfix(e.target.value.toUpperCase())
         setPostfixValue(postfixs.find(postfix => postfix.value === e.target.value))
     }
+
 
 
 
@@ -142,6 +146,7 @@ function FieldPrice({name, danger=false, label, type, postfixs, value, onChange,
     }
 
 
+
     return ( <div className={cx('price-field', type, [danger ? 'danger' : ''])}>
         <span className={cx('title-price')}>{label}</span>
         <div className={cx('input')}>
@@ -157,9 +162,10 @@ function FieldPrice({name, danger=false, label, type, postfixs, value, onChange,
             {
                 type === 'radio' &&
                 postfixs.map((postfix, index) => {
+                    let checked = postfix.value === postfixValue.value;
                     return (
                         <div key={index} id={name} className={cx('radio-postfix')}>
-                            <input onChange={handleOnChangePostfix} className={cx('radio-postfix-input')} defaultChecked={postfix.value === postfixValue.value} id={postfix.value} type='radio' name={name} value={postfix.value}/>
+                            <input onChange={handleOnChangePostfix} className={cx('radio-postfix-input')} defaultChecked={checked} id={postfix.value} type='radio' name={name} value={postfix.value}/>
                             <label className={cx('radio-postfix-label')} htmlFor={postfix.value}>{postfix.text}</label>
                         </div>
                     )

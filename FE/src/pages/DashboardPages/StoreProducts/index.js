@@ -23,8 +23,7 @@ const columns = [
         key: 'image',
         width: 100,
         render: (_, record) => {
-            console.log(record.image);
-            return (<img className={cx('image')} src={ `data:image/png;base64, ${record.image.imageBase64}`} alt='logo' />)
+            return (<img className={cx('image')} src={ record.image ? `data:image/png;base64, ${record.image.imageBase64}` : ''} alt='logo' />)
         },
     },
     {
@@ -59,7 +58,7 @@ const columns = [
         key: 'action',
         render: (_, record) => (
             <Space size="middle">
-                <Actions />
+                <Actions id={record.key} />
             </Space>
         ),
     },
@@ -80,6 +79,7 @@ function StoreProducts() {
         get("/api/v1/admin/products")
         .then((response) => {
             setProducts(response.data.products)
+            console.log(response.data.products);
         })
         .catch(error =>  {
             console.log(error)
@@ -192,13 +192,15 @@ function StoreProducts() {
     );
 }
 
-function Actions() {
+function Actions({id}) {
 
     const [show, setShow] = useState(false);
 
     const handleShowClick = () => {
         setShow(!show);
     }
+
+    console.log(id);
 
     const ref = useRef(null);
 
@@ -224,11 +226,11 @@ function Actions() {
         <div className={cx('popup', [show ? 'show' : ''])}>
             <div className={cx('arrow')} />
             <div className={cx('content')}>
-                <div className={cx('action')}>
+                <Link to={`/dashboard/store-products/products/${id}`}  className={cx('action')}>
                     <div className={cx('icon')}><FontAwesomeIcon icon={faPenToSquare} /></div>
 
                     <span>Edit</span>
-                </div>
+                </Link>
                 <div className={cx('action')}>
                     <div className={cx('icon')}><FontAwesomeIcon icon={faClone} /></div>
                     <span>Duplicate</span>

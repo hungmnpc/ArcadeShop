@@ -16,6 +16,7 @@ const routes = {
     dashboardStoreProducts: {
         products: '/store-products/products',
         newProduct: '/store-products/products/new-product',
+        editProduct: '/store-products/products/:id',
         inventory: '/store-products/inventory',
         categories: '/store-products/categories'
     },

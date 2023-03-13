@@ -17,6 +17,7 @@ import DashboardLayout from '../components/layouts/DashboardLayout';
 import StoreProducts from '../pages/DashboardPages/StoreProducts';
 import Orders from '../pages/DashboardPages/Orders';
 import NewProduct from '../pages/DashboardPages/NewProduct';
+import EditProduct from '../pages/DashboardPages/EditProduct';
 
 const collectionPages = [
     {
@@ -144,6 +145,10 @@ const dashboardRoutes = [
         path: routes.dashboardStoreProducts.newProduct,
         component: NewProduct
         
+    },
+    {
+        path: routes.dashboardStoreProducts.editProduct,
+        component: EditProduct
     }
 ]
 

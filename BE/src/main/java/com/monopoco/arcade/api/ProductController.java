@@ -59,7 +59,18 @@ public class ProductController {
     public ResponseEntity<Set<ImageDTO>> getImagesOfProduct(@PathVariable Long id) {
         ProductDTO productDTO = productService.getProductById(id);
         Set<ImageDTO> imageDTOList =  productDTO.getImageSet();
-        System.out.println(imageDTOList.size());
         return ResponseEntity.ok(imageDTOList);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
+        ProductDTO productDTO = productService.getProductById(id);
+        if (productDTO != null) {
+            return ResponseEntity.ok(productDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+
     }
 }

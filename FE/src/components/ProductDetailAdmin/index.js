@@ -1,11 +1,9 @@
-import { faClone, faSquare, faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import { faCopy, faEllipsis, faSquareCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faClone, faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import {faEllipsis} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button } from "antd";
 import classNames from "classnames/bind";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { images } from "../../assets/images";
 import routes from "../../configs/routes";
 import Checkbox from "../Checkbox";
 import ImageField from "./ImageField";
@@ -13,39 +11,69 @@ import Inventory from "./Inventory";
 import ProductCategories from "./ProductCategories";
 import style from "./ProductDetailAdmin.module.scss";
 import ProductInfo from "./ProductInfo";
-import toast, {Toaster} from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import ProductPrice from "./ProductPrice";
-import { addNewProduct } from "../../utils/request";
+import { addNewProduct, get } from "../../utils/request";
 
 const cx = classNames.bind(style);
 
 
+// Chuyen doi sang su dung useContext + useReducer //
 
-function ProductDetailAdmin({ isScrollOver, ...prop }) {
+
+function ProductDetailAdmin({ isScrollOver, id, ...prop }) {
 
 
     const UNTITLED_PRODUCT = "Untitled Product";
     const [isFocus, setIsFocus] = useState(false);
-    const [productInfo, setProductInfo] = useState(
-        {
-            name: "",
-            ribbon: "",
-            description: "",
-            categories: [
-            ],
-            visible: true,
-            imagesId: [
-              
-            ],
-            additionalInfo: {
-            },
-            price: null,
-            discountMode: "PERCENT",
-            discountValue: 0,
-            inventoryStatus: "In stock",
-            sku: ""
-          }
-    )
+    const [productInfo, setProductInfo] = useState()
+
+    useEffect(() => {
+        if (id) {
+            get(`/api/v1/admin/products/${id}`)
+            .then(response => {
+
+                console.log(response.data);
+                setProductInfo({
+                    ...productInfo,
+                    name: response.data.name,
+                    ribbon: response.data.ribbon,
+                    description: response.data.description,
+                    price: response.data.price,
+                    discountMode: response.data.discountModeName,
+                    discountValue: response.data.discountValue,
+                    imagesId: 
+                      response.data.imageSet.map(image => image.id)
+                    ,
+                    additionalInfo: response.data.additionalInfo,
+                    categories: response.data.categoriesName,
+                    visible: response.data.visible,
+                    inventoryStatus: response.data.inventoryStatus,
+                    sku: response.data.sku
+                })
+            })
+        } else {
+            setProductInfo(
+                {
+                    name: "",
+                    ribbon: "",
+                    description: "",
+                    categories: [
+                    ],
+                    visible: true,
+                    imagesId: [
+                      
+                    ],
+                    additionalInfo: {
+                    },
+                    price: null,
+                    discountMode: "PERCENT",
+                    discountValue: 0,
+                    inventoryStatus: "In stock",
+                    sku: ""
+                  })
+        }
+    },[id])
 
     const handleSave = () => {
         const data = {
@@ -53,11 +81,7 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
             discountValue: parseFloat(productInfo.discountValue),
             price: parseFloat(productInfo.price)
         }
-
-        console.log(data);
-        
-        
-        
+                
         toast.promise(addNewProduct(data), {
             loading: 'Creating.....',
             success: 'Successfull!',
@@ -102,9 +126,10 @@ function ProductDetailAdmin({ isScrollOver, ...prop }) {
 
 
 
+    console.log(productInfo);
 
-
-    return (<div className={cx('wrapper')}>
+    return (
+    productInfo && <div className={cx('wrapper')}>
         <div className={cx('header-color')} />
         <div className={cx('content')}>
             <div className={cx('header', [isScrollOver ? 'minimize' : ''])}>

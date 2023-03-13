@@ -29,6 +29,7 @@ function ImageField({ value, setValue }) {
 
     useEffect(() => {
         setList(value.imagesId)
+        console.log(value.imagesId);
     }, [value])
 
 
@@ -47,8 +48,6 @@ function ImageField({ value, setValue }) {
             ]
         })
     }
-
-    console.log(list);
 
     const drop = (e) => {
         const copyListItems = [...list];

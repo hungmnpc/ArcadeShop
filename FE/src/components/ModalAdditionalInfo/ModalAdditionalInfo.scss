@@ -1,0 +1,11 @@
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    .modal-row {
+        margin: 0 -15px;
+        &+.modal-row {
+            margin-top: 30px;
+        }
+    }
+}
+

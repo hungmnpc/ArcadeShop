@@ -1,0 +1,120 @@
+.wrapper {
+    width: 100%;
+    padding: 25px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: all 0.2s ease-out;
+    opacity: 1;
+    z-index: 10;
+
+    &.black {
+        background-color: black !important;
+    }
+    &.over {
+        padding: 10px 0;
+        opacity: 1;
+        background-color: var(--black);
+    }
+    background-color: rgba($color: #000000, $alpha: 0.5);
+
+    .inner {
+        max-width: var(--width-max);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: auto;
+        padding: 0 16px;
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img {
+                width: 4.8rem;
+                height: 4.8rem;
+                cursor: pointer;
+            }
+
+            .web-name {
+                line-height: 2.4rem;
+                font-size: 2.4rem;
+                cursor: pointer;
+                color: var(--white);
+                padding: 0 20px;
+            }
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 3.3rem;
+            color: var(--white);
+
+            .navbar {
+                display: flex;
+                .navbar-item {
+                    // color: var(--white);
+                    cursor: pointer;
+
+                    &:hover {
+                        color: var(--primary);
+                    }
+                    & + .navbar-item {
+                        margin-left: 25px;
+                    }
+                }
+            }
+
+            .login {
+                .icon {
+                    font-size: 2.5rem;
+                }
+                p {
+                    margin-left: 8px;
+                }
+                a {
+                    display: flex;
+                    // color: var(--white);
+                    cursor: pointer;
+                    align-items: center;
+                    color: white;
+                    font-size: 1.8rem;
+                }
+            }
+        }
+    }
+}
+
+.menu {
+    display: none;
+}
+
+@media only screen and (max-width: 767px) {
+    .wrapper {
+        .inner {
+            .actions {
+                .navbar {
+                    display: none;
+                }
+                .login {
+                    display: none;
+                }
+                .user {
+                    display: none;
+                }
+
+                .menu {
+                    display: inline-block;
+                    z-index: 3;
+                    width: 30px;
+                    height: 30px;
+                    .icon_menu {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

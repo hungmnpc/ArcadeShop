@@ -1,0 +1,23 @@
+.wrapper {
+    .content {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-row-gap: 40px;
+    }
+}
+
+@media only screen and (max-width: 1030px) {
+    .wrapper {
+        .content {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+}
+
+@media only screen and (max-width: 601px) {
+    .wrapper {
+        .content {
+            grid-template-columns: 1fr;
+        }
+    }
+}

@@ -1,0 +1,96 @@
+.wrapper {
+    // padding: 10px 0px;
+    padding-top: 20px;
+
+    .double-range-slider {
+        position: relative;
+
+        .slider {
+            position: relative;
+            z-index: 1;
+            height: 2px;
+            width: 90%;
+            margin: 0 auto;
+            // background-color: red;
+            user-select: none;
+
+            & > .track {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                border-radius: 2px;
+                z-index: 1;
+                background-color: #eeedf02f;
+            }
+
+            & > .range {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                // left: 25%;
+                // right: 25%;
+                z-index: 2;
+                border-radius: 2px;
+                background-color: var(--white);
+            }
+
+            .thumb {
+                cursor: pointer;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                background-color: var(--white);
+                z-index: 3;
+
+                &.left {
+                    // transform: translate(-50%, -50%);
+                    transform: translateX(-9px) translateY(-8px);
+                }
+                &.right {
+                    // transform: translate(-50%, -50%);
+                    transform: translateX(9px) translateY(-8px);
+                }
+            }
+        }
+
+        .value {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            p {
+                user-select: none;
+            }
+        }
+    }
+}
+
+input[type='range'] {
+    position: absolute;
+    pointer-events: none;
+    -webkit-appearance: none;
+    z-index: 2;
+    left: 50%;
+    transform: translateX(-50%);
+    // top: -20px;
+    height: 2px;
+    width: 95%;
+    opacity: 0;
+}
+
+input[type='range']::-webkit-slider-thumb {
+    pointer-events: all;
+    width: 18px;
+    height: 18px;
+    // transform: translateX(-9px);
+    border-radius: 0;
+    border: 0 none;
+    border-radius: 50%;
+    background-color: red;
+    -webkit-appearance: none;
+    cursor: pointer;
+}

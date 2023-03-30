@@ -1,0 +1,331 @@
+.wrapper {
+    background-image: url('../../../../assets/images/banner.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 755px;
+    position: relative;
+    .over-lay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--primary);
+        opacity: 0.2;
+    }
+
+    .container {
+        width: var(--width-max);
+        max-height: 100vh;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding-top: 18rem;
+        padding: 18rem 12px 0 12px;
+        --space-top: 24%;
+
+        .card {
+            width: 50%;
+            // transform: translateY(-50%);
+            z-index: 2;
+        }
+        .image {
+            // transform: translate(0, -50%);
+            width: 50%;
+            display: flex;
+            position: relative;
+            justify-content: flex-end;
+            z-index: 2;
+
+            img {
+                // position: absolute;
+                // top: 100%;
+                // left: 0;
+                width: 536px;
+                height: 689px;
+                box-shadow: -3px 3px 20px 2px var(--black);
+
+                border-radius: 30px;
+            }
+        }
+    }
+}
+
+.card-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: var(--primary);
+    border-radius: 30px;
+    padding: 40px 60px;
+    box-shadow: 3px 3px 20px 2px var(--black);
+
+    color: var(--white);
+    .title1 {
+        font-size: 2.2rem;
+        margin-bottom: 25px;
+    }
+    .title2 {
+        text-transform: uppercase;
+        line-height: 7rem;
+        font-size: 7rem;
+        margin-bottom: 20px;
+    }
+
+    .btn-games {
+        margin-top: 3rem;
+    }
+
+    &.center {
+        justify-content: center;
+        align-items: center;
+    }
+
+    &.card2 {
+        // min-width: 557px;
+        padding-bottom: 25px;
+        .title1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px !important;
+        }
+
+        .title2 {
+            font-size: 14rem;
+            line-height: 12rem;
+        }
+
+        .title-sub {
+            font-size: 4.2rem;
+            line-height: 4.2rem;
+        }
+    }
+}
+
+@media only screen and (max-width: 349px) {
+    .wrapper {
+        width: 100%;
+
+        .container {
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+            align-items: center;
+            justify-content: center;
+            max-height: fit-content;
+            z-index: 10;
+            gap: 2rem;
+
+            .card {
+                width: 100%;
+            }
+
+            .image {
+                width: 100%;
+                justify-content: center;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
+
+    .card-wrapper {
+        padding: 15px 15px;
+        .title2 {
+            font-size: 2.9rem;
+            line-height: 3rem;
+            margin-bottom: 5px;
+        }
+        .title1 {
+            font-size: 1.6rem;
+            margin-bottom: 3px;
+        }
+
+        .btn-games {
+            margin: 0;
+        }
+
+        &.card2 {
+            .title2 {
+                font-size: 3.8rem;
+                line-height: 3.6rem;
+            }
+
+            .title-sub {
+                font-size: 1.8rem;
+                line-height: 1.8rem;
+            }
+        }
+    }
+}
+@media only screen and (max-width: 499px) and (min-width: 350px) {
+    .wrapper {
+        width: 100%;
+
+        .container {
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+            align-items: center;
+            justify-content: center;
+            max-height: fit-content;
+            z-index: 10;
+            gap: 2rem;
+
+            .card {
+                width: 90%;
+            }
+
+            .image {
+                width: 90%;
+                justify-content: center;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
+
+    .card-wrapper {
+        padding: 20px 20px;
+        .title2 {
+            font-size: 3.8rem;
+            line-height: 4rem;
+        }
+
+        .btn-games {
+            margin: 0px;
+        }
+
+        &.card2 {
+            .title1 {
+                font-size: 1.8rem;
+                line-height: 1.8rem;
+            }
+
+            .title2 {
+                font-size: 3.8rem;
+                line-height: 3.6rem;
+            }
+
+            .title-sub {
+                font-size: 2rem;
+                line-height: 2rem;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 739px) and (min-width: 500px) {
+    .wrapper {
+        width: 100%;
+
+        .container {
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+            align-items: center;
+            justify-content: center;
+            max-height: fit-content;
+            z-index: 10;
+            gap: 2rem;
+
+            .card {
+                width: 70%;
+            }
+
+            .image {
+                width: 70%;
+                justify-content: center;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
+
+    .card-wrapper {
+        padding: 24px 24px;
+        .title2 {
+            font-size: 3.8rem;
+            line-height: 4rem;
+        }
+
+        .title1 {
+            font-size: 1.8rem;
+            line-height: 1.8rem;
+        }
+
+        &.card2 {
+            .title2 {
+                font-size: 7rem;
+                line-height: 7rem;
+            }
+
+            .title-sub {
+                font-size: 2rem;
+                line-height: 2rem;
+            }
+        }
+
+        .btn-games {
+            margin: 0px;
+        }
+    }
+}
+
+@media only screen and (min-width: 740px) and (max-width: 1023px) {
+    .wrapper {
+        width: 100%;
+
+        .container {
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+            align-items: center;
+            justify-content: center;
+            max-height: fit-content;
+
+            gap: 2rem;
+
+            .card {
+                width: 80%;
+            }
+
+            .image {
+                width: 80%;
+                justify-content: center;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    .wrapper {
+        width: 100%;
+        .container {
+            width: 90%;
+            .card {
+                z-index: 2;
+            }
+
+            .image {
+                z-index: 1;
+            }
+        }
+    }
+}

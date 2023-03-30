@@ -1,0 +1,100 @@
+//
+
+.wrapper {
+    display: grid;
+    gap: 2rem;
+
+    .filter {
+        max-width: 200px;
+        grid-column: 1;
+        grid-row: 1 / span 2;
+    }
+
+    .filter_mobile {
+        grid-column: 2;
+        grid-row: 1;
+        margin-left: 16px;
+        display: none;
+    }
+
+    .select {
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 16px;
+        grid-column: 3;
+        grid-row: 1;
+    }
+    .products {
+        padding-top: 20px;
+        grid-column: 2 / span 2;
+        grid-row: 2;
+        // display: none;
+    }
+}
+
+@media only screen and (max-width: 770px) {
+    .wrapper {
+        .filter {
+            display: none;
+        }
+
+        .filter_mobile {
+            display: inline-block;
+
+            height: 100%;
+            border: 1px solid var(--white);
+            text-align: center;
+            min-width: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .btn_open {
+                user-select: none;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.089);
+                }
+
+                h4 {
+                    font-size: 1.6rem;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}
+@media only screen and (max-width: 550px) {
+    .wrapper {
+        // .filter {
+        //     display: none;
+        // }
+
+        .filter_mobile {
+            grid-column: 1;
+            grid-row: 1;
+            width: 200px;
+            .btn_open {
+                padding: 6px 10px;
+            }
+        }
+
+        .select {
+            grid-column: 1;
+            grid-row: 2;
+            justify-content: flex-start;
+            margin-left: 16px;
+            width: 200px;
+        }
+
+        .products {
+            grid-column: 1;
+            grid-row: 3;
+        }
+    }
+}

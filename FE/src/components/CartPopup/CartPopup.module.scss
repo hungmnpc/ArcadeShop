@@ -1,0 +1,141 @@
+.wrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: var(--black);
+    width: 400px;
+    height: 100vh;
+    overflow-y: overlay;
+    &.mounted {
+        animation: mounted 300ms linear;
+        .close {
+            svg {
+                animation: openRotate 300ms linear;
+            }
+        }
+    }
+
+    &.unmounted {
+        animation: unmounted 350ms linear;
+
+        .close {
+            svg {
+                animation: closeRotate 300ms linear;
+            }
+        }
+    }
+
+    .header {
+        width: 100%;
+        height: 100px;
+        background-color: white;
+        position: relative;
+        color: var(--black);
+        display: flex;
+        padding: 10px;
+        .close {
+            flex: 1;
+            display: flex;
+            // justify-content: center;
+            align-items: center;
+
+            svg {
+                width: 35%;
+                height: 35%;
+                padding: 4px;
+                cursor: pointer;
+            }
+        }
+
+        .title {
+            flex: 7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.4rem;
+            font-weight: 600;
+            span {
+                transform: translateX(-20px);
+            }
+        }
+    }
+    .container {
+        margin-top: 10px;
+        height: 60%;
+        overflow-y: overlay;
+        .emty-text {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        border-bottom: 1px solid white;
+    }
+
+    .subtotal {
+        padding: 10px 15px;
+        span {
+            display: block;
+        }
+
+        .title {
+            font-weight: 600;
+            font-size: 3rem;
+        }
+        .total-price {
+            font-size: 2.6rem;
+        }
+    }
+
+    .show-cart {
+        width: 100%;
+    }
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.226);
+}
+
+@keyframes mounted {
+    from {
+        width: 0;
+        opacity: 0;
+    }
+    to {
+        width: 400px;
+        opacity: 1;
+    }
+}
+
+@keyframes unmounted {
+    from {
+        width: 400px;
+        opacity: 1;
+    }
+    to {
+        width: 0;
+        opacity: 0;
+    }
+}
+
+@keyframes closeRotate {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes openRotate {
+    from {
+        transform: rotate(180deg);
+    }
+    to {
+        transform: rotate(0deg);
+    }
+}

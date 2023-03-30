@@ -1,0 +1,177 @@
+.wrapper {
+    background-color: var(--white);
+    border-radius: 10px;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    .title { 
+        padding: 18px 24px 10px;
+        font-size: 1.8rem;
+        font-weight: 600;
+        border-bottom: 2px solid #eceff3;  
+    }
+
+    .content {
+        padding: 30px;
+
+        display: flex;
+        flex-direction: column;
+
+        .toggle-onsale {
+            display: flex;
+            align-items: center;
+            .title-onsale {
+                margin-left: 20px;
+                font-size: 1.4rem;
+            }
+        }
+        .price-row {
+            margin: 0 -15px;
+            display: flex;
+            margin-bottom: 30px;
+            .colspan-1 {
+                padding: 0 15px;
+                flex-basis: 33.3333%;
+                // max-width: 33.3333%;
+                // width: 33.3333%;
+            }
+
+            .price-field {
+
+                .title-price {
+                    font-size: 1.4rem;
+                    line-height: 1.8rem;
+                    margin-bottom: 12px;
+                    display: block;
+                }
+
+                &.normal {
+                    .input {
+                        .field-postfix {
+                            border-left: 0px;
+                            
+                        }
+                    }
+                }
+
+                &.danger {
+                    .input {
+                        input {
+                            border-color: red;
+                        }
+
+                        div:first-of-type {
+                            border-left-color: red;
+                        }
+                    }
+
+                    
+                }
+
+                .input {
+
+                    display: flex;
+                    height: 36px;
+
+                    --border-color: #c1e4fe;
+
+                    &:has(> input:focus) {
+                        --border-color: #4eb7f5;
+                    }
+
+
+                    input {
+                        padding: 8px 10px;
+                        background-color: transparent;
+                        border: 1px solid var(--border-color);
+                        border-right-width: 0px;
+                        font-size: 1.6rem;
+                        border-radius: 8px 0 0 8px;
+                        width: calc(100% - var(--postfix-width));
+                        height: 36px;
+                        font-family: inherit;
+
+                        
+
+                    }
+
+                    .field-postfix {
+                        display: inline-flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 36px;
+                        width: 36px;
+                        border: 1px solid var(--border-color);
+                        font-size: 1.2rem;
+                        font-weight: 600;
+                        font-family: inherit;
+
+                        &:last-child {
+                            border-radius: 0 8px 8px 0;
+                        }
+
+                        &+.field-postfix {
+                            border-left-width: 0px;
+                        }
+                    }
+
+                    .radio-postfix {
+                        background-color: #eaf7ff;
+                        width: 36px;
+                        height: 36px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        border: 1px solid var(--border-color);
+                        border-right-color: transparent;
+                        font-weight: 600;
+
+
+
+                        &:last-child {
+                            border-radius: 0 8px 8px 0;
+                            border-right-color: var(--border-color)!important;
+                        }
+
+
+                        &+.radio-postfix {
+                            border-left-color: transparent;
+                        }
+
+
+                        .radio-postfix-input {
+                            display: none;
+                        }
+
+                        .radio-postfix-input:checked + label {
+                            background-color: #3899ec;
+                            color: var(--white);
+
+                        }
+
+                        .radio-postfix-label {
+                            height: 23px;
+                            width: 23px;
+                            text-align: center;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            border-radius: 4px;
+                            margin: 0 -1px;
+                            font-size: 1.2rem;
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+
+
+    }
+
+}
+
+input {
+    outline: none;
+    border: none;
+}

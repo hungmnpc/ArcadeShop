@@ -1,0 +1,142 @@
+.wrapper {
+    background-color: var(--white);
+    border-radius: 10px;
+    .title {
+        border-bottom: 2px solid #eceff3;
+        padding: 18px 24px 10px;
+        line-height: 3.2rem;
+        font-weight: 600;
+        font-size: 1.8rem;
+        letter-spacing: 0px;
+    }
+
+    .contents{
+        padding: 10px 24px 18px;
+        display: flex;
+
+        .images {
+            display: flex;
+            img {
+                width: 100%;
+                height: auto;
+                display: block;
+                border-radius: 10px;
+                cursor: move;
+            }
+
+            .main-image {
+                width: calc(33.333333% - 1px);
+                // width: 100%;
+                display: block;
+                padding: 14px;
+                
+            }
+
+            .image {
+                position: relative;
+                user-select: none;
+                .remove-image {
+                    position: absolute;
+                    top: 20px;
+                    right: 25px;
+                    color: white;
+                    opacity: 0;
+                    cursor: pointer;
+                    font-size: 1.9rem;
+                    transition: opacity .15s ease-out;
+
+                }
+
+                &:hover {
+                    img {
+                        opacity: .7;
+                    }
+                    .remove-image {
+                        opacity: 1;
+
+                        .icon-remove {
+                            
+                        }
+                    }
+                }
+            }
+
+            .child-images {
+                width: calc(100% - 33.333333%);
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+                grid-template-rows: 1fr 1fr;
+
+                .child-image {
+                    padding: 14px;
+                    height: calc(92.33px + 2 * 14px) ;
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                .image-btn-small {
+                    padding: 15px;
+                    div {
+                        padding: 5px;
+                        background-color: #eaf7ff;
+                        width: 100%;
+                        height: 100%;
+                        display: block;
+                        border-radius: 10px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        &:hover {
+                            background-color: #d7ecfe;
+                        }
+                        span {
+                            width: 90%;
+                            height: 90%;
+                            display: block;
+                            border-radius: 6px;
+                            border: 1px dashed #3899ec;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            cursor: pointer;
+                            svg {
+                                color: #3898ecb0;
+                                font-size: 3rem;
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+    .image-btn {
+        width: 100%;
+        min-height: 120px;
+        border-radius: 10px;
+        background-color: #eaf7ff;
+        transition: background-color .15s ease-out;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        span {
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 0px;
+            padding-left: 10px;
+        }
+
+        .icon {
+            font-size: 2.4rem;
+            color: #3899ec;
+        }
+
+        &:hover {
+            background-color: #c6e2f7;
+        }
+    }
+}

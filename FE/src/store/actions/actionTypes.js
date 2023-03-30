@@ -1,0 +1,30 @@
+const actionTypes = Object.freeze({
+    //app
+
+    CHANGE_LANGUAGE: 'CHANGE_LANGUAGE',
+
+
+
+    //admin
+    ADMIN_LOGIN_SUCCESS: 'ADMIN_LOGIN_SUCCESS',
+    ADMIN_LOGIN_FAIL: 'ADMIN_LOGIN_FAIL',
+    PROCESS_LOGOUT: 'PROCESS_LOGOUT',
+    ADMIN_ADD_NEW_PRODUCT: 'ADMIN_ADD_NEW_PRODUCT',
+
+    //user
+    ADD_USER_SUCCESS: 'ADD_USER_SUCCESS',
+    USER_LOGIN_SUCCESS: 'USER_LOGIN_SUCCESS',
+    USER_LOGIN_FAIL: 'USER_LOGIN_FAIL',
+
+    //
+    LOGIN: 'LOGIN',
+
+    //Cart
+    ADD_CART: 'ADD_CART',
+    REMOVE_CART: 'REMOVE_CART',
+    REMEMBER_ACCOUNT: 'REMEMBER_ACCOUNT',
+
+
+});
+
+export default actionTypes;

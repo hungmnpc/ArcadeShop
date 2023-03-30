@@ -1,0 +1,120 @@
+.wrapper {
+    .top {
+        background-image: url('../../../../assets/images/background1.webp');
+        background-position: top;
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding: 3rem;
+        min-height: 570px;
+
+        position: relative;
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .content {
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--white);
+            .title {
+                font-size: 4.2rem;
+                text-transform: uppercase;
+                padding: 10px 0;
+                margin-top: 30px;
+                z-index: inherit;
+            }
+            .detail {
+                text-align: center;
+                max-width: 300px;
+                margin-bottom: 5rem;
+                z-index: inherit;
+            }
+
+            .form {
+                z-index: inherit;
+                min-width: 512px;
+            }
+        }
+    }
+
+    .bottom {
+        background-image: url('../../../../assets/images/background2.webp');
+        background-position: center;
+        background-size: cover;
+        height: 315px;
+        position: relative;
+
+        .image {
+            z-index: 3;
+            height: 309px;
+            width: 961px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -35%);
+            img {
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 960px) {
+    .wrapper {
+        .bottom {
+            .image {
+                width: 600px;
+                height: 200px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 599px) {
+    .wrapper {
+        .top {
+            .content {
+                .form {
+                    min-width: 400px;
+                }
+            }
+        }
+        .bottom {
+            height: 250px;
+            .image {
+                width: 450px;
+                height: 170px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .wrapper {
+        .top {
+            min-height: 500px;
+            .content {
+                .form {
+                    min-width: 300px;
+                }
+            }
+        }
+        .bottom {
+            height: 200px;
+            .image {
+                width: 320px;
+                height: 170px;
+            }
+        }
+    }
+}

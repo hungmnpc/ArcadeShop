@@ -1,0 +1,111 @@
+.wrapper {
+    width: calc(100% - 30px);
+    height: 130px;
+    display: flex;
+    padding: 20px 0px;
+    align-items: center;
+    white-space: nowrap;
+    margin: 0 15px;
+    gap: 15px;
+
+    & + & {
+        border-top: 1px solid white;
+        margin-top: 15px;
+    }
+    .image {
+        width: 23%;
+        height: auto;
+        img {
+            width: 100%;
+            height: 100%;
+            box-shadow: 0px 0px 10px 1px white;
+        }
+    }
+
+    .info {
+        width: 50%;
+        .name {
+            display: block;
+            width: 100%;
+            word-wrap: break-word;
+        }
+        .price {
+            font-weight: 600;
+            display: flex;
+            gap: 15px;
+            &.sale {
+                span:first-child {
+                    opacity: 0.5;
+                    text-decoration: line-through;
+                }
+            }
+        }
+
+        .quantity {
+            position: relative;
+            height: 26px;
+            width: 73px;
+            input {
+                background-color: var(--black);
+                outline: none;
+                border-color: var(--white);
+                height: 100%;
+                width: 100%;
+                color: var(--white);
+                text-align: center;
+            }
+
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+            .change {
+                position: absolute;
+                top: 0;
+                margin-top: 1px;
+                opacity: 0.5;
+                transition: all 0.3s ease-in-out;
+                cursor: pointer;
+                user-select: none;
+            }
+
+            .change:hover {
+                opacity: 1;
+            }
+
+            .sub {
+                left: 3px;
+            }
+
+            .add {
+                right: 3px;
+            }
+        }
+    }
+
+    .removeCart {
+        flex: 1;
+        justify-content: flex-end;
+        display: flex;
+        transform: translate(-10px, -10px);
+        user-select: none;
+
+        svg {
+            opacity: 0;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 1 !important;
+            }
+        }
+    }
+
+    &:hover {
+        .removeCart svg {
+            opacity: 0.5;
+        }
+    }
+}

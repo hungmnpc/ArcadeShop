@@ -1,0 +1,59 @@
+.wrapper {
+    position: fixed;
+    z-index: 11;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+
+    // align-items: center;
+
+    background-color: var(--black);
+
+    .filter {
+        margin-top: 10rem;
+        width: 50%;
+        z-index: 10;
+    }
+    &.mounted {
+        animation: animation1 500ms linear;
+    }
+    &.unmounted {
+        animation: animation2 520ms linear;
+    }
+
+    .close {
+        position: absolute;
+        left: 10px;
+        top: 30px;
+        width: 40px;
+        height: 40px;
+        .icon {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+@keyframes animation1 {
+    from {
+        width: 0;
+        opacity: 0;
+    }
+    to {
+        width: 100vw;
+        opacity: 1;
+    }
+}
+@keyframes animation2 {
+    from {
+        width: 100vw;
+        opacity: 1;
+    }
+    to {
+        width: 0;
+        opacity: 0;
+    }
+}

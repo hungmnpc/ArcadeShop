@@ -1,0 +1,31 @@
+.wrapper {
+    form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--white);
+        .label {
+            margin-bottom: 7px;
+        }
+
+        .field {
+            width: 100%;
+            padding: 12px 5px;
+            font-size: 1.6rem;
+            font-family: inherit;
+            background-color: transparent;
+            color: var(--white);
+            border-color: var(--white);
+            outline: none;
+            border-width: 3px;
+            border-radius: 15px 15px 0 0;
+            line-height: 2rem;
+            min-height: 50px;
+
+            &.emty {
+                border-color: red;
+            }
+        }
+    }
+}

@@ -1,0 +1,30 @@
+.wrapper {
+    // background-color: red;
+    transition: height 0.3s ease-out;
+    width: 100%;
+    border-bottom: 1px solid var(--white);
+
+    .header {
+        padding: 20px 0px;
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+        .title {
+            user-select: none;
+        }
+        .toggle-icon {
+            .icon {
+                font-size: 1.3rem;
+                user-select: none;
+            }
+        }
+    }
+    .wrapper-content {
+        height: 0;
+        overflow: hidden;
+        transition: height 0.3s ease;
+        .content {
+            padding-bottom: 16px;
+        }
+    }
+}

@@ -1,0 +1,28 @@
+.cart {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+
+    & .icon {
+        font-size: 2.7rem;
+        // color: var(--white);
+    }
+
+    &::before {
+        content: attr(data-amount);
+        position: absolute;
+        width: 2.2rem;
+        height: 2.2rem;
+        font-size: 1.4rem;
+        font-weight: 600;
+        // color: var(--white);
+        background-color: #256d85;
+        top: 0;
+        right: 0;
+        transform: translate(20%, -50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+}

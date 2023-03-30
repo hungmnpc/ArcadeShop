@@ -1,0 +1,91 @@
+.actions-dropdown {
+    position: relative;
+
+    .btn-drop {
+        height: 3.5rem;
+        width: 3.5rem;
+        border: 1px solid var(--white);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: all .15s ease-out;
+        color: var(--white);
+
+        &:hover {
+            background-color: var(--white);
+
+            color: #3899ec;
+        }
+
+    }
+
+    &.isShow {
+        .drop-content {
+            display: flex;
+            flex-direction: column;
+            width: max-content;
+            position: absolute;
+            background-color: var(--white);
+            bottom: -10px;
+            left: 50%;
+            transform: translate(-50%, 100%);
+            color: var(--black);
+            z-index: 99999999;
+            padding: 18px;
+            border-radius: 18px;
+            box-shadow: 0 0 11px 0 rgb(0 0 0 / 21%);
+
+            .dropdown-item {
+                display: flex;
+                align-items: center;
+                transition: color .15s ease-out;
+                font-size: 1.5rem;
+                letter-spacing: .1px;
+                cursor: pointer;
+
+                &[data-type="normal"] {
+                    &:hover {
+                        color: #3899ec;
+                    }
+                }
+
+                &[data-type="danger"] {
+                    &:hover {
+                        color: #ee5951;
+                    }
+                }
+
+                &+.dropdown-item {
+                    margin-top: 12px;
+                }
+
+                .dropdown-item-icon {
+                    min-width: 30px;
+                }
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                width: 10px;
+                height: 10px;
+                top: 0;
+                left: 50%;
+                background-color: var(--white);
+                transform: translate(-50%, -40%) rotate(-45deg);
+
+                box-shadow: 0 0 11px 0 rgb(0 0 0 / 21%);
+                z-index: 1;
+                clip-path: polygon(100% 0, 0 0, 100% 100%);
+            }
+        }
+    }
+
+    .drop-content {
+        display: none;
+
+    }
+
+}

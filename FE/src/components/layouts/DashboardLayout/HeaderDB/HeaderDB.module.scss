@@ -1,0 +1,24 @@
+.wrapper {
+    height: var(--header-height);
+    // background-color: var(--black);
+    display: flex;
+    align-items: center;
+    box-shadow: 0 1px 5px 0 rgb(41 85 115 / 21%);
+    background-color: var(--white);
+    .logo {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        width: var(--sidebar-width);
+        justify-content: center;
+        img {
+            height: 80%;
+        }
+        span {
+            font-weight: 700;
+            font-size: 2rem;
+        }
+        border-right: 1px solid rgba(128, 128, 128, 0.432);
+    }
+}

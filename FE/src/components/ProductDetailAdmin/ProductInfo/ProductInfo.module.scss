@@ -1,0 +1,121 @@
+.wrapper {
+    background-color: var(--white);
+    border-radius: 10px;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+
+    .title {
+        padding: 18px 24px 10px;
+        font-size: 1.8rem;
+        font-weight: 600;
+        border-bottom: 2px solid #eceff3;
+    }
+
+
+
+    .section {
+        padding: 30px 24px;
+
+        .header {
+            margin-bottom: 32px;
+            text-transform: uppercase;
+            opacity: .9;
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+        }
+    }
+
+    .basic-info {
+        border-bottom: 2px solid #eceff3;
+
+        display: flex;
+        flex-direction: column;
+
+        .info-row {
+            display: flex;
+            margin: 0 -15px;
+
+            &+.info-row {
+                margin-top: 30px;
+            }
+
+        }
+    }
+
+    .additional-info {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .explanation {
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
+
+        .content {
+            margin-bottom: 30px;
+
+            .row-additional-info {
+                display: flex;
+                padding: 20px 0;
+                margin: 0 -24px;
+                font-weight: 400;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #eaf7ff;
+                }
+
+                .additional-info-title {
+                    flex-basis: 33.3333%;
+                    max-width: 33.3333%;
+                    padding: 0 24px;
+                    font-size: 1.5rem;
+                    width: 33.33333%;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+
+                }
+
+                .additional-info-description {
+                    flex-basis: 66.6666%;
+                    max-width: 66.6666%;
+                    padding: 0 24px;
+                    font-size: 1.5rem;
+
+
+                    p {
+                        font-family: inherit;
+                        width: 100%;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                    }
+                }
+            }
+
+        }
+
+
+        .add-additional-info {
+            button {
+                display: flex;
+                gap: 14px;
+                padding: 0 4px;
+                color: #3899ec;
+                border: none;
+                outline: none;
+                background-color: transparent;
+                font-size: 1.6rem;
+                letter-spacing: 1.6px;
+                cursor: pointer;
+                margin-bottom: 10px;
+
+            }
+        }
+
+    }
+}

@@ -1,0 +1,44 @@
+.field-control {
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px;
+    gap: 15px;
+
+    label {
+        font-size: 1.4rem;
+    }
+    
+    .field-input {
+        padding: 8px 10px;
+        border-radius: 8px;
+        outline: none;
+        border: 1px solid #c1e4fe;
+        line-height: 1.9rem;
+        font-size: 1.5rem;
+        font-family: inherit;
+        transition: background-color .15s ease-out;
+        &::placeholder {
+            font-weight: 400;
+            opacity: .5;
+            color: rgba(68, 65, 65, 0.644);
+        }
+
+        &:hover {
+            background-color: #eaf7ff;
+        }
+
+        &:focus {
+            border-color: #4eb7f5;;
+        }
+    }
+    
+}
+.colspan1 {
+    flex-basis: 33.3333%;
+}
+.colspan2 {
+    flex-basis: 66.6666%;
+}
+.colspan3 {
+    width: 100%;
+}

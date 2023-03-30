@@ -1,0 +1,92 @@
+.wrapper {
+    display: flex;
+    height: 80vh;
+    margin: -20px -14px ;
+    margin-bottom: 0px;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: rgba(128, 128, 128, 0.199);
+    user-select: none;
+    .container {
+        width: 100%;
+        display: flex;
+        gap: 40px;
+        flex-wrap: wrap;
+        height: 100%;
+        margin-left: 20px;
+        overflow-y: overlay;
+        scroll-behavior: smooth;
+        align-content: flex-start;
+        .image {
+            width: auto;
+            height: 250px;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: .7;
+
+            &:hover {
+                opacity: .8 !important;
+            }
+
+            &.choosed {
+                opacity: 1 !important;
+            }
+
+            &.new-image {
+                opacity: 1;
+                width: 250px;
+                    div {
+                        padding: 5px;
+                        background-color: #eaf7ff;
+                        width: 100%;
+                        height: 100%;
+                        display: block;
+                        border-radius: 10px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        &:hover {
+                            background-color: #d7ecfe;
+                        }
+                        span {
+                            width: 80%;
+                            height: 80%;
+                            display: block;
+                            border-radius: 50px;
+                            border: 1px dashed #3899ec;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            cursor: pointer;
+                            svg {
+                                color: #3898ecb0;
+                                font-size: 7rem;
+                            }
+                        }
+
+                    }
+            }
+            .choose-box {
+                
+                position: absolute;
+                color: white;
+                height: 20px;
+                width: 20px;
+                top: 3%;
+                left: 3%;
+                svg {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
+}
+

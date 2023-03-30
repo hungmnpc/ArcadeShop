@@ -1,0 +1,55 @@
+.ant-modal-header {
+    margin: -20px -24px 30px -24px !important;
+    height: 60px;
+    background-color: #3899ec !important;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    .ant-modal-title {
+        color: var(--white);
+        font-size: 2rem;
+    }
+}
+
+.ant-modal-close {
+    background-color: #308ddd !important;
+    width: 30px !important;
+    height: 30px !important; 
+    border-radius: 50% !important;
+
+    &:hover {
+        
+        background-color: #2b81cb !important;
+    }
+    svg {
+        width: 14px;
+        height: 14px;
+        color: var(--white);
+    }
+}
+
+.danger {
+    .ant-modal-header {
+        background-color: transparent !important;
+        .ant-modal-title {
+            color: black;
+        }
+    }
+
+    .ant-modal-close {
+        background-color: transparent !important;
+        svg {
+            width: 16px;
+            height: 16px;
+            color: var(--black);
+        }
+    }
+
+    .ant-btn-primary {
+        background-color: red !important;
+    }
+    
+    .ant-btn {
+        border-radius: 20px;
+    }
+}

@@ -1,0 +1,98 @@
+.wrapper {
+    // margin: 10rem 0;
+    padding-top: 7rem;
+    padding-bottom: 10rem;
+    background-color: var(--gray);
+    .container {
+        max-width: var(--width-max);
+        margin: auto;
+        padding: 0 24px;
+
+        .title {
+            margin-bottom: 4.5rem;
+            h2 {
+                font-size: 4.2rem;
+                text-transform: uppercase;
+                color: var(--white);
+            }
+        }
+        .content {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+
+            .category {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                .category-img {
+                    width: 100%;
+                    border-radius: 30px;
+                    overflow: hidden;
+                    position: relative;
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        width: 100%;
+                        height: 20%;
+                        bottom: 0;
+                        left: 0;
+                        background: linear-gradient(180deg, transparent 0%, rgba(131, 85, 229, 1) 100%);
+                        opacity: 0.1;
+                        transition: all 0.3s ease-out;
+                    }
+                    img {
+                        // border-radius: 30px;
+                        width: 100%;
+                        height: 100%;
+                        transition: all 0.3s ease-out;
+                    }
+
+                    &:hover {
+                        img {
+                            transform: scale(1.2);
+                        }
+                        &::after {
+                            opacity: 0.5;
+
+                            height: 100%;
+                        }
+                    }
+                }
+
+                .category-name {
+                    color: var(--white);
+                    font-size: 2.2rem;
+                    font-weight: 600;
+                    margin-top: 1.6rem;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .wrapper {
+        .container {
+            .title {
+                h2 {
+                    font-size: 3rem;
+                }
+            }
+            .content {
+                flex-direction: column;
+
+                align-items: center;
+                .category {
+                    .category-img {
+                        width: 70%;
+                        img {
+                            transform: scale(1.1);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

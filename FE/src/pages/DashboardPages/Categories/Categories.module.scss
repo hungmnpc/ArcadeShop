@@ -23,12 +23,14 @@
             background-color: rgba(255, 255, 255, 0.774);
             // opacity: .8;
             margin-top: 0px;
+            padding-top: 0;
+            padding-bottom: 30px;
 
             // top: 0;
             .header-top-row {
                 padding-bottom: 10px;
                 .title {
-                    font-size: 3rem;
+                    font-size: 2.4rem;
                 }
                 .actions {
                     gap: 10px;
@@ -160,7 +162,7 @@
         }
 
         .header-subtitle {
-            padding-top: 20px;
+            padding-top: 5px;
             .support {
                 font-size: 1.6rem;
             }
@@ -221,7 +223,7 @@
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: rgba(22,45,61,.2) linear-gradient(180deg,rgba(22,44,60,0),rgba(22,44,60,.8));
+                background: rgba(22,45,61,.2) linear-gradient(180deg,rgba(22,44,60,0),rgba(22, 44, 60, 0.116));
                 background-blend-mode: hard-light;
                 z-index: 0;
             }

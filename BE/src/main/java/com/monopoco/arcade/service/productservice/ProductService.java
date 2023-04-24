@@ -21,7 +21,9 @@ public interface ProductService {
 
     public ProductDTO saveProduct(ProductRequest productRequest);
 
-    public Page<ProductDTO> getProducts(Pageable pageable, String categoryName);
+    public Page<ProductDTO> getProducts(Pageable pageable, String categoryName, String excludeCategoryName);
+
+    public List<ProductDTO> getProductWithExcludeCategory(String categoryName);
 
     public ProductDTO getProductById(Long id);
 
@@ -31,7 +33,10 @@ public interface ProductService {
 
     public List<CategoryDTO> getCategories();
 
-
     public CategoryDTO getCategoryByCategoryName(String categoryName);
+
+    public boolean removeProductFromCategory(String categoryName, Long productID);
+
+    public CategoryDTO addProductsToCategory(String categoryName, List<Long> productIDs);
 
 }

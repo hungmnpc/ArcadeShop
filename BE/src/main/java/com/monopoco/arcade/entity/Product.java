@@ -74,7 +74,11 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private Set<Image> images;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "main_image_id", referencedColumnName = "id")
+    private Image mainImage;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinTable(
             name = "product_category",
             joinColumns = @JoinColumn(name = "product_id"),

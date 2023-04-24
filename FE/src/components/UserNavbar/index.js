@@ -32,6 +32,10 @@ const userMenu = [
         to: '/account/my_account',
     },
     {
+        title: 'Dashboard',
+        to: '/dashboard',
+    },
+    {
         title: 'Log Out',
         to: '/logout',
         isBorderTop: true,
@@ -51,7 +55,7 @@ function UserNavbar() {
                 <div className={cx('avatar')}>
                     <img
                         src={
-                            userState.userInfo.avatarUrl !== null ? userState.userInfo.avatarUrl : images.defaultAvatar
+                            userState.userInfo && userState.userInfo.avatarUrl !== null ? userState.userInfo.avatarUrl : images.defaultAvatar
                         }
                         alt="user"
                     />

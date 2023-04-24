@@ -20,7 +20,7 @@ public class Category {
     @Column(name = "category_name", unique = true)
     private String categoryName;
 
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany(mappedBy = "categories", cascade = {CascadeType.MERGE, CascadeType.PERSIST,CascadeType.REFRESH})
     private Set<Product> products;
 
     @OneToOne(fetch = FetchType.LAZY)

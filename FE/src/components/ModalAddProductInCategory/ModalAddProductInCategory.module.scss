@@ -1,0 +1,85 @@
+.wrapper {
+    margin: 0 15px;
+    // overflow-y: scroll;
+    .search {
+        
+        margin: 0 auto;
+        height: auto;
+        font-size: 1.6rem;
+        border: 2px solid rgb(112, 181, 247);
+        border-radius: 50px;
+        user-select: none;
+        margin-bottom: 16px;
+        label {
+            
+            padding: 10px;
+            // background-color: blue;
+
+            .icon {
+                color: rgb(112, 181, 247);
+            }
+        }
+
+        input {
+            font-size: 1.6rem;
+            font-family: inherit;
+            padding: 8px;
+            font-weight: 500;
+        }
+    }
+
+    .products {
+        height: 288px;
+        // overflow-x: hidden;
+        overflow-y: scroll;
+        scroll-behavior: smooth;
+        .product-wrapper {
+            // margin: 0 -10px;
+            padding: 17px 20px;
+            transition: all .15s ease-in-out;
+            display: flex;
+            align-items: center;
+            user-select: none;
+            .image {
+                width: 60px;
+                height: 60px;
+                border-radius: 100px;
+                overflow: hidden;
+                margin-right: 20px;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            span {
+                font-size: 1.6rem;
+            }
+
+            .checkbox {
+                margin-left: auto;
+                .icon {
+                    width: 20px;
+                    height: 20px;
+                    color: rgb(112, 181, 247);
+                }
+            }
+            &:hover {
+                background-color: aliceblue;
+            }
+            position: relative;
+
+            &::before {
+                content: "";
+                position: absolute;
+                background-color: red;
+                margin: 0 -39px;
+                top: 0;
+                left: -39px;
+                // width: 100%;
+                // height: 100%;
+            }
+        }
+    }
+
+}

@@ -31,13 +31,20 @@ public class MapperUtil {
         additionalInfo.put(product.getAdditionalInfoTitle2().getTitle(), product.getAdditionalInfoDescription2());
         additionalInfo.put(product.getAdditionalInfoTitle3().getTitle(), product.getAdditionalInfoDescription3());
         productDTO.setAdditionalInfo(additionalInfo);
-        Set<ImageDTO> images = new HashSet<>();
+        List<ImageDTO> images = product.getImages().stream()
+                        .map(image -> imageStorageService.downloadImage(image.getId()))
+                                .collect(Collectors.toList());
 
-        product.getImages().forEach(image -> {
-            ImageDTO imageDTO = imageStorageService.downloadImage(image.getId());
-            images.add(imageDTO);
-        });
+        if (product.getMainImage() != null ) {
+            ImageDTO mainImage = imageStorageService.downloadImage(product.getMainImage().getId());
+            images = images.stream().filter(
+                    imageDTO -> !Objects.equals(imageDTO.getId(), mainImage.getId())
+            ).collect(Collectors.toList());
+            images.add(0, mainImage);
+        }
+
         productDTO.setImageSet(images);
+
         Set<String> categories = new HashSet<>();
         product.getCategories().forEach(category -> {
             categories.add(category.getCategoryName());
@@ -48,6 +55,9 @@ public class MapperUtil {
     }
 
     public static ImageDTO imageMapper(Image image, ModelMapper modelMapper) {
+
+//        log.info("{}{}", image.getName() ,image.getId());
+
         byte[] images = ImageUtils.decompressImage(image.getImageData());
         String imageBase64 = Base64.getEncoder().encodeToString(images);
         return new ImageDTO(image.getId(), imageBase64, image.getName());
@@ -57,7 +67,7 @@ public class MapperUtil {
         CategoryDTO categoryDTO = new CategoryDTO();
         categoryDTO.setCategoryName(category.getCategoryName());
         if (category.getImage() != null) {
-            categoryDTO.setImageDTO(imageMapper(category.getImage(), modelMapper));
+            categoryDTO.setImage(imageMapper(category.getImage(), modelMapper));
         }
         categoryDTO.setId(category.getId());
         categoryDTO.setProducts(category.getProducts().stream().map(product ->

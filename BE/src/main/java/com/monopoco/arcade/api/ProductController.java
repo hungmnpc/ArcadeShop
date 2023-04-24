@@ -56,10 +56,11 @@ public class ProductController {
     public ResponseEntity<Map<String, Object>> getProducts(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "100") int size,
-            @RequestParam(defaultValue = "All") String category
+            @RequestParam(defaultValue = "All") String category,
+            @RequestParam(defaultValue = "none", name = "exclude_category") String excludeCategory
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<ProductDTO> productDTOPage = productService.getProducts(pageable, category);
+        Page<ProductDTO> productDTOPage = productService.getProducts(pageable, category, excludeCategory);
         List<ProductDTO> productDTOList = productDTOPage.getContent();
         Map<String, Object> response = new HashMap<>();
         response.put("products", productDTOList);
@@ -75,9 +76,9 @@ public class ProductController {
      * @return
      */
     @GetMapping("/{id}/images")
-    public ResponseEntity<Set<ImageDTO>> getImagesOfProduct(@PathVariable Long id) {
+    public ResponseEntity<List<ImageDTO>> getImagesOfProduct(@PathVariable Long id) {
         ProductDTO productDTO = productService.getProductById(id);
-        Set<ImageDTO> imageDTOList =  productDTO.getImageSet();
+        List<ImageDTO> imageDTOList =  productDTO.getImageSet();
         return ResponseEntity.ok(imageDTOList);
     }
 

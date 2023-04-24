@@ -3,6 +3,7 @@ package com.monopoco.arcade.request;
 import lombok.*;
 
 import java.time.Year;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,7 +24,7 @@ public class ProductRequest {
 
     private boolean visible;
 
-    private Set<Long> imagesId;
+    private List<Long> imagesId;
 
     private Map<String, String> additionalInfo;
 

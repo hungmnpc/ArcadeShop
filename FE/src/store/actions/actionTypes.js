@@ -24,7 +24,8 @@ const actionTypes = Object.freeze({
     REMOVE_CART: 'REMOVE_CART',
     REMEMBER_ACCOUNT: 'REMEMBER_ACCOUNT',
 
-
+    PUSH_HISTORY: 'PUSH_HISTORY',
+    POP_HISTORY: 'POP_HISTORY'
 });
 
 export default actionTypes;

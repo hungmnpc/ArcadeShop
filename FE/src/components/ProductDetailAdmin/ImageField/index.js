@@ -3,7 +3,7 @@ import { faPlus, faPlusCircle, faXmark } from "@fortawesome/free-solid-svg-icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
 import { useContext, useEffect, useRef, useState } from "react";
-import { addImageId, ProductContext, removeImageId } from "..";
+import { addImageId, changeImagesId, ProductContext, removeImageId } from "..";
 import { get } from "../../../utils/request";
 import ModalImage from "../../ModalImage";
 import style from "./ImageField.module.scss";
@@ -25,11 +25,6 @@ function ImageField() {
 
     const dragItem = useRef();
     const dragOverItem = useRef();
-    const [list, setList] = useState(productState.imagesId)
-
-    useEffect(() => {
-        setList(productState.imagesId)
-    }, [productState])
 
 
     const [modalOpen, setModalOpen] = useState(false);
@@ -39,17 +34,20 @@ function ImageField() {
     }
 
     const onOk = (idlist) => {
+        console.log(idlist);
         dispatch(addImageId(idlist));
     }
 
+
     const drop = (e) => {
-        const copyListItems = [...list];
+        const copyListItems = [...productState.imagesId];
         const dragItemContent = copyListItems[dragItem.current];
         copyListItems.splice(dragItem.current, 1);
         copyListItems.splice(dragOverItem.current, 0, dragItemContent);
         dragItem.current = null;
         dragOverItem.current = null;
-        setList(copyListItems);
+        // setList(copyListItems);
+        dispatch(changeImagesId(copyListItems))
     };
     return (<div className={cx('wrapper')}>
         <div className={cx('title')}>
@@ -57,29 +55,28 @@ function ImageField() {
         </div>
         <div className={cx('contents')}>
             {
-                list.length === 0 ? (<div onClick={() => {
+                productState.imagesId.length === 0 ? (<div onClick={() => {
                     setModalOpen(true)
                 }} className={cx('image-btn')}>
                     <FontAwesomeIcon icon={faImages} className={cx('icon')} />
                     <span>Add Images</span>
                 </div>) : (<div className={cx('images')}>
-                    <ImageDisplay dragEnter={dragEnter} dragStart={dragStart} drop={drop} type='main' id={list[0]} />
+                    <ImageDisplay dragEnter={dragEnter} dragStart={dragStart} drop={drop} type='main' id={productState.imagesId[0]} />
                     <div className={cx('child-images')}>
                         {
-                            list.slice(1).map((id, index) => {
+                            productState.imagesId.filter(id => id !== productState.imagesId[0]).map((id, index) => {
                                 return (
                                     <ImageDisplay index={index} dragEnter={dragEnter} dragStart={dragStart} drop={drop} key={index} type='child' id={id} />
                                 )
                             })
                         }
                         {
-                            list.slice(1).length < 8 &&
+                            productState.imagesId.slice(1).length < 8 &&
                             <div onClick={() => {
                                 setModalOpen(true)
                             }} className={cx('image-btn-small')}>
                                 <div>
                                     <span>
-
                                         <FontAwesomeIcon icon={faPlus} />
                                     </span>
 

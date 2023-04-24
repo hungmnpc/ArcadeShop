@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -73,6 +74,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO saveProduct(ProductRequest productRequest) {
+
+//        log.info("{}", productRequest.getImagesId());
         Product product = new Product(null, productRequest.getName(),
                 productRequest.getDescription(), productRequest.getPrice(),
                 productRequest.getRibbon(), productRequest.getSKU(), productRequest.isVisible(),
@@ -81,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
                 inventoryRepository.findInventoryByType(productRequest.getInventoryStatus()),
                 null, null, null,
                 null,null,null,
-                new HashSet<>(), new HashSet<>());
+                new HashSet<>(),null, new HashSet<>());
 
         Product productSaved = productRepository.save(product);
 
@@ -125,11 +128,17 @@ public class ProductServiceImpl implements ProductService {
 
         productRequest.getImagesId().forEach(imageId -> {
             Optional<Image> image = imageStorageRepository.findById(imageId);
+            log.info("{}", image.get().getId());
             if (image.isPresent()) {
+                if (productRequest.getImagesId().indexOf(imageId) == 0) {
+                    productSaved.setMainImage(image.get());
+                }
                 image.get().setProduct(productSaved);
                 productSaved.getImages().add(image.get());
+
             }
         });
+
 
         productRequest.getCategories().forEach(categoryName -> {
             Optional<Category> category = categoryRepository.findByCategoryName(categoryName);
@@ -137,6 +146,7 @@ public class ProductServiceImpl implements ProductService {
         });
 
         productSaved.getCategories().add(categoryRepository.findByCategoryName("All").get());
+        log.info("{}", productSaved.getMainImage().getId());
         return MapperUtil.productMapper(productSaved, modelMapper, imageStorageService);
     }
 
@@ -149,9 +159,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductDTO> getProducts(Pageable pageable, String categoryName) {
+    public Page<ProductDTO> getProducts(Pageable pageable, String categoryName, String excludeCategoryName) {
         Optional<Category> category = categoryRepository.findByCategoryName(categoryName);
         Page<Product> productPage = productRepository.findProductsByCategoriesContaining(pageable, category.get());
+        if (!excludeCategoryName.equals("none")) {
+            Category excludeCategory = categoryRepository.findByCategoryName(excludeCategoryName).get();
+            List<ProductDTO> productList = productPage.getContent().stream()
+                    .filter(product -> !product.getCategories().contains(excludeCategory))
+                    .map(product -> MapperUtil.productMapper(product, modelMapper, imageStorageService))
+                    .collect(Collectors.toList());
+            return new PageImpl<ProductDTO>(productList);
+        }
         return productPage.map(new Function<Product, ProductDTO>() {
             @Override
             public ProductDTO apply(Product product) {
@@ -192,6 +210,10 @@ public class ProductServiceImpl implements ProductService {
                 Optional<Image> image = imageStorageRepository.findById(imageId);
                 image.ifPresent(value -> value.setProduct(product));
                 image.ifPresent(value -> product.getImages().add(value));
+                if (newProductRequest.getImagesId().indexOf(imageId) == 0) {
+                    log.info("{}", imageId);
+                    image.ifPresent(product::setMainImage);
+                }
             });
             List<String> titles = new ArrayList<>(newProductRequest.getAdditionalInfo().keySet());
             for (int i = 0; i < 3; i++) {
@@ -263,5 +285,41 @@ public class ProductServiceImpl implements ProductService {
     public CategoryDTO getCategoryByCategoryName(String categoryName) {
         Optional<Category> category = categoryRepository.findByCategoryName(categoryName);
         return category.map(value -> MapperUtil.categoryMapper(value, modelMapper, imageStorageService)).orElse(null);
+    }
+
+    @Override
+    public boolean removeProductFromCategory(String categoryName, Long productID) {
+        Optional<Category> category = categoryRepository.findByCategoryName(categoryName);
+        Optional<Product> product = productRepository.findById(productID);
+        if (category.isPresent() && product.isPresent()) {
+            product.get().getCategories().remove(category.get());
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public CategoryDTO addProductsToCategory(String categoryName, List<Long> productIDs) {
+        Optional<Category> categoryOptional = categoryRepository.findByCategoryName(categoryName);
+        categoryOptional.ifPresent(category -> productIDs.forEach(id -> {
+            Optional<Product> product = productRepository.findById(id);
+            if (product.isPresent()) {
+                product.get().getCategories().add(category);
+                category.getProducts().add(product.get());
+            }
+        }));
+        return categoryOptional.map(value -> MapperUtil.categoryMapper(value, modelMapper, imageStorageService)).orElse(null);
+    }
+
+    @Override
+    public List<ProductDTO> getProductWithExcludeCategory(String categoryName) {
+        Optional<Category> category = categoryRepository.findByCategoryName(categoryName);
+        if (category.isPresent()) {
+            List<Product> productList = productRepository.findProductsByCategoriesNotContains(category.get());
+            List<ProductDTO> productDTOList = productList.stream().map(product ->
+                 MapperUtil.productMapper(product, modelMapper, imageStorageService)
+            ).collect(Collectors.toList());
+        }
+        return null;
     }
 }

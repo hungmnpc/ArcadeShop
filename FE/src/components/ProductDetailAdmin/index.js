@@ -40,6 +40,8 @@ const productActionsType = Object.freeze({
     SET_IS_VISIBLE: 'SET_IS_VISIBLE',
     SAVE_PRODUCT: 'SAVE_PRODUCT',
     INIT_PRODUCT: 'INIT_PRODUCT',
+    CHANGE_MAIN_IMAGE_ID: 'CHANGE_MAIN_IMAGE_ID',
+    CHANGE_IMAGES_ID: 'CHANGE_IMAGES_ID' 
 });
 
 export const createNewProduct = () => ({
@@ -53,6 +55,11 @@ export const changeNameProduct = (name) => ({
 
 export const addImageId = (ids = []) => ({
     type: productActionsType.ADD_IMAGE_ID,
+    ids: ids
+})
+
+export const changeImagesId = (ids = []) => ({
+    type: productActionsType.CHANGE_IMAGES_ID,
     ids: ids
 })
 
@@ -125,6 +132,11 @@ export const initProduct = (product) => ({
     product: product
 })
 
+export const changeMainImage = (mainImageId) => ({
+    type: productActionsType.CHANGE_MAIN_IMAGE_ID,
+    mainImageId: mainImageId
+})
+
 
 const initProductState = {};
 
@@ -140,9 +152,15 @@ const productReducer = (state = initProductState, action) => {
                 ...action.product
             };
         case productActionsType.ADD_IMAGE_ID:
+            console.log("WTF");
             return {
                 ...state,
                 imagesId: [...new Set(state.imagesId.concat(action.ids))]
+            }
+        case productActionsType.CHANGE_IMAGES_ID:
+            return {
+                ...state,
+                imagesId: [...action.ids]
             }
         case productActionsType.REMOVE_IMAGE_ID:
             return {
@@ -207,6 +225,11 @@ const productReducer = (state = initProductState, action) => {
                 ...state,
                 visible: action.isVisible
             }
+        case productActionsType.CHANGE_MAIN_IMAGE_ID:
+            return {
+                ...state,
+                mainImageId: action.mainImageId
+            }
         default:
             return state;
     }
@@ -226,11 +249,14 @@ function ProductDetailAdmin({ isScrollOver, id, isCopy=false, ...prop }) {
 
     const [productState, dispatch] = useReducer(productReducer, initProductState)
 
+    console.log(productState)
+
     useEffect(() => {
         let newProduct = {};
         if (id) {
             get(`/api/v1/admin/products/${id}`)
             .then(response => {
+                console.log(response)
                 newProduct = {
                     ...productState,
                     name: response.data.name,
@@ -261,9 +287,7 @@ function ProductDetailAdmin({ isScrollOver, id, isCopy=false, ...prop }) {
                     price: response.data.price,
                     discountMode: response.data.discountModeName,
                     discountValue: response.data.discountValue,
-                    imagesId: 
-                      response.data.imageSet.map(image => image.id)
-                    ,
+                    imagesId: [],
                     additionalInfo: response.data.additionalInfo,
                     categories: response.data.categoriesName,
                     visible: response.data.visible,
@@ -283,6 +307,7 @@ function ProductDetailAdmin({ isScrollOver, id, isCopy=false, ...prop }) {
                     imagesId: [
                       
                     ],
+                    mainImageId: undefined,
                     additionalInfo: {
                     },
                     price: null,
@@ -296,7 +321,10 @@ function ProductDetailAdmin({ isScrollOver, id, isCopy=false, ...prop }) {
         
     },[id, prop.productCopyId])
 
+    console.log(productState)
+
     const handleSave = () => {
+        console.log(productState)
         if (!id) {
             const data = {
                 ...productState,

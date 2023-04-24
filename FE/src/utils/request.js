@@ -73,4 +73,16 @@ export const updateProduct = async (data, id) => {
     return response;
 }
 
+export const removeProductFromCategory = async (categoryName, productID) => {
+    const request = createRequest();
+    const response = await request.put(`/categories/${categoryName}/products/${productID}`);
+    return response;
+}
+
+export const addProductToCategory = async (categoryName, productIDs) => {
+    const request = createRequest();
+    const response = await request.post(`/categories/${categoryName}/products`, JSON.stringify({productIDs}))
+    return response;
+}
+
 export default request;

@@ -92,7 +92,7 @@ function CategoryPack({ category }) {
 
     return (
         <div onClick={handleClickCategory} className={cx('category-pack')}>
-            <img src={category.imageDTO !== null ? `data:image/png;base64, ${category.imageDTO.imageBase64}` : images.defaultCategoryImage} alt="category" />
+            <img src={category.image !== null ? `data:image/png;base64, ${category.image.imageBase64}` : images.defaultCategoryImage} alt="category" />
             <div className={cx('shadow')} />
             <div onClick={(e) => {
                 e.stopPropagation()

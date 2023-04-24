@@ -24,6 +24,7 @@ const columns = [
         key: 'image',
         width: 100,
         render: (_, record) => {
+            console.log(record.image)
             return (<img className={cx('image')} src={record.image ? `data:image/png;base64, ${record.image.imageBase64}` : ''} alt='logo' />)
         },
     },
@@ -78,9 +79,13 @@ function StoreProducts() {
 
     const [products, setProducts] = useState([]);
 
+    console.log(products)
+
     useEffect(() => {
         get("/api/v1/admin/products")
             .then((response) => {
+                console.log("response");
+                console.log(response.data)
                 setProducts(response.data.products)
             })
             .catch(error => {

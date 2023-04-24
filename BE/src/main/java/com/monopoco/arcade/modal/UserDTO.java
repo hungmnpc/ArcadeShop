@@ -30,5 +30,4 @@ public class UserDTO {
 	private String avatarUrl;
 
 	Set<Role> roles;
-
 }

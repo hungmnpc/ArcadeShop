@@ -118,6 +118,14 @@ html *::-webkit-scrollbar-track {
 .ant-table-tbody > tr.ant-table-row > td,
 .ant-table-tbody > tr > td.ant-table-cell-row-hover {
     transition: all .25s linear;
+    
+}
+.ant-table-tbody > tr.ant-table-row > td:nth-child(3) {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding-right: 50px;
+
 }
 
 @font-face {

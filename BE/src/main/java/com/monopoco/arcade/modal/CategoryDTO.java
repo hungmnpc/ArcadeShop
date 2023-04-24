@@ -18,10 +18,12 @@ import java.util.Set;
 @Setter
 @ToString
 public class CategoryDTO {
+
     private String id;
 
     private String categoryName;
 
     private Set<ProductDTO> products;
-    private ImageDTO imageDTO;
+
+    private ImageDTO image;
 }

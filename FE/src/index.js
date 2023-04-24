@@ -9,6 +9,7 @@ import AuthProvider from './context/userContext';
 import CartProvider from './context/CartContext';
 import AppProvider from './context/AppContext';
 import { Toaster } from 'react-hot-toast';
+import { Router } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

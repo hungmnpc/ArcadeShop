@@ -22,12 +22,16 @@ function SubMenu({ items }) {
         dispatch(processLogout());
     };
 
+    const navigation = (to) => {
+        return navigate(to)
+    }
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('content')}>
                 {items.map((item, index) => (
                     <div className={cx('item', [item.isBorderTop ? 'border_top' : ''])} key={index}>
-                        <Button onClick={item.to === '/logout' ? handleLogout : undefined} transparent>
+                        <Button onClick={item.to === '/logout' ? handleLogout : () => { navigation(item.to)}} transparent>
                             {item.title}
                         </Button>
                     </div>

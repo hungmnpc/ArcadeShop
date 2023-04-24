@@ -8,18 +8,29 @@
     .header-color {
         width: 100%;
         height: 170px;
-        background-image: linear-gradient(257deg, #ebdce1, #aae0eb 71%, #ece1d8);
+        // background-image: linear-gradient(257deg, #ebdce1, #aae0eb 71%, #ece1d8);
         position: absolute;
         z-index: 1;
         top: 0;
         left: 0;
+        overflow: hidden;
+        img {
+            width: 100%;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-image: linear-gradient(360deg, rgb(0, 0, 0), transparent);
+            filter: blur(8px);
+        }
         &::after {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: linear-gradient(180deg, rgba(0, 0, 0, .7), transparent);
+            background-image: linear-gradient(360deg, rgb(0, 0, 0), transparent);
             content: "";
             opacity: .35;
         }

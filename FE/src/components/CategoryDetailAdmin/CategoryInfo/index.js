@@ -2,6 +2,7 @@ import classNames from "classnames/bind";
 import { useContext } from "react";
 import { CategoryContext } from "..";
 import style from "./CategoryInfo.module.scss";
+import { changeCategoryName } from "..";
 
 const cx = classNames.bind(style);
 
@@ -17,7 +18,9 @@ function CategoryInfo() {
             <div className={cx('contents')}>
                 <div className={cx('category_name_field')}>
                     <label htmlFor="category_name">Category name</label>
-                    <input id="category_name" name="category_name" value={categoryState.categoryName}/>
+                    <input onChange={(event) => {
+                        dispatch(changeCategoryName(event.target.value))
+                    }} id="category_name" name="category_name" value={categoryState.categoryName} className={cx("field-control")}/>
                 </div>
                 <div className={cx('category_image')}>
                     <span>Category image</span>

@@ -21,5 +21,19 @@
     .contents{
         padding: 20px 24px 18px;
         display: flex;
+        flex-direction: column;
+        gap: 10px;
+        .category_name_field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            .field-control {
+                border: 1px solid #c1e4fe;
+                padding: 8px;
+                border-radius: 5px;
+                font-size: 1.6rem;
+                font-family: inherit;
+            }
+        }
     }
 }

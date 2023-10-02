@@ -3,11 +3,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styles from './ShowAndHide.module.scss';
+import { useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function ShowAndHide({ children, title, isOpen = false }) {
     const [isShow, setIsShow] = useState();
+
+    const location = useLocation();
+
+    useEffect(() => {
+        setIsShow(false)
+    }, [location])
 
     const contentRef = useRef();
     useEffect(() => {

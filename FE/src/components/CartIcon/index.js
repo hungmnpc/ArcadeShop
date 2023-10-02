@@ -6,14 +6,15 @@ import { CartContext } from '../../context/CartContext';
 import useDelayUnmount from '../../hooks/useDelayUnmount';
 import CartPopup from '../CartPopup';
 import styles from './CartIcon.module.scss';
+import { closePopupCart, openPopupCart } from '../../store/actions/userActions';
 
 const cx = classNames.bind(styles);
 
 function CartIcon({ data }) {
-    const [show, setShow] = useState(false);
 
-    const mounted = useDelayUnmount(show, 300);
-    const [cartState] = useContext(CartContext);
+    const [cartState, dispatch] = useContext(CartContext);
+    const mounted = useDelayUnmount(cartState.openPopup, 300);
+    console.log(cartState);
 
     const [cartAmount, setCartAmount] = useState(cartState.cart.length);
 
@@ -22,15 +23,15 @@ function CartIcon({ data }) {
     }, [cartState.cart.length]);
 
     const handleCloseCart = () => {
-        setShow(false);
+        dispatch(closePopupCart())
     };
 
     return (
         <>
-            <div data-amount={cartAmount} className={cx('cart')} onClick={() => setShow(true)}>
+            <div data-amount={cartAmount} className={cx('cart')} onClick={() => dispatch(openPopupCart())}>
                 <FontAwesomeIcon className={cx('icon')} icon={faCartShopping} />
             </div>
-            {mounted && <CartPopup onClose={handleCloseCart} onMounted={show} />}
+            {mounted && <CartPopup onClose={handleCloseCart} onMounted={cartState.openPopup} />}
         </>
     );
 }

@@ -11,21 +11,9 @@ import NewSletter from './components/NewSletter';
 
 const cx = classNames.bind(styles);
 
-const _products = products.map((product, index) => {
-    const sale = sales.find((sale) => sale.id === product.id);
-
-    return {
-        ...product,
-        // sale_price: sale ? (product.list_price * (100 - sale.sale_off_percent)) / 100 : ,
-
-        sale_price: !!sale ? (product.list_price * (100 - sale.sale_off_percent)) / 100 : undefined,
-    };
-});
 
 const bestSellers = {
     title: 'Best Sellers',
-    products: _products.filter((product) => product.sold >= soldHigh),
-
     viewAll: '/best_sellers',
 };
 
@@ -49,15 +37,11 @@ const shopByCategory = [
 
 const gears = {
     title: 'Upgrage your gear',
-    products: _products.filter((product) => product.typeId === 4),
-
-    viewAll: '/gears',
+    viewAll: '/accessories',
 };
 
 const _trendingGames = {
     title: 'Trending games',
-    products: _products.filter((product) => product.typeId === GAMEID && product.sold >= trendingGames).slice(0, 5),
-
     viewAll: '/games',
 };
 
@@ -66,12 +50,12 @@ function HomePage() {
     return (
         <div className={cx('home')}>
             <Banner />
-            <CarouselProducts data={bestSellers} />
+            <CarouselProducts info={bestSellers} />
             <ShopByCategory data={shopByCategory} />
             <Coupon />
-            <CarouselProducts data={gears} />
+            <CarouselProducts info={gears} />
             <OnSale />
-            <CarouselProducts data={_trendingGames} />
+            <CarouselProducts info={_trendingGames}  />
             <NewSletter />
         </div>
     );

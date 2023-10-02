@@ -6,11 +6,12 @@ import { CartContext } from '../../context/CartContext';
 import CartItem from './CartItem';
 import styles from './CartPopup.module.scss';
 import Button from '../Button';
+import { closePopupCart } from '../../store/actions/userActions';
 
 const cx = classNames.bind(styles);
 
 function CartPopup({ onClose, onMounted }) {
-    const [cartState] = useContext(CartContext);
+    const [cartState, dispatch] = useContext(CartContext);
 
     const [subTotal, setSubTotal] = useState(0);
 
@@ -18,7 +19,7 @@ function CartPopup({ onClose, onMounted }) {
         console.log(cartState.cart);
 
         const subTotalUpdate = cartState.cart.reduce(
-            (pre, current) => pre + (current.sale_price || current.list_price) * current.quantity,
+            (pre, current) => pre + (current.price * (100 - current.discountValue) / 100 ) * current.quantity,
             0,
         );
 
@@ -51,7 +52,7 @@ function CartPopup({ onClose, onMounted }) {
                     <span className={cx('total-price')}>{subTotal}₫</span>
                 </div>
                 <div className={cx('show-cart')}>
-                    <Button primary={true} w100>
+                    <Button to='/carts' onClick={() => dispatch(closePopupCart())} primary={true} w100>
                         Show cart
                     </Button>
                 </div>

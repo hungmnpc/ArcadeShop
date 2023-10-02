@@ -6,8 +6,10 @@ import com.monopoco.arcade.entity.User;
 import com.monopoco.arcade.principal.UserPrincipal;
 import com.monopoco.arcade.request.LoginRequest;
 import com.monopoco.arcade.response.LoginResponse;
+import io.netty.util.Timeout;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -37,9 +40,13 @@ public class AuthController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request) {
-        log.info("Test MTF");
+        log.info("{}", request.getRequestedSessionId());
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
@@ -52,6 +59,7 @@ public class AuthController {
                     .withIssuer(request.getRequestURL().toString())
                     .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                     .withClaim("avatarUrl", user.getAvatarUrl())
+                    .withClaim("id", user.getId())
                     .sign(algorithm);
 
             String refreshToken = JWT.create()
@@ -62,7 +70,8 @@ public class AuthController {
 
             return ResponseEntity.ok(new LoginResponse(accessToken, refreshToken, user.getName()));
         } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+            log.error(ex.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Tài khoản mật khẩu không chính xác");
         }
     }
 

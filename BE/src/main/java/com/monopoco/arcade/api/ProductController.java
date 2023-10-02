@@ -10,10 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
@@ -25,6 +28,9 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      *
@@ -57,10 +63,12 @@ public class ProductController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "100") int size,
             @RequestParam(defaultValue = "All") String category,
+            @RequestParam(defaultValue = "0-3000") String price,
+            @RequestParam(defaultValue = "none") String sort,
             @RequestParam(defaultValue = "none", name = "exclude_category") String excludeCategory
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<ProductDTO> productDTOPage = productService.getProducts(pageable, category, excludeCategory);
+        Page<ProductDTO> productDTOPage = productService.getProducts(pageable, category, excludeCategory, price, sort);
         List<ProductDTO> productDTOList = productDTOPage.getContent();
         Map<String, Object> response = new HashMap<>();
         response.put("products", productDTOList);
@@ -68,6 +76,25 @@ public class ProductController {
         response.put("totalItems", productDTOPage.getTotalElements());
         response.put("totalPages", productDTOPage.getTotalPages());
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<?> filterProduct(
+            @RequestParam(defaultValue = "0-30000") String price,
+            @RequestParam(defaultValue = "ALL") String categoryId,
+            @RequestParam(defaultValue = "id") String column,
+            @RequestParam(defaultValue = "DESC") String sortType,
+            @RequestParam(defaultValue = "ALL") String mainCategory
+    ) {
+        try {
+            log.info("{}", column);
+            List<ProductDTO> productDTOList = productService.filterProduct(price, categoryId, column, sortType, mainCategory);
+            return ResponseEntity.ok(productDTOList);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
 
     /**
@@ -94,10 +121,47 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteProductById(@PathVariable Long id) {
+
         if (productService.deleteProduct(id) != null) {
             return ResponseEntity.status(HttpStatus.ACCEPTED).build();
         } else {
             return ResponseEntity.badRequest().body(String.format("Product ID = %d không tồn tại", id));
+        }
+    }
+
+    @GetMapping("/best_seller")
+    public ResponseEntity<?> getBestSeller(HttpServletRequest request) {
+        try {
+            List<ProductDTO> productDTOList = productService.getBestSeller();
+            return ResponseEntity.ok(productDTOList);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/upgrade_gear")
+    public ResponseEntity<?> getUpgradeGear() {
+        try {
+            List<ProductDTO> productDTOList = productService.upgradeGear();
+            return ResponseEntity.ok(productDTOList);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/best_game")
+    public ResponseEntity<?> getBestGame() {
+        try {
+            List<ProductDTO> productDTOList = productService.getBestGame();
+            return ResponseEntity.ok(productDTOList);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 }

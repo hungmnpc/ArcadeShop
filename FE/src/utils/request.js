@@ -25,12 +25,12 @@ export const deleteProduct = async(id) => {
 }
 
 export const login = async (email, password) => {
-    const response = await request.post('/login',
+    const response = await request.post('/api/v1/auth/login',JSON.stringify(
     {
         email: email,
         password: password,
-    });
-
+    }));
+    
     return response;
 };
 
@@ -82,6 +82,35 @@ export const removeProductFromCategory = async (categoryName, productID) => {
 export const addProductToCategory = async (categoryName, productIDs) => {
     const request = createRequest();
     const response = await request.post(`/categories/${categoryName}/products`, JSON.stringify({productIDs}))
+    return response;
+}
+
+export const addNewProductToCart = async (productId, quantity) => {
+    const request = createRequest();
+
+    const response = await request.post(`/carts`, JSON.stringify({
+        productId: productId,
+        quantity: quantity
+    }))
+
+    return response;
+}
+
+export const createOrder = async (cartIds) => {
+    const request = createRequest();
+
+    const response = await request.post('/orders', JSON.stringify({
+        cartIds: cartIds
+    }))
+
+    return response;
+}
+
+export const changeOrderStatus = async (status, orderId) => {
+    const request = createRequest();
+
+    const response = await request.put('/orders/' + orderId, JSON.stringify(status))
+
     return response;
 }
 

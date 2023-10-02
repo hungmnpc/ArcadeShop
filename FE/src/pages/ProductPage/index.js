@@ -11,6 +11,7 @@ import { CartContext } from '../../context/CartContext';
 
 import styles from './ProductPage.module.scss';
 import { addCart } from '../../store/actions/userActions';
+import { addNewProductToCart, get } from '../../utils/request';
 
 const cx = classNames.bind(styles);
 
@@ -37,9 +38,17 @@ function ProductPage({ id }) {
     const [product, setProduct] = useState();
     const [quantity, setQuantity] = useState(1);
     const [cartState, dispatch] = useContext(CartContext);
+    
 
     useEffect(() => {
-        setProduct(getProductById(Number(params.id)));
+        get('/api/v1/admin/products/' + params.id)
+        .then(response => {
+            console.log(response.data)
+            setProduct(response.data)
+        })
+        .catch(error => {
+            console.error(error)
+        })
     }, [params.id]);
 
     useEffect(() => {
@@ -49,7 +58,13 @@ function ProductPage({ id }) {
     }, [quantity]);
 
     const handleAddProductToCart = () => {
-        dispatch(addCart(product, quantity));
+        addNewProductToCart(product.id, quantity)
+                    .then(response => {
+                        console.log(response.data.id);
+                        dispatch(addCart(product, quantity, response.data.id));
+                    })
+                    .catch(error => console.error(error))
+    
     };
 
     return (
@@ -75,24 +90,20 @@ function ProductPage({ id }) {
                     <div className={cx('content')}>
                         <div className={cx('image_description')}>
                             <div className={cx('image')}>
-                                <img src={product.image} alt={product.name} />
+                                <img src={`data:image/jpeg;base64,${product.imageSet[0].imageBase64}`} alt={product.name} />
                             </div>
-                            <div className={cx('description')}>
-                                <p>
-                                    I'm a product description. This is a great place to "sell" your product and grab
-                                    buyers' attention. Describe your product clearly and concisely. Use unique keywords.
-                                    Write your own description instead of using manufacturers' copy.
-                                </p>
+                            <div dangerouslySetInnerHTML={{ __html: product.description }} className={cx('description')}>
+                                
                             </div>
                         </div>
                         <div className={cx('product-detail')}>
                             <h2 className={cx('product-name')}>{product.name}</h2>
-                            <p className={cx('sku')}>SKU: 0003</p>
+                            <p className={cx('sku')}>SKU: {product.sku}</p>
                             <div className={cx('price')}>
-                                <p className={cx([product.sale_price ? 'sale' : ''])}>
-                                    &nbsp;{product.list_price}$&nbsp;
+                                <p className={cx([product.discountValue > 0 ? 'sale' : ''])}>
+                                    &nbsp;{product.price}$&nbsp;
                                 </p>
-                                {product.sale_price && <p>{product.sale_price}$</p>}
+                                {product.discountValue > 0 && <p>{product.price * (100 - product.discountValue)}$</p>}
                             </div>
                             <div className={cx('quantity')}>
                                 <label htmlFor="quantityInput">

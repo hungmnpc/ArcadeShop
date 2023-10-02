@@ -49,9 +49,11 @@ function UserNavbar() {
 
     const [userState] = useContext(AuthContext);
 
+    console.log(userState);
+
     return (
         <div className={cx('wrapper')}>
-            <Tippy trigger="mouseenter click" interactive render={(attrs) => <SubMenu items={userMenu} />}>
+            <Tippy trigger="mouseenter click" interactive render={(attrs) => <SubMenu items={userState.userInfo.roles.includes('ROLE_ADMIN') ? userMenu : userMenu.filter(menu => menu.title !== 'Dashboard')} />}>
                 <div className={cx('avatar')}>
                     <img
                         src={

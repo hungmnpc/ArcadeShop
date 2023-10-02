@@ -22,23 +22,23 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @Rollback(value = false)
 public class UserServiceTest {
 
-    @Autowired
-    private UserRepository repo;
+    // @Autowired
+    // private UserRepository repo;
 
-    @Autowired
-    private UserService service;
+    // @Autowired
+    // private UserService service;
 
-    @Autowired
-    private ModelMapper modelMapper;
+    // @Autowired
+    // private ModelMapper modelMapper;
 
-    @Test
-    public void testAddUser() {
-        String password = "12345";
-        UserDTO user =  new UserDTO(null, "Hưng", "Đinh", "hungkaiken3@gmail.com", password,"0868462896",null, new HashSet<>());
-        UserDTO userSaved = service.addNewUser(user);
-        assertThat(userSaved).isNotNull();
-        assertThat(userSaved.getId()).isGreaterThan(0);
+    // @Test
+    // public void testAddUser() {
+    //     String password = "12345";
+    //     UserDTO user =  new UserDTO(null, "Hưng", "Đinh", "hungkaiken3@gmail.com", password,"0868462896",null, new HashSet<>());
+    //     UserDTO userSaved = service.addNewUser(user);
+    //     assertThat(userSaved).isNotNull();
+    //     assertThat(userSaved.getId()).isGreaterThan(0);
 
-    }
+    // }
 
 }

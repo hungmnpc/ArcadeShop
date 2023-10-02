@@ -21,7 +21,7 @@ public interface ProductService {
 
     public ProductDTO saveProduct(ProductRequest productRequest);
 
-    public Page<ProductDTO> getProducts(Pageable pageable, String categoryName, String excludeCategoryName);
+    public Page<ProductDTO> getProducts(Pageable pageable, String categoryName, String excludeCategoryName, String price, String sort);
 
     public List<ProductDTO> getProductWithExcludeCategory(String categoryName);
 
@@ -39,4 +39,13 @@ public interface ProductService {
 
     public CategoryDTO addProductsToCategory(String categoryName, List<Long> productIDs);
 
+    public List<ProductDTO> getBestSeller();
+
+    public List<ProductDTO> upgradeGear();
+
+    public List<ProductDTO> getBestGame();
+
+    public List<ProductDTO> filterProduct(String price, String categoryId, String columnSort, String sortType, String mainCategory);
+
+    public List<CategoryDTO> getAllCategoryByType(String type);
 }

@@ -40,7 +40,7 @@ function SelectControl({label, value, onChange, selectItems, colspan}) {
     return ( <div ref={fieldRef} className={cx('wrapper', `colspan${colspan}`)}>
         <span className={cx('label')}>{label}</span>
         <div onClick={handleClickDrop} className={cx('select-field', [isDrop ? 'drop': ''])}>
-            <span className={cx('selected')}>{value}</span>
+            <span className={cx('selected')}>{selectItems.find(item => item.value === value).text}</span>
             <FontAwesomeIcon className={cx('icon-dropdown')} icon={faAngleDown} />
         </div>
         <div className={cx('drop-items', [isDrop? 'show' : ''])}>

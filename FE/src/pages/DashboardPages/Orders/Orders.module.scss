@@ -1,0 +1,66 @@
+.wrapper {
+    padding: 20px 50px;
+
+    .top {
+        display: flex;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        .title {
+            h2 {
+                font-size: 3rem;
+                color: rgba(0, 0, 0, 0.808);
+                line-height: 4rem;
+                font-family: Madefor;
+                font-weight: 700;
+                .number {
+                    color: rgba(0, 0, 0, 0.316);
+                }
+            }
+        }
+    }
+
+    .container {
+        background-color: var(--white);
+        min-height: 100vh;
+        padding: 20px 30px;
+        border-radius: 10px;
+        margin-top: 10px;
+        position: sticky;
+        top: 0;
+
+        .status {
+            padding: 7px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            &.ACCOMPLISHED {
+                background-color: #00FF00;
+            }
+            &.PROCESSING {
+                background-color: #FFFF00;
+            }
+            &.SHIPPING {
+                background-color: #138aec;
+                color: white;
+            }
+            &.CANCELLED {
+                background-color: rgb(250, 39, 39);
+                color: white;
+            }
+        }
+
+        .filter {
+            margin-bottom: 30px;
+            width: 40%;
+        }
+    }
+
+    .action {
+        .btn-change {
+            padding: 5px 10px;
+        }
+    }
+}

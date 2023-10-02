@@ -5,6 +5,7 @@ import com.monopoco.arcade.entity.Product;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -17,7 +18,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-public class CategoryDTO {
+public class CategoryDTO implements Serializable {
 
     private String id;
 

@@ -3,13 +3,14 @@ import style from "./Inventory.module.scss";
 import FieldControl from "../../FieldControl";
 import SelectControl from "../../SelectControl";
 import { useContext } from "react";
-import { changeInventoryStatus, changeSku, ProductContext } from "..";
+import { changeInventoryStatus, changeQuantity, changeSku, ProductContext } from "..";
 
 const cx = classNames.bind(style);
 
 function Inventory() {
 
     const [productState, dispatch] = useContext(ProductContext)
+    console.log(productState)
 
     return (<div className={cx('wrapper')}>
         <div className={cx('title')}>
@@ -23,6 +24,9 @@ function Inventory() {
             <FieldControl value={productState.sku} onChange={(data) => {
                 dispatch(changeSku(data))
             }} label="SKU" type="text" colspan="1" required={true} name="sku" placeholder="" />
+            <FieldControl value={productState.quantity} onChange={(data) => {
+                dispatch(changeQuantity(data))
+            }} label="Quantity" type="text" colspan="1" required={true} name="sku" placeholder="" />
         </div>
     </div>);
 }

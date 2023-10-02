@@ -9,6 +9,8 @@ import styles from './Filter.module.scss';
 const cx = classNames.bind(styles);
 
 function Filter({ collections, collection, addParams, valueMinMax }) {
+
+    console.log(collections);
     const [searchParams] = useSearchParams();
     const [collectioned, setCollectioned] = useState(collection);
     const [priceMin, setPriceMin] = useState(
@@ -39,6 +41,8 @@ function Filter({ collections, collection, addParams, valueMinMax }) {
         addParams({ price: priceParam });
     };
 
+    console.log(collection);
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('header')}>
@@ -49,11 +53,11 @@ function Filter({ collections, collection, addParams, valueMinMax }) {
                     <div className={cx('list')}>
                         {collections.map((item, index) => (
                             <div
-                                onClick={() => handleClickCollection(item.value)}
-                                className={cx('filter-item', [collection === item.value ? 'active' : ''])}
+                                onClick={() => handleClickCollection(item.id)}
+                                className={cx('filter-item', [collection === item.id ? 'active' : ''])}
                                 key={index}
                             >
-                                <p>{item.text}</p>
+                                <p>{item.categoryName}</p>
                             </div>
                         ))}
                     </div>

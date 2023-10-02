@@ -1,6 +1,7 @@
 package com.monopoco.arcade.api;
 
 import com.monopoco.arcade.modal.CategoryDTO;
+import com.monopoco.arcade.modal.ProductDTO;
 import com.monopoco.arcade.request.ListProductID;
 import com.monopoco.arcade.service.productservice.ProductService;
 import lombok.extern.slf4j.Slf4j;
@@ -57,6 +58,19 @@ public class CategoryController {
             return ResponseEntity.ok(categoryDTO);
         } else {
             return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/getAllFromType/{categoryId}")
+    public ResponseEntity<?> getAllFromType(@PathVariable() String categoryId) {
+        log.info("{}", categoryId);
+        try {
+            List<CategoryDTO> categoryDTOList = productService.getAllCategoryByType(categoryId);
+            return ResponseEntity.ok(categoryDTOList);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 

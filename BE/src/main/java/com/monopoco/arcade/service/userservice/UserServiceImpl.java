@@ -6,6 +6,7 @@ import com.monopoco.arcade.modal.UserDTO;
 import com.monopoco.arcade.principal.UserPrincipal;
 import com.monopoco.arcade.repository.RoleRepository;
 import com.monopoco.arcade.repository.UserRepository;
+import com.monopoco.arcade.utils.MapperUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,6 +136,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 //        });
 
 //        return new UserPrincipal(user.getFirstName()+ user.getLastName(), user.getEmail(), user.getPassword(), authorities);
-        return  new UserPrincipal(modelMapper.map(user, UserDTO.class));
+        return  new UserPrincipal(MapperUtil.userMapper(user, modelMapper));
     }
 }

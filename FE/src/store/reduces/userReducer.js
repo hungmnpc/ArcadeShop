@@ -1,5 +1,6 @@
 import actionTypes from '../actions/actionTypes';
 import jwtDecode from 'jwt-decode';
+import { emptyCart } from '../actions/userActions';
 
 const getUserInfoByAccessToken = (accessToken) => {
     if (accessToken) {
@@ -7,7 +8,7 @@ const getUserInfoByAccessToken = (accessToken) => {
         if (tokenValid(decode.exp)) {
             return {
                 name: decode.sub,
-                roles: decode.role,
+                roles: decode.roles,
                 avatarUrl: decode.avatarUrl,
             };
         } else {
@@ -43,10 +44,10 @@ export const initialState = {
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.USER_LOGIN_SUCCESS:
+            console.log(action.userInfo.accessToken);
             localStorage.setItem('isLoggedIn', true);
-            localStorage.setItem('access_token', action.userInfo.access_token);
-            localStorage.setItem('access_token', action.userInfo.access_token);
-            setSessionID(action.userInfo.sessionID)
+            localStorage.setItem('access_token', action.userInfo.accessToken);
+            localStorage.setItem('refresh_token', action.userInfo.refreshToken);
 
             return {
                 ...state,
@@ -57,9 +58,10 @@ const userReducer = (state = initialState, action) => {
             };
 
         case actionTypes.PROCESS_LOGOUT:
-            localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('access_token');
+            localStorage.setItem('isLoggedIn', false);
+            localStorage.setItem('access_token', '');
             localStorage.removeItem('refresh_token');
+            localStorage.removeItem('cart')
             return {
                 ...state,
                 isLoggedIn: false,

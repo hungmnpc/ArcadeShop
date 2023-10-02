@@ -8,6 +8,7 @@ const routes = {
     consoles_page: '/consoles',
     controllers_page: '/controllers',
     accessories_page: '/accessories',
+    cart_page: '/carts',
     contact_page: '/contact',
     crud: '/crud',
     crud_page: '/crud/:entity',

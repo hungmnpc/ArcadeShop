@@ -6,10 +6,11 @@ import { CartContext } from '../../../context/CartContext';
 import { useDebounce } from '../../../hooks';
 import { addCart, removeCart } from '../../../store/actions/userActions';
 import style from './CartItem.module.scss';
+import { addNewProductToCart } from '../../../utils/request';
 
 const cx = classNames.bind(style);
 function CartItem({ data }) {
-    const officialPrice = data.sale_price ? data.sale_price : data.list_price;
+    const officialPrice = data.price * (100 - data.discountValue) / 100;
 
     const [cartState, dispatch] = useContext(CartContext);
 
@@ -17,8 +18,18 @@ function CartItem({ data }) {
 
     const quantityDebounce = useDebounce(quantity, 500);
 
+    console.log(Number.parseInt(quantityDebounce))
+
     useEffect(() => {
-        dispatch(addCart(data, quantityDebounce - data.quantity));
+        if (Number.parseInt(quantityDebounce) !== data.quantity) {
+            addNewProductToCart(data.id, Number.parseInt(quantityDebounce) - data.quantity)
+                        .then(response => {
+                            console.log(response.data.id);
+                            dispatch(addCart(data, Number.parseInt(quantityDebounce) - data.quantity, response.data.id));
+                        })
+                        .catch(error => console.error(error))
+        }
+        
     }, [quantityDebounce]);
 
     const handleRemoveCart = () => {
@@ -28,12 +39,12 @@ function CartItem({ data }) {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('image')}>
-                <img src={data.image} alt={data.name} />
+                <img src={`data:image/jpeg;base64,${data.imageSet[0].imageBase64}`} alt={data.name} />
             </div>
             <div className={cx('info')}>
                 <span className={cx('name')}>{data.name}</span>
-                <div className={cx('price', [data.sale_price ? 'sale' : ''])}>
-                    {data.sale_price && <span>{data.list_price}₫</span>}
+                <div className={cx('price', [data.discountValue > 0 ? 'sale' : ''])}>
+                    {data.discountValue > 0 && <span>{data.price}₫</span>}
                     <span>{officialPrice}₫</span>
                 </div>
                 <div className={cx('quantity')}>

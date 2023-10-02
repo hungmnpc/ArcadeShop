@@ -21,8 +21,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @EnableWebSecurity
@@ -65,10 +64,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         http.authorizeHttpRequests().antMatchers("/h2-console/**").permitAll();
-        http.authorizeHttpRequests().antMatchers(GET, "/api/users/**").hasAnyAuthority("ROLE_USER" +
-                "");
+        http.authorizeHttpRequests().antMatchers(GET, "/api/users/**").hasAnyAuthority("ROLE_USER");
 //        http.authorizeHttpRequests().antMatchers(GET, "/api/users/**").permitAll();
-        http.authorizeHttpRequests().antMatchers(POST, "/api/products/**").permitAll();
+        http.authorizeHttpRequests().antMatchers(POST, "/api/admin/products/**").hasAnyAuthority("ROLE_ADMIN");
+        http.authorizeHttpRequests().antMatchers(PUT, "/api/admin/products/**").hasAnyAuthority("ROLE_ADMIN");
+        http.authorizeHttpRequests().antMatchers(DELETE, "/api/v1/admin/products/**").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeHttpRequests().antMatchers(GET, "/api/products/**").permitAll();
         http.authorizeHttpRequests().antMatchers(POST, "/api/v1/admin/products/**").permitAll();
 

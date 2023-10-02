@@ -2,6 +2,7 @@ package com.monopoco.arcade.principal;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.monopoco.arcade.modal.UserDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 
+@Slf4j
 public class UserPrincipal implements UserDetails {
 
     private UserDTO userDTO;
@@ -20,9 +22,12 @@ public class UserPrincipal implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        log.info("{}", userDTO.getRoles());
         userDTO.getRoles().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
+            log.info(role);
+            authorities.add(new SimpleGrantedAuthority(role.toString()));
         });
+        log.info("{}", authorities.toString());
         return authorities;
     }
 
@@ -64,7 +69,15 @@ public class UserPrincipal implements UserDetails {
         return true;
     }
 
+    public Long getId() {
+        return userDTO.getId();
+    }
 
+    public String getEmail() {
+        return userDTO.getEmail();
+    }
 
-
+    public UserDTO getUser() {
+        return userDTO;
+    }
 }

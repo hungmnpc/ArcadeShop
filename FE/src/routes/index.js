@@ -21,32 +21,33 @@ import EditProduct from '../pages/DashboardPages/EditProduct';
 import CopyProduct from '../pages/DashboardPages/CopyProduct';
 import Categories from '../pages/DashboardPages/Categories';
 import EditCategory from '../pages/DashboardPages/EditCategory';
+import CartPage from '../pages/CartPage';
 
 const collectionPages = [
     {
         title: 'Games',
         path: routes.games_page,
-        data: allProduct.filter((product) => product.typeId === GAMEID),
+        category: "Games",
     },
     {
         title: 'Best Sellers',
         path: routes.best_sellers_page,
-        data: allProduct.filter((product) => product.sold >= soldHigh),
+        category: "Best Sellers",
     },
     {
         title: 'Consoles',
         path: routes.consoles_page,
-        data: allProduct.filter((product) => product.typeId === CONSOLEID),
+        category: "Consoles",
     },
     {
         title: 'Controllers',
         path: routes.controllers_page,
-        data: allProduct.filter((product) => product.typeId === CONTROLLERID),
+        category: 'Controllers',
     },
     {
         title: 'Accessories',
         path: routes.accessories_page,
-        data: allProduct.filter((product) => product.typeId === ACCESSORIESID),
+        category: "Accessories",
     },
 ];
 
@@ -66,17 +67,23 @@ const publicRoutes = [
         layout: DefaultLayout,
     },
     {
+        title: 'Cart',
+        path: routes.cart_page,
+        component: CartPage,
+        layout: ProductsLayout,
+    },
+    {
         title: 'On Sale',
         path: routes.onSale,
         component: ProductsPage,
-        data: onSale,
+        category: "On Sale",
         layout: ProductsLayout,
     },
     {
         title: 'Shop all',
         path: routes.products,
         component: ProductsPage,
-        data: allProduct,
+        category: "All",
         layout: ProductsLayout,
     },
     {
@@ -164,6 +171,10 @@ const dashboardRoutes = [
     {
         path: routes.dashboardStoreProducts.editCategory,
         component: EditCategory
+    },
+    {
+        path: routes.dashboardOrders.orders,
+        component: Orders
     }
 ]
 

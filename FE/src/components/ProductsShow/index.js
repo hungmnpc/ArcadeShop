@@ -9,15 +9,20 @@ import styles from './ProductsShow.module.scss';
 import SortSelect from './SortSelect';
 
 import { useDelayUnMount } from '../../hooks';
+import { get } from '../../utils/request';
+import { toast } from 'react-hot-toast';
 
 const cx = classNames.bind(styles);
 
-function ProductsShow({ collections, data }) {
+function ProductsShow({category, collections, data }) {
     const [searchParams, setSearchParams] = useSearchParams({});
 
     const [openFilterMobile, setOpenFilterMobile] = useState(false);
 
+
     const location = useLocation();
+
+    console.log(location);
 
     useEffect(() => {
         setOpenFilterMobile(false);
@@ -25,8 +30,8 @@ function ProductsShow({ collections, data }) {
 
     const shouldRenderChild = useDelayUnMount(openFilterMobile, 300);
 
-    const max = Math.max(...data.map((product) => product.list_price));
-    const min = Math.min(...data.map((product) => (product.sale_price ? product.sale_price : product.list_price)));
+    const max = Math.max(...data.map((product) => product.price * (100 - product.discountValue) / 100));
+    const min = Math.min(...data.map((product) => product.price * (100 - product.discountValue) / 100));
     const [min_max, setMin_Max] = useState({
         min: min,
         max: max - min <= 50 ? max + 50 : max,
@@ -43,11 +48,12 @@ function ProductsShow({ collections, data }) {
 
     const [products, setProducts] = useState(data);
     const [productsShow, setProductsShow] = useState(products);
+    console.log(products);
 
     useEffect(() => {
-        const max = Math.max(...products.map((product) => product.list_price));
+        const max = Math.max(...products.map((product) => product.price * (100 - product.discountValue) / 100));
         const min = Math.min(
-            ...products.map((product) => (product.sale_price ? product.sale_price : product.list_price)),
+            ...products.map((product) => product.price * (100 - product.discountValue) / 100),
         );
         setMin_Max({
             min: min,
@@ -73,6 +79,7 @@ function ProductsShow({ collections, data }) {
             searchParams.append('price', '');
         }
         setCollection(searchParams.get('collection'));
+
         setProducts(getProductsByType(data, searchParams.get('collection')));
     }, [searchParams.get('collection')]);
 
@@ -82,13 +89,51 @@ function ProductsShow({ collections, data }) {
         if (price) {
             const min = Number(price.split('-')[0]);
             const max = Number(price.split('-')[1]);
-            _product = products.slice(0).filter((product) => {
-                const productPrice = product.sale_price ? product.sale_price : product.list_price;
-                return productPrice >= min && productPrice <= max;
-            });
+            console.log(min)
+            console.log(max)
+
         }
         setProductsShow(_product);
     }, [searchParams.get('price')]);
+
+    useEffect(() => {
+        console.log(searchParams.get('price'));
+        let url = '/api/v1/admin/products/filter?'
+        if (searchParams.get('price')) {
+            url += 'price='+ searchParams.get('price');
+        }
+        console.log(searchParams.get('collection'));
+        if (searchParams.get('collection')) {
+            url += '&categoryId=' + searchParams.get('collection')
+        }
+        console.log(category.toUpperCase());
+
+        url += '&mainCategory=' + category.toUpperCase()
+        // if (searchParams.get)
+        if (searchParams.get('sort')) {
+            if (searchParams.get('sort').startsWith('price')) {
+                url += '&column=price'
+            } else if (searchParams.get('sort').startsWith('name')) {
+                url += '&column=name'
+            }
+
+            if (searchParams.get('sort').endsWith('ascending')) {
+                url += '&sortType=ASC'
+            } else {
+                url += '&sortType=DESC'
+            }
+        }
+        toast.promise(get(url), {
+            loading: "Waitting.....",
+            error: "Error",
+        }).then(response => {
+            console.log(response)
+            setProductsShow(response.data)
+        }).catch(error => {
+            console.error(error)
+        })
+
+    } , [searchParams])
 
     const hanldeClose = () => {
         setOpenFilterMobile(false);

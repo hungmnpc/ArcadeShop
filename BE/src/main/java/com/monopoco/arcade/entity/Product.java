@@ -86,11 +86,6 @@ public class Product {
     )
     private Set<Category> categories;
 
-
-
-
-
-
-
-
+    @Column(name = "quantity_in_stock")
+    private Integer quantity;
 }

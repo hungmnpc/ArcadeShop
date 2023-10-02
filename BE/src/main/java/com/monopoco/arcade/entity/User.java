@@ -30,6 +30,8 @@ public class User {
 
 	private String phone;
 
+	private String address;
+
 	@Column(name = "avatarUrl")
 	private String avatarUrl;
 
@@ -40,5 +42,4 @@ public class User {
 		inverseJoinColumns = @JoinColumn(name = "role_id")
 	)
 	Set<Role> roles;
-
 }

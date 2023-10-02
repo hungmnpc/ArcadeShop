@@ -6,14 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class UserDTO implements Serializable {
 
 	private Long id;
 
@@ -29,5 +31,7 @@ public class UserDTO {
 
 	private String avatarUrl;
 
-	Set<Role> roles;
+	private String address;
+
+	private List<String> roles;
 }

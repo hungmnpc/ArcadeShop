@@ -2,6 +2,7 @@ package com.monopoco.arcade.modal;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ProductDTO {
+public class ProductDTO implements Serializable {
     private Long id;
 
     private String name;
@@ -39,4 +40,6 @@ public class ProductDTO {
     private List<ImageDTO> imageSet;
 
     private Set<String> categoriesName;
+
+    private Integer quantity;
 }

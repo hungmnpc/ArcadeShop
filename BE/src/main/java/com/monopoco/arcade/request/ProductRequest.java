@@ -36,4 +36,6 @@ public class ProductRequest {
 
     private String SKU;
     private String inventoryStatus;
+
+    private Integer quantity;
 }

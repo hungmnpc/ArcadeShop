@@ -1,15 +1,10 @@
 package com.monopoco.arcade.utils;
 
-import com.monopoco.arcade.entity.Category;
-import com.monopoco.arcade.entity.Image;
-import com.monopoco.arcade.entity.Product;
-import com.monopoco.arcade.modal.CategoryDTO;
-import com.monopoco.arcade.modal.ImageDTO;
-import com.monopoco.arcade.modal.ProductDTO;
+import com.monopoco.arcade.entity.*;
+import com.monopoco.arcade.modal.*;
 import com.monopoco.arcade.service.imageservice.ImageStorageService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -19,8 +14,6 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class MapperUtil {
-
-
     public static ProductDTO productMapper(Product product,
                                            ModelMapper modelMapper, ImageStorageService imageStorageService) {
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
@@ -74,5 +67,52 @@ public class MapperUtil {
             productMapper(product, modelMapper, imageStorageService)
         ).collect(Collectors.toSet()));
         return categoryDTO;
+    }
+
+    public static CartDTO cartMapper(Cart cart, ModelMapper modelMapper, ImageStorageService imageStorageService) {
+        UserDTO userDTO = userMapper(cart.getUser(), modelMapper);
+        ProductDTO productDTO = productMapper(cart.getProduct(), modelMapper, imageStorageService);
+        CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
+        cartDTO.setProduct(productDTO);
+        return cartDTO;
+    }
+
+    public static UserDTO userMapper(User user, ModelMapper modelMapper) {
+        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+        List<String> roles = user.getRoles().stream().map(Role::getName).collect(Collectors.toList());
+        userDTO.setRoles(roles);
+        return userDTO;
+    }
+
+    public static OrderDetailDTO orderDetailMapper(OrderDetail orderDetail,
+                                                   ModelMapper modelMapper,
+                                                   ImageStorageService imageStorageService) {
+        OrderDetailDTO orderDetailDTO = modelMapper.map(orderDetail, OrderDetailDTO.class);
+        ProductDTO productDTO = productMapper(orderDetail.getProduct(), modelMapper, imageStorageService);
+        orderDetailDTO.setProduct(productDTO);
+        return orderDetailDTO;
+    }
+
+    public static OrderDTO orderMapper(Order order,
+                                       ModelMapper modelMapper,
+                                       ImageStorageService imageStorageService) {
+        OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
+        UserDTO userDTO = userMapper(order.getUser(), modelMapper);
+        List<OrderDetailDTO> orderDetailDTOS = order.getOrderDetails().stream()
+                .map(orderDetail ->
+                    orderDetailMapper(orderDetail, modelMapper, imageStorageService)
+                ).collect(Collectors.toList());
+        orderDTO.setOrderDetails(orderDetailDTOS);
+        AtomicReference<Double> subTotal = new AtomicReference<>(new Double(0.0));
+        orderDetailDTOS.forEach(orderDetailDTO -> {
+            Double subDetail = orderDetailDTO.getQuantity() * orderDetailDTO.getProduct().getPrice() *
+                    (100 - orderDetailDTO.getProduct().getDiscountValue()) / 100;
+            subTotal.updateAndGet(v -> v + subDetail);
+        });
+        orderDTO.setSubTotal(subTotal.get());
+        orderDTO.setStatusNumber(order.getStatus().getStatus());
+        orderDTO.setUser(userDTO);
+        orderDTO.setStatusValue(order.getStatus().toString());
+        return orderDTO;
     }
 }

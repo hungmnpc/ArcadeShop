@@ -24,7 +24,6 @@ const columns = [
         key: 'image',
         width: 100,
         render: (_, record) => {
-            console.log(record.image)
             return (<img className={cx('image')} src={record.image ? `data:image/png;base64, ${record.image.imageBase64}` : ''} alt='logo' />)
         },
     },
@@ -51,9 +50,9 @@ const columns = [
         sorter: true
     },
     {
-        title: 'Inventory',
-        dataIndex: 'inventory',
-        key: 'inventory'
+        title: 'quantity',
+        dataIndex: 'quantity',
+        key: 'quantity'
     },
     {
         title: 'Action',
@@ -79,13 +78,9 @@ function StoreProducts() {
 
     const [products, setProducts] = useState([]);
 
-    console.log(products)
-
     useEffect(() => {
         get("/api/v1/admin/products")
             .then((response) => {
-                console.log("response");
-                console.log(response.data)
                 setProducts(response.data.products)
             })
             .catch(error => {
@@ -196,7 +191,7 @@ function StoreProducts() {
                         type: 'Physical',
                         sku: product.sku,
                         price: product.price,
-                        inventory: product.inventoryStatus
+                        quantity: product.quantity
 
                     }
                 })} />
@@ -205,7 +200,7 @@ function StoreProducts() {
     );
 }
 
-function Actions({ id }) {
+export function Actions({ id }) {
 
     const [show, setShow] = useState(false);
 
@@ -296,6 +291,8 @@ function Actions({ id }) {
 
     </div>);
 }
+
+
 
 
 

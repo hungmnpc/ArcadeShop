@@ -32,6 +32,7 @@ const productActionsType = Object.freeze({
     CHANGE_DISCOUNT_VALUE: 'CHANGE_DISCOUNT_VALUE',
     ADD_CATEGORY: 'ADD_CATEGORY',
     REMOVE_CATEGORY: 'REMOVE_CATEGORY',
+    CHANGE_QUANTITY: "CHANGE_QUANTITY",
     CHANGE_RIBBON: 'CHANGE_RIBBON',
     CHANGE_DESCRIPTION: 'CHANGE_DESCRIPTION',
     ADD_AN_INFO_SECTION: 'ADD_AN_INFO_SECTION',
@@ -137,6 +138,11 @@ export const changeMainImage = (mainImageId) => ({
     mainImageId: mainImageId
 })
 
+export const changeQuantity = (quantity) => ({
+    type: productActionsType.CHANGE_QUANTITY,
+    quantity: quantity
+})
+
 
 const initProductState = {};
 
@@ -196,6 +202,11 @@ const productReducer = (state = initProductState, action) => {
             return {
                 ...state,
                 categories: [...state.categories, action.category]
+            }
+        case productActionsType.CHANGE_QUANTITY:
+            return {
+                ...state,
+                quantity: action.quantity
             }
         case productActionsType.REMOVE_CATEGORY:
             return {
@@ -272,7 +283,8 @@ function ProductDetailAdmin({ isScrollOver, id, isCopy = false, ...prop }) {
                         categories: response.data.categoriesName,
                         visible: response.data.visible,
                         inventoryStatus: response.data.inventoryStatus,
-                        sku: response.data.sku
+                        sku: response.data.sku,
+                        quantity: response.data.quantity
                     }
                     dispatch(initProduct(newProduct));
                 })
@@ -292,7 +304,8 @@ function ProductDetailAdmin({ isScrollOver, id, isCopy = false, ...prop }) {
                         categories: response.data.categoriesName,
                         visible: response.data.visible,
                         inventoryStatus: response.data.inventoryStatus,
-                        sku: response.data.sku
+                        sku: response.data.sku,
+                        quantity: response.data.quantity
                     }
                     dispatch(initProduct(newProduct));
                 })
@@ -314,7 +327,8 @@ function ProductDetailAdmin({ isScrollOver, id, isCopy = false, ...prop }) {
                 discountMode: "PERCENT",
                 discountValue: 0,
                 inventoryStatus: "In stock",
-                sku: ""
+                sku: "",
+                quantity: 0
             }
             dispatch(initProduct(newProduct));
         }
@@ -329,7 +343,8 @@ function ProductDetailAdmin({ isScrollOver, id, isCopy = false, ...prop }) {
             const data = {
                 ...productState,
                 discountValue: parseFloat(productState.discountValue),
-                price: parseFloat(productState.price)
+                price: parseFloat(productState.price),
+                quantity: parseInt(productState.quantity)
             }
 
             toast.promise(addNewProduct(data), {

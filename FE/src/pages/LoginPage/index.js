@@ -59,10 +59,10 @@ function LoginPage() {
                 data: data,
             };
 
-            axios(config)
+            request.login(email, password)
                 .then(function (response) {
                     const userData = response.data;
-
+                    console.log(response);
                     dispatch(userLoginSuccess(userData));
                     if (saveInfo) {
                         appDispatch(

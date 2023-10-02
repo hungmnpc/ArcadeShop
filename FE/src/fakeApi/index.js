@@ -24,37 +24,37 @@ export const optionsSort = [
 export const Collection = [
     {
         text: 'All',
-        value: 'all',
+        value: 'ALL',
         id: ALL,
     },
     {
         text: 'Consoles',
-        value: 'consoles',
+        value: 'CONSOLES',
         id: CONSOLEID,
     },
     {
         text: 'Games',
-        value: 'games',
+        value: 'GAMES',
         id: GAMEID,
     },
     {
         text: 'Controllers',
-        value: 'controllers',
+        value: 'CONTROLLERS',
         id: CONTROLLERID,
     },
     {
         text: 'Accessories',
-        value: 'accessories',
+        value: 'ACCESSORIES',
         id: ACCESSORIESID,
     },
     {
         text: 'On Sale',
-        value: 'on_sale',
+        value: 'ON SALE',
         id: ONSALE,
     },
     {
         text: 'Best Sellers',
-        value: 'best_sellers',
+        value: 'BEST SELLERS',
         id: BESTSELLERS,
     },
 ];

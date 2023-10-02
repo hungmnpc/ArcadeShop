@@ -4,6 +4,7 @@ import { Fragment, useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
 import { publicRoutes } from './routes';
+import { Toaster } from 'react-hot-toast';
 
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
                                     path={route.path}
                                     element={
                                         <Layout>
-                                            <Page title={route.title} data={route.data} />
+                                            <Page title={route.title} category={route.category} />
                                         </Layout>
                                     }
                                 />
@@ -31,6 +32,7 @@ function App() {
                         })}
                     </Routes>
                 </ScrollToTop>
+                <Toaster />
             </Router>
         </>
     );

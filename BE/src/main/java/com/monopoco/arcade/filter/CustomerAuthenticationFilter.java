@@ -9,6 +9,8 @@ import com.monopoco.arcade.repository.UserRepository;
 import com.monopoco.arcade.service.userservice.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,7 +32,10 @@ import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
+import org.springframework.stereotype.Component;
 import org.springframework.web.util.UrlPathHelper;
+
 
 @Slf4j
 public class CustomerAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -39,9 +44,13 @@ public class CustomerAuthenticationFilter extends UsernamePasswordAuthentication
 
     private final static UrlPathHelper urlPathHelper = new UrlPathHelper();
 
-
     public CustomerAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
+    }
+
+    @Override
+    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+        super.setAuthenticationManager(authenticationManager);
     }
 
     @Override

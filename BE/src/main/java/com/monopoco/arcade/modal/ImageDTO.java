@@ -2,6 +2,8 @@ package com.monopoco.arcade.modal;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 /**
  * @author: hungdinh
  * Date created: 04/03/2023
@@ -12,7 +14,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class ImageDTO {
+public class ImageDTO implements Serializable {
 
     private Long id;
 

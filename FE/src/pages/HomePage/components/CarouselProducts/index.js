@@ -9,7 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { get } from '../../../../utils/request';
 
 const cx = classNames.bind(styles);
 
@@ -31,10 +32,43 @@ function SamplePrevArrow(props) {
     );
 }
 
-function CarouselProducts({ data }) {
+function CarouselProducts({info}) {
+    const [data , setData] = useState([])
     useEffect(() => {
-        Aos.init();
+        if (info.title === 'Best Sellers') {
+            get("/api/v1/admin/products/best_seller")
+            .then(response => {
+                console.log(response)
+                Aos.init();
+                setData(response.data)
+            })
+            .catch(error => {
+                console.error(error)
+            })
+        } else if (info.title === 'Upgrage your gear') {
+            get("/api/v1/admin/products/upgrade_gear")
+            .then(response => {
+                console.log(response)
+                Aos.init();
+                setData(response.data)
+            })
+            .catch(error => {
+                console.error(error)
+            })
+        } else if (info.title === 'Trending games') {
+            get("/api/v1/admin/products/best_game")
+            .then(response => {
+                console.log(response)
+                Aos.init();
+                setData(response.data)
+            })
+            .catch(error => {
+                console.error(error)
+            })
+        }
     }, []);
+
+    console.log(data)
     const settings = {
         dots: false,
         infinite: true,
@@ -89,17 +123,17 @@ function CarouselProducts({ data }) {
                         data-aos-anchor-placement="top-bottom"
                         className={cx('title')}
                     >
-                        <h2>{data.title}</h2>
+                        <h2>{info.title}</h2>
                     </div>
                     <div className={cx('btn')}>
-                        <Button rounded={true} to={data.viewAll}>
+                        <Button rounded={true} to={info.viewAll}>
                             View all
                         </Button>
                     </div>
                 </div>
                 <div className={cx('slider')}>
                     <Slider {...settings}>
-                        {data.products.map((product, index) => (
+                        {data.map((product, index) => (
                             <CarouselItem data={product} key={index} />
                         ))}
                     </Slider>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const request = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'https://arcade-481i.onrender.com/',
     withCredentials: true,
     headers: {
         'content-type': 'application/json',
